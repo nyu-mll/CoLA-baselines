@@ -21,13 +21,13 @@ class CBOWClassifier(nn.Module):
         self.sigmoid = nn.Sigmoid()
         self.tanh = nn.Tanh()
 
-    def forward(self, inputs):
+    def forward(self, x):
         if self.max_pool:
-            encoding = nn.functional.max_pool1d(inputs.transpose(0, 2),
-                                                len(inputs))
-            encoding = encoding.squeeze().transpose(0, 1)
+            encoding = nn.functional.max_pool1d(x.transpose(1, 2),
+                                                x.shape[1])
+            encoding = encoding.transpose(1, 2).squeeze()
         else:
-            encoding = inputs.sum(0)
+            encoding = x.sum(1)
         hidden = self.tanh(self.i2h(encoding))
         out = self.sigmoid(self.h2o(hidden))
         return out
