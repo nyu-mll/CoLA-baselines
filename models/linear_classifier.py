@@ -24,8 +24,9 @@ class LinearClassifier(nn.Module):
         return out
 
 class LinearClassifierWithEncoder(nn.Module):
-    def __init__(self, hidden_size, encoding_size, 
+    def __init__(self, hidden_size, encoding_size,
                  embedding_size, num_layers):
+        super(LinearClassifierWithEncoder, self).__init__()
         self.hidden_size = hidden_size
         self.encoding_size = encoding_size
         self.embedding_size = embedding_size
@@ -36,7 +37,7 @@ class LinearClassifierWithEncoder(nn.Module):
             embedding_size=self.embedding_size,
             num_layers=self.num_layers
         )
-    
+
     def forward(self, x):
         _, encoding = self.encoder(x)
         output = self.model.forward(encoding)

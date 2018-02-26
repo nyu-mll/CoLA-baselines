@@ -21,8 +21,8 @@ class EarlyStopping:
         self.checkpoint = checkpoint_instance
         self.best_monitored_metric = 0. if not minimize else np.inf
         self.other_metrics = {
-            'acc': None,
-            'val_loss': None
+            'acc': 0,
+            'val_loss': np.inf
         }
         self.best_monitored_epoch = 0
 

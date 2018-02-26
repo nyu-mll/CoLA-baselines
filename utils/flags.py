@@ -71,6 +71,4 @@ def get_parser():
                         help="Name of the current experiment")
     parser.add_argument("-r", "--resume", type=str, default=None,
                         help="Checkpoint path for resuming")
-    parser.add_argument("--test_path", type=str, default="",
-                        help="Location of test set")
     return parser

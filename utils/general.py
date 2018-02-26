@@ -12,7 +12,7 @@ def get_model_instance(args):
             embedding_size=args.embedding_size,
             num_layers=args.num_layers
         )
-    elif args.model == "aj_classifier":
+    elif args.model == "linear_classifier":
         # TODO: Add support for encoder here later
         return LinearClassifierWithEncoder(
             hidden_size=args.hidden_size,
