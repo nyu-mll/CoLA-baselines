@@ -9,6 +9,7 @@ from utils import get_model_instance
 from .dataset import get_datasets, get_iter
 from .meter import Meter
 from .early_stopping import EarlyStopping
+from .logger import Logger
 from utils import Checkpoint
 
 # TODO: Add __init__ for all modules and then __all__ in all of them
@@ -23,6 +24,7 @@ class Trainer:
         self.checkpoint = Checkpoint(self.args)
         self.num_classes = 2
         self.meter = Meter(self.num_classes)
+        self.writer = Logger()
         self.load_datasets()
 
     def load_datasets(self):
@@ -57,8 +59,9 @@ class Trainer:
         self.criterion = torch.nn.BCELoss()
 
     def train(self):
+        self.print_start_info()
         for i in range(1, self.args.epochs + 1):
-            print("========= Epoch %d =========" % i)
+            self.writer.write("========= Epoch %d =========" % i)
             self.train_loader.init_epoch()
             for idx, data in enumerate(self.train_loader):
                 x, y = data.sentence, data.label
@@ -70,6 +73,7 @@ class Trainer:
 
                 if type(output) == tuple:
                     output = output[0]
+                output = output.squeeze()
 
                 loss = self.criterion(output, y.float())
                 loss.backward()
@@ -99,16 +103,6 @@ class Trainer:
 
             self.early_stopping.print_info()
 
-    def print_final_info(self):
-        print("Early Stopping activated")
-        self.early_stopping.print_info()
-
-    def print_current_info(self, it, total, matthews, other_metrics):
-        print("%d/%d: Matthews %.5f, Accuracy: %.5f, Loss: %.9f" %
-              (it, total, matthews,
-               other_metrics['acc'], other_metrics['val_loss']))
-
-
     def validate(self, loader: torchtext.data.Iterator):
         self.model.eval()
         self.meter.reset()
@@ -123,6 +117,7 @@ class Trainer:
 
             if type(output) == tuple:
                 output = output[0]
+            output = output.squeeze()
 
             loss = nn.functional.binary_cross_entropy(output, y.float(),
                                                       size_average=False)
@@ -142,3 +137,43 @@ class Trainer:
 
         return correct / total * 100, avg_loss, \
                self.meter.matthews(), self.meter.confusion()
+
+    def print_final_info(self):
+        self.writer.write("Early Stopping activated")
+        self.early_stopping.print_info()
+
+    def print_current_info(self, it, total, matthews, other_metrics):
+        self.writer.write("%d/%d: Matthews %.5f, Accuracy: %.5f, Loss: %.9f" %
+              (it, total, matthews,
+               other_metrics['acc'], other_metrics['val_loss']))
+
+    def print_start_info(self):
+        self.writer.write("======== General =======")
+        self.writer.write("Model: %s" % self.args.model)
+        self.writer.write("GPU: %s" % self.args.gpu)
+        self.writer.write("Experiment Name: %s" % self.args.experiment_name)
+        self.writer.write("Save location: %s" % self.args.save_loc)
+        self.writer.write_new_line()
+
+        self.writer.write("======== Data =======")
+        self.writer.write("Training set: %d examples" % (len(self.train_dataset)))
+        self.writer.write("Validation set: %d examples" % (len(self.val_dataset)))
+        self.writer.write("Test set: %d examples" % (len(self.test_dataset)))
+        self.writer.write_new_line()
+
+        self.writer.write("======= Parameters =======")
+        self.writer.write("Learning Rate: %f" % self.args.learning_rate)
+        self.writer.write("Batch Size: %d" % self.args.batch_size)
+        self.writer.write("Epochs: %d" % self.args.epochs)
+        self.writer.write("Patience: %d" % self.args.patience)
+        self.writer.write("Stages per Epoch: %d" % self.args.stages_per_epoch)
+        self.writer.write("Embedding: %s" % self.args.embedding)
+        self.writer.write("Number of layers: %d" % self.args.num_layers)
+        self.writer.write("Hidden Size: %d" % self.args.hidden_size)
+        self.writer.write("Encoder Size: %d" % self.args.encoding_size)
+        self.writer.write("Resume: %s" % self.args.resume)
+        self.writer.write_new_line()
+
+        self.writer.write("======= Model =======")
+        self.writer.write(self.model)
+        self.writer.write_new_line()
