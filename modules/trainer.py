@@ -11,6 +11,7 @@ from .meter import Meter
 from .early_stopping import EarlyStopping
 from .logger import Logger
 from utils import Checkpoint
+from utils import Timer
 
 # TODO: Add __init__ for all modules and then __all__ in all of them
 # to faciliate easy loading
@@ -25,6 +26,7 @@ class Trainer:
         self.num_classes = 2
         self.meter = Meter(self.num_classes)
         self.writer = Logger()
+        self.timer = Timer()
         self.load_datasets()
 
     def load_datasets(self):
@@ -91,7 +93,7 @@ class Trainer:
                     }
                     stop = self.early_stopping(matthews, other_metrics, i)
                     if stop:
-                        self.print_final_info()
+                        self.writer.write("Early Stopping activated")
                         break
                     else:
                         self.print_current_info(idx, len(self.train_loader),
@@ -101,7 +103,10 @@ class Trainer:
                 # At the some interval validate train loader
                 self.validate(self.train_loader)
 
-            self.early_stopping.print_info()
+            self.print_epoch_info()
+
+            if self.early_stopping.is_activated():
+                break
 
     def validate(self, loader: torchtext.data.Iterator):
         self.model.eval()
@@ -110,7 +115,7 @@ class Trainer:
         total = 0
         total_loss = 0
         loader.init_epoch()
-        for idx, data in enumerate(loader):
+        for data in loader:
             x, y = data.sentence, data.label
             x = self.embedding(x)
             output = self.model(x)
@@ -138,9 +143,10 @@ class Trainer:
         return correct / total * 100, avg_loss, \
                self.meter.matthews(), self.meter.confusion()
 
-    def print_final_info(self):
-        self.writer.write("Early Stopping activated")
+    def print_epoch_info(self):
+        self.writer.write_new_line()
         self.early_stopping.print_info()
+        self.writer.write("Time Elasped: %s" % self.timer.get_current())
 
     def print_current_info(self, it, total, matthews, other_metrics):
         self.writer.write("%d/%d: Matthews %.5f, Accuracy: %.5f, Loss: %.9f" %
@@ -153,6 +159,7 @@ class Trainer:
         self.writer.write("GPU: %s" % self.args.gpu)
         self.writer.write("Experiment Name: %s" % self.args.experiment_name)
         self.writer.write("Save location: %s" % self.args.save_loc)
+        self.writer.write("Timestamp: %s" % self.timer.get_time_hhmmss())
         self.writer.write_new_line()
 
         self.writer.write("======== Data =======")

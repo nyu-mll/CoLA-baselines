@@ -25,6 +25,7 @@ class EarlyStopping:
             'val_loss': np.inf
         }
         self.best_monitored_epoch = 0
+        self.activated = False
 
     def __call__(self, value, other_metrics, epoch):
         """
@@ -48,9 +49,13 @@ class EarlyStopping:
 
         elif self.best_monitored_epoch + self.patience < epoch:
             self.checkpoint.restore(self.model)
+            self.activated = True
             return True
 
         return False
+
+    def is_activated(self):
+        return self.activated
 
     def init_from_checkpoint(self):
         # Maybe do something later if expected
