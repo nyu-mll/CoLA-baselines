@@ -3,7 +3,7 @@ import os
 import numpy as np
 import torch
 
-from utils import Checkpoint
+from acceptability.utils import Checkpoint
 
 
 class EarlyStopping:

@@ -1,4 +1,5 @@
 import os
+import sys
 import nltk
 import torch
 from torch.utils.data import Dataset
@@ -9,9 +10,9 @@ class AcceptabilityDataset(Dataset):
     def __init__(self, path, vocab_name):
         self.pairs = []
         self.sentences = []
-        if not os.exists(path):
+        if not os.path.exists(path):
             # TODO: log failure here
-            os.exit(1)
+            sys.exit(1)
 
         self.vocab = vocab.pretrained_aliases[vocab_name]
         with open(path, 'r') as f:

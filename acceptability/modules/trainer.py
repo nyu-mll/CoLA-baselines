@@ -4,14 +4,14 @@ import sys
 import torchtext
 
 from torch import nn
-from utils import get_parser
-from utils import get_model_instance
+from acceptability.utils import get_parser
+from acceptability.utils import get_model_instance
 from .dataset import get_datasets, get_iter
 from .meter import Meter
 from .early_stopping import EarlyStopping
 from .logger import Logger
-from utils import Checkpoint
-from utils import Timer
+from acceptability.utils import Checkpoint
+from acceptability.utils import Timer
 
 # TODO: Add __init__ for all modules and then __all__ in all of them
 # to faciliate easy loading

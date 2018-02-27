@@ -1,9 +1,9 @@
 import torch
 import os
 
-from ..utils.flags import get_parser
-from ..utils.general import get_model_instance
-from ..utils.checkpoint import Checkpoint
+from acceptability.utils.flags import get_parser
+from acceptability.utils.general import get_model_instance
+from acceptability.utils.checkpoint import Checkpoint
 
 
 class Generator:

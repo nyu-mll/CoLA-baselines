@@ -1,6 +1,6 @@
-from models import LSTMPoolingClassifier
-from models import LinearClassifierWithEncoder
-from models import CBOWClassifier
+from acceptability.models import LSTMPoolingClassifier
+from acceptability.models import LinearClassifierWithEncoder
+from acceptability.models import CBOWClassifier
 
 
 def get_model_instance(args):

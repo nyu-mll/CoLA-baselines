@@ -1,5 +1,6 @@
 __pycache__
 *.pyc
+*.egg*
 ./raw
 save
 .vscode
