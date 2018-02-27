@@ -1,3 +1,4 @@
+# pylint: disable=E0401
 from modules import Trainer
 
 if __name__ == '__main__':
