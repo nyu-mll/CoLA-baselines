@@ -50,20 +50,18 @@ def get_parser():
     parser.add_argument("-lr", "--learning_rate", type=float, default=.0005,
                         help="Learning rate")
 
+    # Encoder parameter
     parser.add_argument("--encoding_size", type=int, default=100,
                         help="Output size of encoder, input size of aj")
     parser.add_argument("--encoding_num_layers", type=int, default=1,
                         help="Number of layers in encoder network")
-    parser.add_argument("--encoder_path", type=str, default="",
+
+    ## Take care to pass this argument for loading a pretrained encoder
+    parser.add_argument("--encoder_path", type=str, default=None,
                         help="Location of encoder checkpoint")
     parser.add_argument("--encoding_type", type=str,
                         default="lstm_pooling_classifier",
                         help="Class of encoder")
-
-    parser.add_argument("--classifier_path", type=str, default="",
-                        help="Location of classifier checkpoint")
-    parser.add_argument("--classifier_type", type=str, default="aj_classifier",
-                        help="Class of classifier model")
 
     parser.add_argument("--experiment_name", type=str,
                         default="experiment_" + \

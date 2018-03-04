@@ -1,4 +1,7 @@
+import torch
+
 from torch import nn
+from ..utils import get_encoder_instance
 from .lstm_classifiers import LSTMPoolingClassifier
 
 class LinearClassifier(nn.Module):
@@ -25,18 +28,21 @@ class LinearClassifier(nn.Module):
 
 class LinearClassifierWithEncoder(nn.Module):
     def __init__(self, hidden_size, encoding_size,
-                 embedding_size, num_layers):
+                 embedding_size, num_layers,
+                 encoder_type="lstm_pooling_classifier",
+                 encoder_num_layers=1,
+                 encoder_path=None):
         super(LinearClassifierWithEncoder, self).__init__()
         self.hidden_size = hidden_size
         self.encoding_size = encoding_size
         self.embedding_size = embedding_size
         self.num_layers = num_layers
+        self.encoder_num_layers = encoder_num_layers
+
         self.model = LinearClassifier(self.hidden_size, self.encoding_size)
-        self.encoder = LSTMPoolingClassifier(
-            hidden_size=self.encoding_size,
-            embedding_size=self.embedding_size,
-            num_layers=self.num_layers
-        )
+        self.encoder = get_encoder_instance(encoder_type, encoding_size,
+                                            embedding_size, encoder_num_layers,
+                                            encoder_path)
 
     def forward(self, x):
         _, encoding = self.encoder(x)
