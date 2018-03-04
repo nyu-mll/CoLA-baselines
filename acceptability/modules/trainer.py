@@ -4,8 +4,7 @@ import sys
 import torchtext
 
 from torch import nn
-from acceptability.utils import get_parser
-from acceptability.utils import get_model_instance
+from acceptability.utils import get_parser, get_model_instance, get_experiment_name
 from .dataset import get_datasets, get_iter
 from .meter import Meter
 from .early_stopping import EarlyStopping
@@ -22,6 +21,8 @@ class Trainer:
         parser = get_parser()
         self.args = parser.parse_args()
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
+        if self.args.experiment_name is None:
+            self.args.experiment_name = get_experiment_name(self.args)
         self.checkpoint = Checkpoint(self.args)
         self.num_classes = 2
         self.meter = Meter(self.num_classes)

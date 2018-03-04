@@ -6,7 +6,7 @@ class Checkpoint:
     def __init__(self, args):
         self.args = args
         self.experiment_ckpt_path = os.path.join(self.args.save_loc,
-                                                 self.args.experiment_name)
+                                                 self.args.experiment_name + ".ckpt")
 
     def load_state_dict(self, model):
         # TODO: Add logging for checkpoint loaded in both

@@ -1,6 +1,7 @@
 import torch
 
 from torch import nn
+from datetime import datetime
 from acceptability.models import LSTMPoolingClassifier
 from acceptability.models import LinearClassifierWithEncoder
 from acceptability.models import CBOWClassifier
@@ -35,23 +36,20 @@ def get_model_instance(args):
     else:
         return None
 
-def get_encoder_instance(encoder_type, encoding_size, embedding_size,
-                         encoder_num_layers,
-                         encoder_path=None):
 
-    encoder = lambda x: x
-    if encoder_type == "lstm_pooling_classifier":
-        encoder = LSTMPoolingClassifier(
-            hidden_size=encoding_size,
-            embedding_size=embedding_size,
-            num_layers=encoder_num_layers
-        )
+def get_experiment_name(args):
+    # mapping:
+    # h -> hidden_size
+    # l -> layers
+    # lr -> learning rate
+    # e -> encoding_size
+    name = "experiment_%s_%s_h_%d_l_%d_lr_%.4f_e_%d" % (
+        args.model,
+        datetime.now().isoformat(),
+        args.hidden_size,
+        args.num_layers,
+        args.learning_rate,
+        args.encoding_size
+    )
 
-        if encoder_path is not None:
-            encoder.load_state_dict(torch.load(encoder_path))
-
-            # Since we have loaded freeze params
-            for p in encoder.parameters():
-                p.requires_grad = False
-
-    return encoder
+    return name

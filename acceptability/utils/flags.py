@@ -65,14 +65,13 @@ def get_parser():
 
     # Train dataset evaluate parameters
     # Can be useful when train dataset is small (like directly evaluating acceptability dataset)
-    parser.add_argument("--evaluate_train", action="store_true", type=bool, default=False,
+    parser.add_argument("--evaluate_train", action="store_true", default=False,
                         help="Whether to evaluate training set after some interval (default: False)")
     parser.add_argument("--train_evaluate_interval", type=int, default=10,
                         help="Interval after which train dataset needs to be evaluated.")
 
     parser.add_argument("--experiment_name", type=str,
-                        default="experiment_" + \
-                        datetime.now().replace(microsecond=0).isoformat(),
+                        default=None,
                         help="Name of the current experiment")
     parser.add_argument("-r", "--resume", type=str, default=None,
                         help="Checkpoint path for resuming")
