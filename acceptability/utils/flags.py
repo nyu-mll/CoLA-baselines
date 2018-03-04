@@ -53,7 +53,7 @@ def get_parser():
     # Encoder parameter
     parser.add_argument("--encoding_size", type=int, default=100,
                         help="Output size of encoder, input size of aj")
-    parser.add_argument("--encoding_num_layers", type=int, default=1,
+    parser.add_argument("--encoder_num_layers", type=int, default=1,
                         help="Number of layers in encoder network")
 
     ## Take care to pass this argument for loading a pretrained encoder

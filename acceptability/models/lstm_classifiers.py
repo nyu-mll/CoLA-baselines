@@ -33,7 +33,7 @@ class LSTMPoolingClassifier(nn.Module):
         self.num_layers = num_layers
         self.ih2h = nn.LSTM(embedding_size, hidden_size, num_layers=num_layers,
                             bidirectional=True, batch_first=True)
-        self.pool2o = nn.Linear(2*hidden_size, 1)
+        self.pool2o = nn.Linear(2 * hidden_size, 1)
         self.sigmoid = nn.Sigmoid()
         self.softmax = nn.Softmax()
 

@@ -23,7 +23,7 @@ def get_model_instance(args):
             embedding_size=args.embedding_size,
             encoding_size=args.encoding_size,
             num_layers=args.num_layers,
-            encoder_type=args.encoder_type,
+            encoder_type=args.encoding_type,
             encoder_num_layers=args.encoder_num_layers,
             encoder_path=args.encoder_path
         )
