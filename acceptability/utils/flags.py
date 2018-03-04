@@ -27,7 +27,7 @@ def get_parser():
                         help="Padding Crop length")
 
     # Chunk parameters
-    parser.add_argument("--stages_per_epoch", type=int, default=100,
+    parser.add_argument("--stages_per_epoch", type=int, default=2,
                         help="Eval/Stats steps per epoch")
     parser.add_argument("--prints_per_stage", type=int, default=1,
                         help="How many times print stats per epoch")
@@ -62,6 +62,13 @@ def get_parser():
     parser.add_argument("--encoding_type", type=str,
                         default="lstm_pooling_classifier",
                         help="Class of encoder")
+
+    # Train dataset evaluate parameters
+    # Can be useful when train dataset is small (like directly evaluating acceptability dataset)
+    parser.add_argument("--evaluate_train", action="store_true", type=bool, default=False,
+                        help="Whether to evaluate training set after some interval (default: False)")
+    parser.add_argument("--train_evaluate_interval", type=int, default=10,
+                        help="Interval after which train dataset needs to be evaluated.")
 
     parser.add_argument("--experiment_name", type=str,
                         default="experiment_" + \

@@ -82,9 +82,7 @@ class Trainer:
 
                 self.optimizer.step()
 
-                if idx % self.args.stages_per_epoch == 0:
-                    # TODO: Validate here
-                    # TODO: Add early stopping based on matthews here
+                if idx % (len(self.train_loader) / self.args.stages_per_epoch) == 0:
                     acc, loss, matthews, confusion = self.validate(self.val_loader)
                     other_metrics = {
                         'acc': acc,
@@ -99,11 +97,21 @@ class Trainer:
                         self.print_current_info(idx, len(self.train_loader),
                                                 matthews, other_metrics)
 
-            if i % 10 == 0:
-                # At the some interval validate train loader
-                self.validate(self.train_loader)
 
             self.print_epoch_info()
+
+            if self.args.evaluate_train and i % self.args.train_evaluate_interval == 0:
+                # At the some interval validate train loader
+                # TODO: Print this information
+                self.writer.write("Evaluating training set")
+                acc, loss, matthews, confusion = self.validate(self.train_loader)
+                other_metrics = {
+                    'acc': acc,
+                    'val_loss': loss,
+                    'confusion_matrix': confusion
+                }
+                self.writer.write("Epoch:")
+                self.print_current_info(i, self.args.epochs, matthews, other_metrics)
 
             if self.early_stopping.is_activated():
                 break
