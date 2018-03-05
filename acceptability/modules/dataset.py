@@ -43,9 +43,9 @@ def get_datasets(args):
     sentence = data.Field(
         sequential=True,
         fix_length=args.crop_pad_length,
-        tokenize=tokenize,
+        tokenize=tokenize if args.preprocess_data else lambda x: x,
         tensor_type=torch.cuda.LongTensor if args.gpu else torch.LongTensor,
-        lower=True,
+        lower=True if args.preprocess_data else False,
         batch_first=True
     )
 
