@@ -26,7 +26,7 @@ class Trainer:
         self.checkpoint = Checkpoint(self.args)
         self.num_classes = 2
         self.meter = Meter(self.num_classes)
-        self.writer = Logger()
+        self.writer = Logger(self.args)
         self.timer = Timer()
         self.load_datasets()
 
@@ -168,6 +168,7 @@ class Trainer:
         self.writer.write("GPU: %s" % self.args.gpu)
         self.writer.write("Experiment Name: %s" % self.args.experiment_name)
         self.writer.write("Save location: %s" % self.args.save_loc)
+        self.writer.write("Logs dir: %s" % self.args.logs_dir)
         self.writer.write("Timestamp: %s" % self.timer.get_time_hhmmss())
         self.writer.write_new_line()
 

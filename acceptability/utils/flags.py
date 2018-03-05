@@ -10,8 +10,12 @@ def get_parser():
     parser.add_argument("-e", "--embedding", type=str, default="glove.6B.300d",
                         help="Embedding type to be used, select from" +
                         "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
-    parser.add_argument("-l", "--logs", type=str, default="./logs",
+
+    parser.add_argument("-l", "--logs_dir", type=str, default="./logs",
                         help="Log directory")
+    parser.add_argument("--should_not_log", action='store_true',
+                        help="Specify when trainer should not log to file")
+
     parser.add_argument("-dt", "--data_type", type=str,
                         default="discriminator",
                         help="Data type")
