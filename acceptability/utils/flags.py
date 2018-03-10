@@ -7,11 +7,17 @@ def get_parser():
     parser.add_argument("-d", "--data_dir", type=str, default="./data",
                         help="Directory containing train.txt, test.txt" +
                         "and valid.txt")
-    parser.add_argument("--preprocess_data", action="store_true", default=False,
-                        help="Whether to preprocess data using nltk and lowercase?")
     parser.add_argument("-e", "--embedding", type=str, default="glove.6B.300d",
                         help="Embedding type to be used, select from" +
                         "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
+
+    # Preprocess arguments
+    parser.add_argument("--preprocess_data", action="store_true", default=True,
+                        help="Whether to preprocess data?")
+    parser.add_argument("--should_not_lowercase", action="store_false", default=False,
+                        help="Should lowercase data? Default: true")
+    parser.add_argument("--preprocess_tokenizer", default='space', type=str,
+                        help="Type of tokenizer to use (space|nltk)")
 
     parser.add_argument("-l", "--logs_dir", type=str, default="./logs",
                         help="Log directory")

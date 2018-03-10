@@ -30,7 +30,7 @@ class AcceptabilityDataset(Dataset):
         return self.pairs[index]
 
 
-def tokenize(sentence):
+def nltk_tokenize(sentence):
     return nltk.word_tokenize(sentence)
 
 def preprocess_label(label):
@@ -40,12 +40,19 @@ def preprocess_label(label):
         return '0'
 
 def get_datasets(args):
+    tokenizer = lambda x: x
+    if args.preprocess_data:
+        if args.preprocess_tokenizer == 'nltk':
+            tokenizer = nltk_tokenize
+        elif args.preprocess_tokenizer == 'space':
+            tokenizer = lambda x: x.split(' ')
+
     sentence = data.Field(
         sequential=True,
         fix_length=args.crop_pad_length,
-        tokenize=tokenize if args.preprocess_data else lambda x: x,
+        tokenize=tokenizer,
         tensor_type=torch.cuda.LongTensor if args.gpu else torch.LongTensor,
-        lower=True if args.preprocess_data else False,
+        lower=not args.should_not_lowercase,
         batch_first=True
     )
 

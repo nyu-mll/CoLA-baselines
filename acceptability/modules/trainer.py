@@ -27,6 +27,7 @@ class Trainer:
         self.num_classes = 2
         self.meter = Meter(self.num_classes)
         self.writer = Logger(self.args)
+        self.writer.write(self.args)
         self.timer = Timer()
         self.load_datasets()
 
