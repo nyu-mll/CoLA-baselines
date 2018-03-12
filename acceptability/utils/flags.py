@@ -88,3 +88,30 @@ def get_parser():
     parser.add_argument("-r", "--resume", type=str, default=None,
                         help="Checkpoint path for resuming")
     return parser
+
+
+def get_lm_parser():
+    parser = argparse.ArgumentParser("Acceptability Judgments Generator")
+    parser.add_argument("-f", "--file", type=str,
+                        help="File to be used for language modelling")
+
+    parser.add_argument("-m", "--model", type=str, default="lstm",
+                        help="Model to be used for LM")
+    parser.add_argument("-l", "--log_folder", type=str, default="./logs",
+                        help="Folder for storing logs")
+    parser.add_argument("-e", "--embedding_size", type=int, default=600,
+                        help="Size of the embedding dimension")
+    parser.add_argument("-h", "--hidden_size", type=int, default=600,
+                        help="Size of the hidden dimension")
+    parser.add_argument("-nl", "--num_layers", type=int, default=1,
+                        help="Size of the hidden dimension")
+    parser.add_argument("-b", "--batch_size", type=int, default=32,
+                        help="Batch size")
+    parser.add_argument("-e", "--num_epochs", type=int, default=32,
+                        help="Number of epochs")
+    parser.add_argument("-d", "--dropout", type=float, default=0.5,
+                        help="Dropout")
+    parser.add_argument("-lr", "--learning_rate", type=float, default=0.001,
+                        help="Learning rate")
+
+    return parser
