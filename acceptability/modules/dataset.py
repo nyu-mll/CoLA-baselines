@@ -89,13 +89,24 @@ def get_iter(args, dataset):
     )
 
 class LMDataset(Dataset):
+    UNK_TOKEN = '<unk>'
+    SOS_TOKEN = '<s>'
+    EOS_TOKEN = '</s>'
+
+    UNK_INDEX = 0
+    SOS_INDEX = 1
+    EOS_INDEX = 2
+
     def __init__(self, dataset_path, vocab_path):
         super(LMDataset, self).__init__()
         self.sentences = []
         if not os.path.exists(dataset_path):
             sys.exit(1)
 
-        self.itos = ['<unk>','<s>', '</s>']
+        self.itos = [''] * 3
+        self.itos[self.UNK_INDEX] = self.UNK_TOKEN
+        self.itos[self.SOS_INDEX] = self.SOS_TOKEN
+        self.itos[self.EOS_INDEX] = self.EOS_TOKEN
 
         with open(dataset_path, 'r') as f:
             for line in f:
@@ -105,7 +116,7 @@ class LMDataset(Dataset):
                     self.sentences.append(line[3].strip())
 
         # Return unk index by default
-        self.stoi = defaultdict(0)
+        self.stoi = defaultdict(self.UNK_INDEX)
         index = 3
         with open(vocab_path, 'r') as f:
             for line in f:
@@ -113,7 +124,11 @@ class LMDataset(Dataset):
                 self.stoi[line.strip()] = index
                 index += 1
 
+    def get_vocab_size(self):
+        return len(self.itos)
 
+    def preprocess(self, x):
+        return ' '.join([self.SOS_TOKEN, x, self.EOS_TOKEN])
 
     def __len__(self):
         return len(self.sentences)
