@@ -4,6 +4,7 @@ import nltk
 import torch
 from torch.utils.data import Dataset
 from torchtext import vocab, data
+from collections import defaultdict
 
 
 class AcceptabilityDataset(Dataset):
@@ -86,3 +87,40 @@ def get_iter(args, dataset):
         device=0 if args.gpu else -1,
         repeat=False
     )
+
+class LMDataset(Dataset):
+    def __init__(self, dataset_path, vocab_path):
+        super(LMDataset, self).__init__()
+        self.sentences = []
+        if not os.path.exists(dataset_path):
+            sys.exit(1)
+
+        self.itos = ['<unk>','<s>', '</s>']
+
+        with open(dataset_path, 'r') as f:
+            for line in f:
+                line = line.split("\t")
+
+                if len(line) >= 4:
+                    self.sentences.append(line[3].strip())
+
+        # Return unk index by default
+        self.stoi = defaultdict(0)
+        index = 3
+        with open(vocab_path, 'r') as f:
+            for line in f:
+                self.itos.append(line.strip())
+                self.stoi[line.strip()] = index
+                index += 1
+
+
+
+    def __len__(self):
+        return len(self.sentences)
+
+    def __getitem__(self, index):
+        sentence = self.sentences[index]
+        indices = [self.stoi[word] for word in sentence.split(' ')]
+
+        return torch.LongTensor(indices)
+
