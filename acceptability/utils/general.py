@@ -5,6 +5,7 @@ from datetime import datetime
 from acceptability.models import LSTMPoolingClassifier
 from acceptability.models import LinearClassifierWithEncoder
 from acceptability.models import CBOWClassifier
+from acceptability.models import LSTMLanguageModel
 
 
 def get_model_instance(args):
@@ -35,6 +36,36 @@ def get_model_instance(args):
         )
     else:
         return None
+
+def get_lm_model_instance(args):
+    if args.model == "lstm":
+        return LSTMLanguageModel(
+            args.embedding_size,
+            args.seq_length,
+            args.hidden_dim,
+            args.batch_size,
+            args.vocab_size,
+            args.num_layers,
+            args.dropout
+        )
+
+def get_lm_experiment_name(args):
+    # mapping:
+    # h -> hidden_size
+    # l -> layers
+    # lr -> learning rate
+    # e -> encoding_size
+    name = "experiment_%s_%s_s_%d_h_%d_l_%d_lr_%.4f_d_%d" % (
+        args.model,
+        datetime.now().isoformat(),
+        args.seq_length,
+        args.hidden_size,
+        args.num_layers,
+        args.learning_rate,
+        args.dropout
+    )
+
+    return name
 
 
 def get_experiment_name(args):
