@@ -1,8 +1,10 @@
 import torch
 import os
+import sys
+import numpy as np
 
 from torch.autograd import Variable
-from acceptability.utils import get_lm_parser, get_model_instance, get_lm_experiment_name
+from acceptability.utils import get_lm_parser, get_lm_model_instance, get_lm_experiment_name
 from acceptability.utils import Checkpoint, Timer
 from .dataset import LMDataset
 from .early_stopping import EarlyStopping
@@ -13,7 +15,7 @@ class LMTrainer:
     def __init__(self):
         parser = get_lm_parser()
         self.args = parser.parse_args()
-        self.train_data = LMDataset(self.args.file, self.args.vocab_path,
+        self.train_data = LMDataset(self.args.file, self.args.vocab_file,
                                     self.args.seq_length)
         self.args.vocab_size = self.train_data.get_vocab_size()
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
@@ -31,7 +33,7 @@ class LMTrainer:
         self.timer = Timer()
 
     def load(self):
-        self.model = get_model_instance(self.args)
+        self.model = get_lm_model_instance(self.args)
 
         if self.model is None:
             # TODO: Add logger statement for valid model here
@@ -59,14 +61,15 @@ class LMTrainer:
         vocab_size = self.args.vocab_size
         hidden = self.model.init_hidden()
         for epoch in range(1, self.args.epochs + 1):
-            for idx, data, target in enumerate(self.train_loader):
-
+            for idx, vals in enumerate(self.train_loader):
+                data, target = vals
+                data, target = Variable(data), Variable(target)
                 hidden = self.detach(hidden)
                 self.model.zero_grad()
 
                 output, hidden = self.model(data, hidden)
 
-                loss = self.criterion(output.view(-1, vocab_size), target)
+                loss = self.criterion(output, target.view(-1))
                 loss.backward()
 
                 torch.nn.utils.clip_grad_norm(self.model.parameters(),
@@ -78,5 +81,5 @@ class LMTrainer:
                 if step % 100 == 0:
                     total_loss = 0
                     print('Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
-                            (epoch+1, self.args.num_epochs, step, len(self.train_loader),
-                             loss.data[0], torch.exp(loss.data[0])))
+                            (epoch+1, self.args.epochs, step, len(self.train_loader),
+                             loss.data[0], np.exp(loss.data[0])))

@@ -110,8 +110,13 @@ class LMDataset(Dataset):
         self.itos[self.EOS_INDEX] = self.EOS_TOKEN
 
         # Return unk index by default
-        self.stoi = defaultdict(self.UNK_INDEX)
+        self.stoi = defaultdict(lambda: self.UNK_INDEX)
+        self.stoi[self.SOS_TOKEN] = self.SOS_INDEX
+        self.stoi[self.EOS_TOKEN] = self.EOS_INDEX
+        self.stoi[self.UNK_TOKEN] = self.UNK_INDEX
+
         index = 3
+
         with open(vocab_path, 'r') as f:
             for line in f:
                 self.itos.append(line.strip())
@@ -123,13 +128,13 @@ class LMDataset(Dataset):
         with open(dataset_path, 'r') as f:
             for line in f:
                 line = line.split("\t")
-
                 if len(line) >= 4:
                     words = self.preprocess(line[3].split(' '))
                     num_tokens += len(words)
-
+        print(num_tokens)
         final_size = (num_tokens // self.seq_length) * self.seq_length + 1
         self.tokens = torch.LongTensor(final_size)
+        print(final_size)
 
         num_tokens = 0
         with open(dataset_path, 'r') as f:
@@ -154,7 +159,7 @@ class LMDataset(Dataset):
         return len(self.itos)
 
     def preprocess(self, x):
-        return ' '.join([self.SOS_TOKEN, x, self.EOS_TOKEN])
+        return ' '.join([self.SOS_TOKEN] + x + [self.EOS_TOKEN])
 
     def __len__(self):
         return self.tokens.size(0) // self.seq_length

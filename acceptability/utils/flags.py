@@ -100,19 +100,24 @@ def get_lm_parser():
 
     parser.add_argument("-m", "--model", type=str, default="lstm",
                         help="Model to be used for LM")
-    parser.add_argument("-l", "--log_folder", type=str, default="./logs",
+    parser.add_argument("-l", "--logs_dir", type=str, default="./logs",
                         help="Folder for storing logs")
-    parser.add_argument("-e", "--embedding_size", type=int, default=600,
+    parser.add_argument("--should_not_log", action='store_true',
+                        help="Specify when trainer should not log to file")
+
+    parser.add_argument("-en", "--experiment_name", type=str, default=None,
+                        help="Name of the experiment")
+    parser.add_argument("-es", "--embedding_size", type=int, default=300,
                         help="Size of the embedding dimension")
     parser.add_argument("-sl", "--seq_length", type=int, default=25,
                         help="Sequence length")
-    parser.add_argument("-h", "--hidden_size", type=int, default=600,
+    parser.add_argument("-hs", "--hidden_size", type=int, default=600,
                         help="Size of the hidden dimension")
     parser.add_argument("-nl", "--num_layers", type=int, default=1,
                         help="Size of the hidden dimension")
     parser.add_argument("-b", "--batch_size", type=int, default=32,
                         help="Batch size")
-    parser.add_argument("-e", "--num_epochs", type=int, default=32,
+    parser.add_argument("-e", "--epochs", type=int, default=10,
                         help="Number of epochs")
     parser.add_argument("-d", "--dropout", type=float, default=0.5,
                         help="Dropout")

@@ -42,7 +42,7 @@ def get_lm_model_instance(args):
         return LSTMLanguageModel(
             args.embedding_size,
             args.seq_length,
-            args.hidden_dim,
+            args.hidden_size,
             args.batch_size,
             args.vocab_size,
             args.num_layers,
