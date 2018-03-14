@@ -1,6 +1,7 @@
 from __future__ import print_function
 from datetime import datetime
 import argparse
+import torch
 
 def get_parser():
     parser = argparse.ArgumentParser(description="Acceptability Judgments")
@@ -94,6 +95,8 @@ def get_lm_parser():
     parser = argparse.ArgumentParser("Acceptability Judgments Generator")
     parser.add_argument("-f", "--file", type=str,
                         help="File to be used for language modelling")
+    parser.add_argument("-v", "--vocab_file", type=str,
+                        help="Vocabulary file")
 
     parser.add_argument("-m", "--model", type=str, default="lstm",
                         help="Model to be used for LM")
@@ -101,6 +104,8 @@ def get_lm_parser():
                         help="Folder for storing logs")
     parser.add_argument("-e", "--embedding_size", type=int, default=600,
                         help="Size of the embedding dimension")
+    parser.add_argument("-sl", "--seq_length", type=int, default=25,
+                        help="Sequence length")
     parser.add_argument("-h", "--hidden_size", type=int, default=600,
                         help="Size of the hidden dimension")
     parser.add_argument("-nl", "--num_layers", type=int, default=1,
@@ -111,7 +116,14 @@ def get_lm_parser():
                         help="Number of epochs")
     parser.add_argument("-d", "--dropout", type=float, default=0.5,
                         help="Dropout")
+    parser.add_argument("-g", "--gpu", action="store_true", default=torch.cuda.is_available(),
+                        help="GPU")
     parser.add_argument("-lr", "--learning_rate", type=float, default=0.001,
                         help="Learning rate")
-
+    parser.add_argument("-s", "--save_loc", type=str, default='./save',
+                        help="Save folder")
+    parser.add_argument("-r", "--resume", type=str, default=None,
+                        help="Checkpoint for resuming")
+    parser.add_argument('--clip', type=float, default=0.5,
+                        help='gradient clipping')
     return parser
