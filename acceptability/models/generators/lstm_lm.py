@@ -5,10 +5,11 @@ from torch.autograd import Variable
 
 
 class LSTMLanguageModel(nn.Module):
-    def __init__(self, emb_dim, num_steps, batch_size, vocab_size,
+    def __init__(self, emb_dim, seq_length, hidden_dim, batch_size, vocab_size,
                  num_layers, dropout=0.5, bidirectional=False):
         self.emb_dim = emb_dim
-        self.num_steps = num_steps
+        self.seq_length = seq_length
+        self.hidden_dim = hidden_dim
         self.batch_size = batch_size
         self.vocab_size = vocab_size
         self.num_layers = num_layers
@@ -35,3 +36,8 @@ class LSTMLanguageModel(nn.Module):
         out = self.dropout(out)
         logits = self.fc(out.view(-1, self.emb_dim))
         return logits.view(self.num_steps, self.batch_size, self.vocab_size), hidden
+
+    def init_hidden(self, bsz):
+        weight = next(self.parameters()).data
+        return (Variable(weight.new(self.num_layers, self.batch_size, self.hidden_dim).zero_()),
+                Variable(weight.new(self.num_layers, self.batch_size, self.hidden_dim).zero_()))
