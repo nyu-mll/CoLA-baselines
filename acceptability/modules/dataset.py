@@ -101,6 +101,7 @@ class LMDataset(Dataset):
     def __init__(self, dataset_path, vocab_path, seq_length):
         super(LMDataset, self).__init__()
         if not os.path.exists(dataset_path):
+            print("Dataset not found at " + dataset_path)
             sys.exit(1)
 
         self.seq_length = seq_length

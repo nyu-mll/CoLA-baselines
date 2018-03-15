@@ -48,7 +48,7 @@ class LMTrainer:
         self.model = get_lm_model_instance(self.args)
 
         if self.model is None:
-            # TODO: Add logger statement for valid model here
+            self.writer.write("Please pass a valid model name")
             sys.exit(1)
 
         self.checkpoint.load_state_dict(self.model)
