@@ -64,6 +64,8 @@ class Trainer:
 
     def train(self):
         self.print_start_info()
+        log_interval = len(self.train_loader) // self.args.stages_per_epoch
+
         for i in range(1, self.args.epochs + 1):
             self.writer.write("========= Epoch %d =========" % i)
             self.train_loader.init_epoch()
@@ -84,7 +86,7 @@ class Trainer:
 
                 self.optimizer.step()
 
-                if idx % (len(self.train_loader) / self.args.stages_per_epoch) == 0:
+                if idx % log_interval == 0 and idx > 0:
                     acc, loss, matthews, confusion = self.validate(self.val_loader)
                     other_metrics = {
                         'acc': acc,
@@ -155,7 +157,7 @@ class Trainer:
 
     def print_epoch_info(self):
         self.writer.write_new_line()
-        self.early_stopping.print_info()
+        self.writer.write(self.early_stopping.get_info())
         self.writer.write("Time Elasped: %s" % self.timer.get_current())
 
     def print_current_info(self, it, total, matthews, other_metrics):
