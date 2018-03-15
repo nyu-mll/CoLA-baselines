@@ -16,11 +16,13 @@ class LMTrainer:
     def __init__(self):
         parser = get_lm_parser()
         self.args = parser.parse_args()
+        print("Loading datasets")
         self.train_data = LMDataset(os.path.join(self.args.data, 'train.tsv'), self.args.vocab_file,
                                     self.args.seq_length)
+        print("Train dataset loaded")
         self.val_data = LMDataset(os.path.join(self.args.data, 'valid.tsv'), self.args.vocab_file,
                                   self.args.seq_length)
-
+        print("Val dataset loaded")
 
         self.args.vocab_size = self.train_data.get_vocab_size()
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
@@ -37,6 +39,8 @@ class LMTrainer:
             shuffle=False
         )
 
+        print("Created dataloaders")
+
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)
         self.checkpoint = Checkpoint(self.args)
@@ -45,6 +49,7 @@ class LMTrainer:
         self.timer = Timer()
 
     def load(self):
+        print("Creating model instance")
         self.model = get_lm_model_instance(self.args)
 
         if self.model is None:
@@ -68,6 +73,7 @@ class LMTrainer:
         return [state.detach() for state in states]
 
     def train(self):
+        print("Starting training")
         self.model.train()
         self.print_start_info()
         total_loss = 0
