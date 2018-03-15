@@ -61,9 +61,16 @@ class EarlyStopping:
         # Maybe do something later if expected
         return
 
-    def print_info(self):
-        print("Best Matthews: %.5f, Best Accuracy: %.5f, Best Loss: %.9f at epoch %d"
+    def get_info(self):
+        return "Best Matthews: %.5f, Best Accuracy: %.5f, Best Loss: %.9f at epoch %d" \
               % (self.best_monitored_metric,
                  self.other_metrics['acc'],
                  self.other_metrics['val_loss'],
-                 self.best_monitored_epoch))
+                 self.best_monitored_epoch)
+
+    def get_info_lm(self):
+        return "Best Preplexity: %5f, Best Loss %.5f at epoch %d" \
+                % (self.best_monitored_metric,
+                   self.other_metrics['val_loss'],
+                   self.best_monitored_epoch)
+

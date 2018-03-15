@@ -131,10 +131,8 @@ class LMDataset(Dataset):
                 if len(line) >= 4:
                     words = self.preprocess(line[3].split(' '))
                     num_tokens += len(words)
-        print(num_tokens)
         final_size = (num_tokens // self.seq_length) * self.seq_length + 1
         self.tokens = torch.LongTensor(final_size)
-        print(final_size)
 
         num_tokens = 0
         with open(dataset_path, 'r') as f:

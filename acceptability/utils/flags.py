@@ -93,8 +93,8 @@ def get_parser():
 
 def get_lm_parser():
     parser = argparse.ArgumentParser("Acceptability Judgments Generator")
-    parser.add_argument("-f", "--file", type=str,
-                        help="File to be used for language modelling")
+    parser.add_argument("-d", "--data", type=str,
+                        help="Directory containing train.tsv and valid.tsv")
     parser.add_argument("-v", "--vocab_file", type=str,
                         help="Vocabulary file")
 
@@ -104,6 +104,11 @@ def get_lm_parser():
                         help="Folder for storing logs")
     parser.add_argument("--should_not_log", action='store_true',
                         help="Specify when trainer should not log to file")
+    parser.add_argument("-se", "--stages_per_epoch", type=int, default=2,
+                        help="Eval/Stats steps per epoch")
+
+    parser.add_argument("-p", "--patience", type=int, default=20,
+                        help="Early stopping patience")
 
     parser.add_argument("-en", "--experiment_name", type=str, default=None,
                         help="Name of the experiment")
@@ -119,7 +124,7 @@ def get_lm_parser():
                         help="Batch size")
     parser.add_argument("-e", "--epochs", type=int, default=10,
                         help="Number of epochs")
-    parser.add_argument("-d", "--dropout", type=float, default=0.5,
+    parser.add_argument("-do", "--dropout", type=float, default=0.5,
                         help="Dropout")
     parser.add_argument("-g", "--gpu", action="store_true", default=torch.cuda.is_available(),
                         help="GPU")

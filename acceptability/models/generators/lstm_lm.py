@@ -38,7 +38,9 @@ class LSTMLanguageModel(nn.Module):
         logits = self.fc(out.view(-1, self.hidden_dim))
         return logits, hidden
 
-    def init_hidden(self):
+    def init_hidden(self, bsz=None):
+        if not bsz:
+            bsz = self.batch_size
         weight = next(self.parameters()).data
-        return (Variable(weight.new(self.num_layers, self.batch_size, self.hidden_dim).zero_()),
-                Variable(weight.new(self.num_layers, self.batch_size, self.hidden_dim).zero_()))
+        return (Variable(weight.new(self.num_layers, bsz, self.hidden_dim).zero_()),
+                Variable(weight.new(self.num_layers, bsz, self.hidden_dim).zero_()))
