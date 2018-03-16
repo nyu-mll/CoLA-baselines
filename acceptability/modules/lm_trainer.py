@@ -80,7 +80,6 @@ class LMTrainer:
         hidden = self.model.init_hidden()
         log_interval = len(self.train_loader) // self.args.stages_per_epoch
 
-        print(log_interval)
         for epoch in range(1, self.args.epochs + 1):
             for idx, vals in enumerate(self.train_loader):
                 data, target = vals

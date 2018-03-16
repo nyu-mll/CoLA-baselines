@@ -122,6 +122,8 @@ def get_lm_parser():
                         help="Size of the hidden dimension")
     parser.add_argument("-b", "--batch_size", type=int, default=32,
                         help="Batch size")
+    parser.add_argument("-bs", "--buffer_size", type=int, default=1,
+                        help="Buffer size for logger")
     parser.add_argument("-e", "--epochs", type=int, default=10,
                         help="Number of epochs")
     parser.add_argument("-do", "--dropout", type=float, default=0.5,
