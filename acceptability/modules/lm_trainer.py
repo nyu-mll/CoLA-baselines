@@ -90,7 +90,9 @@ class LMTrainer:
                     target = target.cuda(async=True)
 
                 if data.size(0) != self.args.batch_size:
-                    hidden = self.model.init_hidden(data.size(0))
+                    # ignoring some data here so that we don't reinstanstiate
+                    # hidden
+                    continue
 
                 hidden = self.detach(hidden)
                 self.model.zero_grad()
