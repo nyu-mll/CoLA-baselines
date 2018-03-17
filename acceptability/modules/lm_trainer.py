@@ -103,6 +103,7 @@ class LMTrainer:
 
                 torch.nn.utils.clip_grad_norm(self.model.parameters(),
                                               self.args.clip)
+                self.optimizer.step()
 
                 total_loss += loss.data
 
@@ -139,7 +140,6 @@ class LMTrainer:
         for batch in self.val_loader:
             data, target = batch
             data, target = Variable(data, volatile=True), Variable(target, volatile=True)
-
             if self.args.gpu:
                 data = data.cuda()
                 target = target.cuda()

@@ -168,5 +168,4 @@ class LMDataset(Dataset):
 
         data = self.tokens[index * self.seq_length: end]
         target = self.tokens[index * self.seq_length + 1: end + 1]
-
         return data, target
