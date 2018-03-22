@@ -13,10 +13,10 @@ def get_parser():
                         "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
 
     # Preprocess arguments
-    parser.add_argument("--preprocess_data", action="store_true", default=True,
-                        help="Whether to preprocess data?")
+    parser.add_argument("--should_not_preprocess_data", action="store_false", default=False,
+                        help="Whether to preprocess data? Default: true (Will preprocess)")
     parser.add_argument("--should_not_lowercase", action="store_false", default=False,
-                        help="Should lowercase data? Default: true")
+                        help="Should lowercase data? Default: true (Will lowercase)")
     parser.add_argument("--preprocess_tokenizer", default='space', type=str,
                         help="Type of tokenizer to use (space|nltk)")
 
@@ -34,17 +34,19 @@ def get_parser():
                         help="Type of the model you want to use")
     parser.add_argument("-s", "--save_loc", type=str, default="./save",
                         help="Save point for models")
-    parser.add_argument("-g", "--gpu", type=bool, default=False,
+    parser.add_argument("-g", "--gpu", action="store_false", default=False,
                         help="Whether use GPU or not")
-    parser.add_argument("-p", "--crop_pad_length", type=int, default=30,
+    parser.add_argument("-cp", "--crop_pad_length", type=int, default=30,
                         help="Padding Crop length")
 
+    parser.add_argument("-bs", "--buffer_size", type=int, default=1,
+                        help="Buffer size for logger")
     # Chunk parameters
-    parser.add_argument("--stages_per_epoch", type=int, default=2,
+    parser.add_argument("-se", "--stages_per_epoch", type=int, default=2,
                         help="Eval/Stats steps per epoch")
     parser.add_argument("--prints_per_stage", type=int, default=1,
                         help="How many times print stats per epoch")
-    parser.add_argument("--patience", type=int, default=20,
+    parser.add_argument("-p", "--patience", type=int, default=20,
                         help="Early stopping patience")
     parser.add_argument("-n", "--epochs", type=int, default=10,
                         help="Number of epochs")
@@ -56,16 +58,16 @@ def get_parser():
                         help="Use max pooling for CBOW")
 
     # Tuneable parameters
-    parser.add_argument("--hidden_size", type=int, default=300,
+    parser.add_argument("-hs", "--hidden_size", type=int, default=300,
                         help="Hidden dimension for LSTM")
-    parser.add_argument("--num_layers", type=int, default=1,
+    parser.add_argument("-nl", "--num_layers", type=int, default=1,
                         help="Number of layers for LSTM")
     parser.add_argument("-lr", "--learning_rate", type=float, default=.0005,
                         help="Learning rate")
 
     # Encoder parameter
     parser.add_argument("--encoding_size", type=int, default=100,
-                        help="Output size of encoder, input size of aj")
+                        help="Output size of encoder, input size of linear")
     parser.add_argument("--encoder_num_layers", type=int, default=1,
                         help="Number of layers in encoder network")
 
