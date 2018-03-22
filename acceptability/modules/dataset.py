@@ -42,7 +42,7 @@ def preprocess_label(label):
 
 def get_datasets(args):
     tokenizer = lambda x: x
-    if args.preprocess_data:
+    if not args.should_not_preprocess_data:
         if args.preprocess_tokenizer == 'nltk':
             tokenizer = nltk_tokenize
         elif args.preprocess_tokenizer == 'space':
