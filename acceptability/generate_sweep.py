@@ -84,7 +84,7 @@ def generate_lm_sweeps(args):
         params_line, output_name = get_sampled_params(current_space, index)
 
         lines[2] += str(index)
-        lines[3] += output_name
+        lines[7] += output_name
 
         params_line = run_line + ' ' + params_line
 
