@@ -89,7 +89,7 @@ def get_iter(args, dataset):
     )
 
 #TODO: Separate vocab into a class
-class LMDataset(Dataset):
+class LMDataset():
     UNK_TOKEN = '<unk>'
     SOS_TOKEN = '<s>'
     EOS_TOKEN = '</s>'
@@ -99,7 +99,6 @@ class LMDataset(Dataset):
     EOS_INDEX = 2
 
     def __init__(self, dataset_path, vocab_path, seq_length):
-        super(LMDataset, self).__init__()
         if not os.path.exists(dataset_path):
             print("Dataset not found at " + dataset_path)
             sys.exit(1)
@@ -132,8 +131,8 @@ class LMDataset(Dataset):
                 if len(line) >= 4:
                     words = self.preprocess(line[3].split(' '))
                     num_tokens += len(words)
-        final_size = (num_tokens // self.seq_length) * self.seq_length + 1
-        self.tokens = torch.LongTensor(final_size)
+
+        self.tokens = torch.LongTensor(num_tokens)
 
         num_tokens = 0
         with open(dataset_path, 'r') as f:
@@ -145,27 +144,13 @@ class LMDataset(Dataset):
                     for word in words:
                         self.tokens[num_tokens] = self.stoi[word]
                         num_tokens += 1
-                        if num_tokens == final_size:
-                            break
 
-                if num_tokens == final_size:
-                    break
-
-        if num_tokens < final_size:
-            self.tokens[num_tokens + 1] = self.itos[self.EOS_INDEX]
 
     def get_vocab_size(self):
         return len(self.itos)
 
     def preprocess(self, x):
-        return ' '.join([self.SOS_TOKEN] + x + [self.EOS_TOKEN])
+        return [self.SOS_TOKEN] + x + [self.EOS_TOKEN]
 
-    def __len__(self):
-        return self.tokens.size(0) // self.seq_length
-
-    def __getitem__(self, index):
-        end = (index + 1) * self.seq_length
-
-        data = self.tokens[index * self.seq_length: end]
-        target = self.tokens[index * self.seq_length + 1: end + 1]
-        return data, target
+    def get_tokens(self):
+        return self.tokens

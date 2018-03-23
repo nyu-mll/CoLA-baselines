@@ -1,17 +1,18 @@
 import torch
 import os
 import sys
+import math
 import numpy as np
 
 from torch.autograd import Variable
 from acceptability.utils import get_lm_parser, get_lm_model_instance, get_lm_experiment_name
 from acceptability.utils import Checkpoint, Timer
+from acceptability.utils import batchify, get_batch, repackage_hidden
 from .dataset import LMDataset
 from .early_stopping import EarlyStopping
 from .logger import Logger
 
 
-# TODO: Add GPU support
 class LMTrainer:
     def __init__(self):
         parser = get_lm_parser()
@@ -20,26 +21,27 @@ class LMTrainer:
         self.train_data = LMDataset(os.path.join(self.args.data, 'train.tsv'), self.args.vocab_file,
                                     self.args.seq_length)
         print("Train dataset loaded")
+
         self.val_data = LMDataset(os.path.join(self.args.data, 'valid.tsv'), self.args.vocab_file,
                                   self.args.seq_length)
         print("Val dataset loaded")
 
+        self.test_data = LMDataset(os.path.join(self.args.data, 'test.tsv'), self.args.vocab_file,
+                                  self.args.seq_length)
+        print("Test dataset loaded")
+
         self.args.vocab_size = self.train_data.get_vocab_size()
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
 
-        self.train_loader = torch.utils.data.DataLoader(
-            self.train_data,
-            batch_size=self.args.batch_size,
-            shuffle=True
-        )
-
-        self.val_loader = torch.utils.data.DataLoader(
-            self.val_data,
-            batch_size=self.args.batch_size,
-            shuffle=False
-        )
 
         print("Created dataloaders")
+        self.train_loader = batchify(self.train_data.get_tokens(), self.args.batch_size,
+                                     self.args)
+        self.val_loader = batchify(self.val_data.get_tokens(), self.args.batch_size,
+                                   self.args)
+
+        self.test_loader = batchify(self.test_data.get_tokens(), self.args.batch_size,
+                                    self.args)
 
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)
@@ -72,51 +74,56 @@ class LMTrainer:
     def detach(self, states):
         return [state.detach() for state in states]
 
+    def get_batches(self, loader):
+        batches = []
+        for _, i in enumerate(range(0, loader.size(0) -1, self.args.seq_length)):
+            data, targets = get_batch(loader, i, self.args.seq_length)
+            batches.append((data, targets))
+
+        return batches
+
     def train(self):
         print("Starting training")
         self.model.train()
+        self.log_interval = len(self.train_loader) // self.args.stages_per_epoch
+        self.log_interval //= self.args.seq_length
+
         self.print_start_info()
-        total_loss = 0
-        hidden = self.model.init_hidden()
-        log_interval = len(self.train_loader) // self.args.stages_per_epoch
+
+        batches = self.get_batches(self.train_loader)
 
         for epoch in range(1, self.args.epochs + 1):
-            for idx, vals in enumerate(self.train_loader):
-                data, target = vals
-                data, target = Variable(data), Variable(target)
+            total_loss = 0
+            ntokens = self.train_data.get_vocab_size()
+            hidden = self.model.init_hidden(self.args.batch_size)
 
-                if self.args.gpu:
-                    data = data.cuda()
-                    target = target.cuda(async=True)
+            for step, i in enumerate(np.random.permutation(len(batches))):
+                data, targets = batches[i]
+                data, targets = Variable(data), Variable(targets)
+                hidden = repackage_hidden(hidden)
 
-                if data.size(0) != self.args.batch_size:
-                    # ignoring some data here so that we don't reinstanstiate
-                    # hidden
-                    continue
-
-                hidden = self.detach(hidden)
                 self.model.zero_grad()
 
                 output, hidden = self.model(data, hidden)
-                loss = self.criterion(output, target.view(-1))
+
+                loss = self.criterion(output.view(-1, ntokens), targets)
                 loss.backward()
 
-                torch.nn.utils.clip_grad_norm(self.model.parameters(),
-                                              self.args.clip)
+                torch.nn.utils.clip_grad_norm(self.model.parameters(), self.args.clip)
                 self.optimizer.step()
 
                 total_loss += loss.data
 
-                step = (idx + 1)
-                if step % log_interval == 0:
+                if step % self.log_interval == 0 and step > 0:
+                    curr_loss = total_loss[0] / self.log_interval
                     self.writer.write(
                         'Train: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
-                            (epoch, self.args.epochs, step, len(self.train_loader),
-                             total_loss[0] / log_interval, np.exp(total_loss[0] / log_interval)))
+                            (epoch, self.args.epochs, step, len(self.train_loader) // self.args.seq_length,
+                             curr_loss, math.exp(curr_loss)))
                     total_loss = 0
 
-                    val_loss = self.validate()
-                    stop = self.early_stopping(np.exp(val_loss), {'val_loss': val_loss}, epoch)
+                    val_loss = self.validate(self.val_loader)
+                    stop = self.early_stopping(math.exp(val_loss), {'val_loss': val_loss}, epoch)
 
                     if stop:
                         self.writer.write("Early Stopping activated")
@@ -124,38 +131,33 @@ class LMTrainer:
                     else:
                         self.writer.write(
                             'Val: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
-                                (epoch, self.args.epochs, step, len(self.train_loader),
-                                val_loss, np.exp(val_loss)))
+                                (epoch, self.args.epochs, step, len(self.train_loader) // self.args.seq_length,
+                                val_loss, math.exp(val_loss)))
 
             if self.early_stopping.is_activated():
                 break
             self.print_epoch_info()
 
 
-    def validate(self):
+    def validate(self, loader):
         self.model.eval()
         total_loss = 0
-        hidden = self.model.init_hidden()
+        hidden = self.model.init_hidden(self.args.batch_size)
+        ntokens = self.train_data.get_vocab_size()
 
-        for batch in self.val_loader:
-            data, target = batch
-            data, target = Variable(data, volatile=True), Variable(target, volatile=True)
-            if self.args.gpu:
-                data = data.cuda()
-                target = target.cuda()
+        tokens = 0
 
-            if data.size(0) != self.args.batch_size:
-                # ignoring some data here so that we don't reinstanstiate
-                # hidden
-                continue
-
+        for _, i in enumerate(range(0, loader.size(0) - 1, self.args.seq_length)):
+            data, targets = get_batch(loader, i, self.args.seq_length, evaluation=True)
+            data, targets = Variable(data, volatile=True), Variable(targets, volatile=True)
             output, hidden = self.model(data, hidden)
-            loss = len(batch) * self.criterion(output, target.view(-1))
-            total_loss += loss.data
+            output_flat = output.view(-1, ntokens)
+            tokens += output_flat.size(0)
+            total_loss += self.criterion(output_flat, targets).data
+            hidden = repackage_hidden(hidden)
 
         self.model.train()
-
-        return total_loss[0] / len(self.val_loader)
+        return total_loss[0] / (loader.size(0) / self.args.seq_length)
 
     def print_epoch_info(self):
         self.writer.write_new_line()
@@ -170,13 +172,16 @@ class LMTrainer:
         self.writer.write("Save location: %s" % self.args.save_loc)
         self.writer.write("Logs dir: %s" % self.args.logs_dir)
         self.writer.write("Timestamp: %s" % self.timer.get_time_hhmmss())
+        self.writer.write("Log Interval: %s" % self.log_interval)
         self.writer.write_new_line()
 
         self.writer.write("======== Data =======")
         self.writer.write("Training set: %d examples of size %d" %
-                          (len(self.train_data), self.args.seq_length))
+                          (len(self.train_data.get_tokens()) // self.args.seq_length,
+                           self.args.seq_length))
         self.writer.write("Validation set: %d examples of size %d" %
-                          (len(self.val_data), self.args.seq_length))
+                          (len(self.val_data.get_tokens()) // self.args.seq_length,
+                           self.args.seq_length))
         self.writer.write_new_line()
 
         self.writer.write("======= Parameters =======")

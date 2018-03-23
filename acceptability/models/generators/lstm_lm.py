@@ -19,7 +19,7 @@ class LSTMLanguageModel(nn.Module):
         self.embedding = nn.Embedding(self.vocab_size, self.emb_dim)
         self.lstm = nn.LSTM(input_size=emb_dim, hidden_size=self.hidden_dim,
                             num_layers=num_layers, dropout=dropout,
-                            bidirectional=bidirectional, batch_first=True)
+                            bidirectional=bidirectional)
         self.fc = nn.Linear(self.hidden_dim, vocab_size)
 
         self.init_weights()

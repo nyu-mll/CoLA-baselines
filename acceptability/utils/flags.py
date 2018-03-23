@@ -13,9 +13,9 @@ def get_parser():
                         "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
 
     # Preprocess arguments
-    parser.add_argument("--should_not_preprocess_data", action="store_false", default=False,
+    parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
                         help="Whether to preprocess data? Default: true (Will preprocess)")
-    parser.add_argument("--should_not_lowercase", action="store_false", default=False,
+    parser.add_argument("--should_not_lowercase", action="store_true", default=False,
                         help="Should lowercase data? Default: true (Will lowercase)")
     parser.add_argument("--preprocess_tokenizer", default='space', type=str,
                         help="Type of tokenizer to use (space|nltk)")
@@ -34,7 +34,7 @@ def get_parser():
                         help="Type of the model you want to use")
     parser.add_argument("-s", "--save_loc", type=str, default="./save",
                         help="Save point for models")
-    parser.add_argument("-g", "--gpu", action="store_false", default=False,
+    parser.add_argument("-g", "--gpu", action="store_true", default=False,
                         help="Whether use GPU or not")
     parser.add_argument("-cp", "--crop_pad_length", type=int, default=30,
                         help="Padding Crop length")
@@ -116,7 +116,7 @@ def get_lm_parser():
                         help="Name of the experiment")
     parser.add_argument("-es", "--embedding_size", type=int, default=300,
                         help="Size of the embedding dimension")
-    parser.add_argument("-sl", "--seq_length", type=int, default=25,
+    parser.add_argument("-sl", "--seq_length", type=int, default=35,
                         help="Sequence length")
     parser.add_argument("-hs", "--hidden_size", type=int, default=600,
                         help="Size of the hidden dimension")
