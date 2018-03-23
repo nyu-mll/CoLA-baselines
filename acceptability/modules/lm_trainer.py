@@ -69,8 +69,10 @@ class LMTrainer:
     def train(self):
         print("Starting training")
         self.model.train()
+        self.log_interval = len(self.train_loader) // self.args.stages_per_epoch
+        self.log_interval //= self.args.seq_length
+
         self.print_start_info()
-        log_interval = len(self.train_loader) // self.args.stages_per_epoch
 
         for epoch in range(1, self.args.epochs + 1):
             total_loss = 0
@@ -93,8 +95,8 @@ class LMTrainer:
 
                 total_loss += loss.data
 
-                if step % log_interval == 0 and step > 0:
-                    curr_loss = total_loss[0] / log_interval
+                if step % self.log_interval == 0 and step > 0:
+                    curr_loss = total_loss[0] / self.log_interval
                     self.writer.write(
                         'Train: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
                             (epoch, self.args.epochs, step, len(self.train_loader) // self.args.seq_length,
@@ -149,6 +151,7 @@ class LMTrainer:
         self.writer.write("Save location: %s" % self.args.save_loc)
         self.writer.write("Logs dir: %s" % self.args.logs_dir)
         self.writer.write("Timestamp: %s" % self.timer.get_time_hhmmss())
+        self.writer.write("Log Interval: %s" % self.log_interval)
         self.writer.write_new_line()
 
         self.writer.write("======== Data =======")
