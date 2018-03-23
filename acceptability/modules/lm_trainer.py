@@ -4,6 +4,7 @@ import sys
 import math
 import numpy as np
 
+from torch import nn
 from torch.autograd import Variable
 from acceptability.utils import get_lm_parser, get_lm_model_instance, get_lm_experiment_name
 from acceptability.utils import Checkpoint, Timer
@@ -95,7 +96,7 @@ class LMTrainer:
 
                 total_loss += loss.data
 
-                if step % self.log_interval == 0 and step > 0:
+                if step % self.log_interval == 0:
                     curr_loss = total_loss[0] / self.log_interval
                     self.writer.write(
                         'Train: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
@@ -112,7 +113,7 @@ class LMTrainer:
                     else:
                         self.writer.write(
                             'Val: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
-                                (epoch, self.args.epochs, step, len(self.train_loader),
+                                (epoch, self.args.epochs, step, len(self.train_loader) // self.args.seq_length,
                                 val_loss, np.exp(val_loss)))
 
             if self.early_stopping.is_activated():
@@ -126,17 +127,18 @@ class LMTrainer:
         hidden = self.model.init_hidden(self.args.batch_size)
         ntokens = self.train_data.get_vocab_size()
 
+        tokens = 0
+
         for batch, i in enumerate(range(0, self.val_loader.size(0) - 1, self.args.seq_length)):
             data, targets = get_batch(self.val_loader, i, self.args.seq_length, evaluation=True)
             output, hidden = self.model(data, hidden)
             output_flat = output.view(-1, ntokens)
-
-            total_loss += len(data) * self.criterion(output_flat, targets).data
+            tokens += output_flat.size(0)
+            total_loss += nn.functional.cross_entropy(output_flat, targets, size_average=False).data
             hidden = repackage_hidden(hidden)
 
         self.model.train()
-
-        return total_loss[0] / len(self.val_loader)
+        return total_loss[0] / tokens
 
     def print_epoch_info(self):
         self.writer.write_new_line()
