@@ -45,7 +45,7 @@ class LMTrainer:
 
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)
-        self.checkpoint = Checkpoint(self.args)
+        self.checkpoint = Checkpoint(self)
         self.writer = Logger(self.args)
         self.writer.write(self.args)
         self.timer = Timer()
@@ -58,17 +58,20 @@ class LMTrainer:
             self.writer.write("Please pass a valid model name")
             sys.exit(1)
 
-        self.checkpoint.load_state_dict(self.model)
+        self.current_epoch = 0
 
-        if self.args.gpu:
-            self.model = self.model.cuda()
-
-        self.early_stopping = EarlyStopping(self.model, self.checkpoint, minimize=True)
+        self.early_stopping = EarlyStopping(self.model, self.checkpoint, patience=self.args.patience,
+                                            minimize=True)
 
         self.optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad,
                                                  self.model.parameters()),
                                           lr=self.args.learning_rate)
         self.criterion = torch.nn.CrossEntropyLoss()
+
+        self.checkpoint.load_state_dict()
+
+        if self.args.gpu:
+            self.model = self.model.cuda()
 
     # Truncated Backpropagation
     def detach(self, states):
@@ -88,11 +91,15 @@ class LMTrainer:
         self.log_interval = len(self.train_loader) // self.args.stages_per_epoch
         self.log_interval //= self.args.seq_length
 
+        if self.log_interval <= 0:
+            self.log_interval = 1
+
         self.print_start_info()
 
         batches = self.get_batches(self.train_loader)
 
-        for epoch in range(1, self.args.epochs + 1):
+        for epoch in range(self.current_epoch + 1, self.args.epochs + 1):
+            self.current_epoch = epoch
             total_loss = 0
             ntokens = self.train_data.get_vocab_size()
             hidden = self.model.init_hidden(self.args.batch_size)
@@ -138,6 +145,8 @@ class LMTrainer:
                 break
             self.print_epoch_info()
 
+        self.checkpoint.restore()
+        self.checkpoint.finalize()
 
     def validate(self, loader):
         self.model.eval()

@@ -55,9 +55,8 @@ def get_lm_experiment_name(args):
     # l -> layers
     # lr -> learning rate
     # e -> encoding_size
-    name = "experiment_%s_%s_s_%d_h_%d_l_%d_lr_%.4f_d_%.2f" % (
+    name = "experiment_%s_s_%d_h_%d_l_%d_lr_%.4f_d_%.2f" % (
         args.model,
-        datetime.now().isoformat(),
         args.seq_length,
         args.hidden_size,
         args.num_layers,
@@ -74,9 +73,8 @@ def get_experiment_name(args):
     # l -> layers
     # lr -> learning rate
     # e -> encoding_size
-    name = "experiment_%s_%s_h_%d_l_%d_lr_%.4f_e_%d" % (
+    name = "experiment_%s_h_%d_l_%d_lr_%.4f_e_%d" % (
         args.model,
-        datetime.now().isoformat(),
         args.hidden_size,
         args.num_layers,
         args.learning_rate,

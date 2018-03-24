@@ -45,10 +45,11 @@ class EarlyStopping:
             self.best_monitored_metric = value
             self.other_metrics = other_metrics
             self.best_monitored_epoch = epoch
-            self.checkpoint.save(self.model)
+            self.checkpoint.save()
 
         elif self.best_monitored_epoch + self.patience < epoch:
-            self.checkpoint.restore(self.model)
+            self.checkpoint.restore()
+            self.checkpoint.finalize()
             self.activated = True
             return True
 

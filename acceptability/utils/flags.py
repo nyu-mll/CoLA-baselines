@@ -88,8 +88,12 @@ def get_parser():
     parser.add_argument("--experiment_name", type=str,
                         default=None,
                         help="Name of the current experiment")
-    parser.add_argument("-r", "--resume", type=str, default=None,
-                        help="Checkpoint path for resuming")
+    parser.add_argument("-rf", "--resume_file", type=str,
+                        default=None,
+                        help="Use specific checkpoint path for resuming")
+    parser.add_argument("-r", "--resume", action="store_true", default=False,
+                        help="Whether should resume training?" +
+                        " Will look for checkpoint with experiment name")
     return parser
 
 
@@ -136,8 +140,12 @@ def get_lm_parser():
                         help="Learning rate")
     parser.add_argument("-s", "--save_loc", type=str, default='./save',
                         help="Save folder")
-    parser.add_argument("-r", "--resume", type=str, default=None,
-                        help="Checkpoint for resuming")
+    parser.add_argument("-rf", "--resume_file", type=str,
+                        default=None,
+                        help="Use specific checkpoint path for resuming")
+    parser.add_argument("-r", "--resume", action="store_true", default=False,
+                        help="Whether should resume training?" +
+                        " Will look for checkpoint with experiment name")
     parser.add_argument('--clip', type=float, default=0.5,
                         help='gradient clipping')
     return parser

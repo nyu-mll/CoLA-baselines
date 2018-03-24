@@ -23,7 +23,7 @@ class Trainer:
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
         if self.args.experiment_name is None:
             self.args.experiment_name = get_experiment_name(self.args)
-        self.checkpoint = Checkpoint(self.args)
+        self.checkpoint = Checkpoint(self)
         self.num_classes = 2
         self.meter = Meter(self.num_classes)
         self.writer = Logger(self.args)
@@ -50,23 +50,30 @@ class Trainer:
         if self.model is None:
             # TODO: Add logger statement for valid model here
             sys.exit(1)
-        self.checkpoint.load_state_dict(self.model)
 
-        if self.args.gpu:
-            self.model = self.model.cuda()
-
-        self.early_stopping = EarlyStopping(self.model, self.checkpoint)
+        self.early_stopping = EarlyStopping(self.model, self.checkpoint, self.args.patience)
 
         self.optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad,
                                                  self.model.parameters()),
                                           lr=self.args.learning_rate)
         self.criterion = torch.nn.BCELoss()
 
+        self.current_epoch = 0
+        self.checkpoint.load_state_dict()
+
+        if self.args.gpu:
+            self.model = self.model.cuda()
+
+
     def train(self):
         self.print_start_info()
         log_interval = len(self.train_loader) // self.args.stages_per_epoch
 
-        for i in range(1, self.args.epochs + 1):
+        if log_interval <= 0:
+            log_interval = 1
+
+        for i in range(self.current_epoch + 1, self.args.epochs + 1):
+            self.current_epoch = i
             self.writer.write("========= Epoch %d =========" % i)
             self.train_loader.init_epoch()
             for idx, data in enumerate(self.train_loader):
@@ -106,7 +113,6 @@ class Trainer:
 
             if self.args.evaluate_train and i % self.args.train_evaluate_interval == 0:
                 # At the some interval validate train loader
-                # TODO: Print this information
                 self.writer.write("Evaluating training set")
                 acc, loss, matthews, confusion = self.validate(self.train_loader)
                 other_metrics = {
@@ -119,6 +125,9 @@ class Trainer:
 
             if self.early_stopping.is_activated():
                 break
+
+        self.checkpoint.restore()
+        self.checkpoint.finalize()
 
     def validate(self, loader: torchtext.data.Iterator):
         self.model.eval()
