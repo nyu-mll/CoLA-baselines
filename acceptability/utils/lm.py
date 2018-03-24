@@ -20,6 +20,6 @@ def batchify(data, bsz, args):
 
 def get_batch(source, i, seq_len, evaluation=False):
     seq_len = min(seq_len, len(source) - 1 - i)
-    data = Variable(source[i:i+seq_len], volatile=evaluation)
-    target = Variable(source[i+1:i+1+seq_len].view(-1))
+    data = source[i:i+seq_len]
+    target = source[i+1:i+1+seq_len].view(-1)
     return data, target

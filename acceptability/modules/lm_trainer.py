@@ -4,7 +4,6 @@ import sys
 import math
 import numpy as np
 
-from torch import nn
 from torch.autograd import Variable
 from acceptability.utils import get_lm_parser, get_lm_model_instance, get_lm_experiment_name
 from acceptability.utils import Checkpoint, Timer
@@ -75,6 +74,14 @@ class LMTrainer:
     def detach(self, states):
         return [state.detach() for state in states]
 
+    def get_batches(self, loader):
+        batches = []
+        for _, i in enumerate(range(0, loader.size(0) -1, self.args.seq_length)):
+            data, targets = get_batch(loader, i, self.args.seq_length)
+            batches.append((data, targets))
+
+        return batches
+
     def train(self):
         print("Starting training")
         self.model.train()
@@ -83,13 +90,16 @@ class LMTrainer:
 
         self.print_start_info()
 
+        batches = self.get_batches(self.train_loader)
+
         for epoch in range(1, self.args.epochs + 1):
             total_loss = 0
             ntokens = self.train_data.get_vocab_size()
             hidden = self.model.init_hidden(self.args.batch_size)
 
-            for step, i in enumerate(range(0, self.train_loader.size(0) -1, self.args.seq_length)):
-                data, targets = get_batch(self.train_loader, i, self.args.seq_length)
+            for step, i in enumerate(np.random.permutation(len(batches))):
+                data, targets = batches[i]
+                data, targets = Variable(data), Variable(targets)
                 hidden = repackage_hidden(hidden)
 
                 self.model.zero_grad()
@@ -113,7 +123,7 @@ class LMTrainer:
                     total_loss = 0
 
                     val_loss = self.validate(self.val_loader)
-                    stop = self.early_stopping(np.exp(val_loss), {'val_loss': val_loss}, epoch)
+                    stop = self.early_stopping(math.exp(val_loss), {'val_loss': val_loss}, epoch)
 
                     if stop:
                         self.writer.write("Early Stopping activated")
@@ -122,7 +132,7 @@ class LMTrainer:
                         self.writer.write(
                             'Val: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
                                 (epoch, self.args.epochs, step, len(self.train_loader) // self.args.seq_length,
-                                val_loss, np.exp(val_loss)))
+                                val_loss, math.exp(val_loss)))
 
             if self.early_stopping.is_activated():
                 break
@@ -139,6 +149,7 @@ class LMTrainer:
 
         for _, i in enumerate(range(0, loader.size(0) - 1, self.args.seq_length)):
             data, targets = get_batch(loader, i, self.args.seq_length, evaluation=True)
+            data, targets = Variable(data, volatile=True), Variable(targets, volatile=True)
             output, hidden = self.model(data, hidden)
             output_flat = output.view(-1, ntokens)
             tokens += output_flat.size(0)
