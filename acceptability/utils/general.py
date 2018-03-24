@@ -82,3 +82,16 @@ def get_experiment_name(args):
     )
 
     return name
+
+
+def seed_torch(args):
+    # Set the random seed manually for reproducibility.
+    torch.manual_seed(args.seed)
+
+    if torch.cuda.is_available():
+        if not args.gpu:
+            print("WARNING: You have a CUDA device," +
+                  " so you should probably run with --cuda")
+        else:
+            torch.cuda.manual_seed(args.seed)
+
