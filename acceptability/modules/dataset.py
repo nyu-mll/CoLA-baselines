@@ -98,12 +98,11 @@ class LMDataset():
     SOS_INDEX = 1
     EOS_INDEX = 2
 
-    def __init__(self, dataset_path, vocab_path, seq_length):
+    def __init__(self, dataset_path, vocab_path):
         if not os.path.exists(dataset_path):
             print("Dataset not found at " + dataset_path)
             sys.exit(1)
 
-        self.seq_length = seq_length
         self.itos = [''] * 3
         self.itos[self.UNK_INDEX] = self.UNK_TOKEN
         self.itos[self.SOS_INDEX] = self.SOS_TOKEN

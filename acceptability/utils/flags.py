@@ -39,6 +39,8 @@ def get_parser():
     parser.add_argument("-cp", "--crop_pad_length", type=int, default=30,
                         help="Padding Crop length")
 
+    parser.add_argument("--seed", type=int, default=1111,
+                        help="Seed for reproducability")
     parser.add_argument("-bs", "--buffer_size", type=int, default=1,
                         help="Buffer size for logger")
     # Chunk parameters
@@ -116,6 +118,9 @@ def get_lm_parser():
     parser.add_argument("-p", "--patience", type=int, default=20,
                         help="Early stopping patience")
 
+    parser.add_argument("--seed", type=int, default=1111,
+                        help="Seed for reproducability")
+
     parser.add_argument("-en", "--experiment_name", type=str, default=None,
                         help="Name of the experiment")
     parser.add_argument("-es", "--embedding_size", type=int, default=300,
@@ -148,4 +153,30 @@ def get_lm_parser():
                         " Will look for checkpoint with experiment name")
     parser.add_argument('--clip', type=float, default=0.5,
                         help='gradient clipping')
+    return parser
+
+def get_lm_generator_parser():
+    parser = argparse.ArgumentParser(description='Acceptability LM Generator')
+
+    # Model parameters.
+    parser.add_argument("-d", "--data", type=str, default="./data/",
+                        help="location of the data corpus")
+    parser.add_argument("-m", "--checkpoint", type=str, default="./model.pth",
+                        help="model checkpoint to use")
+    parser.add_argument("-o", "--outf", type=str, default="generated.txt",
+                        help="output file for generated text")
+    parser.add_argument("-n", "--nlines", type=int, default="1000",
+                        help="number of lines to generate")
+    parser.add_argument("-v", "--vocab_file", type=str, default="vocab_100k.tsv",
+                        help="number of lines to generate")
+    parser.add_argument("--seed", type=int, default=1111,
+                        help="random seed")
+    # TODO: Change default value to False and check later explicity
+    parser.add_argument("-g", "--gpu", action="store_true", default=torch.cuda.is_available(),
+                        help="use CUDA")
+    parser.add_argument("-t", "--temperature", type=float, default=1.0,
+                        help="temperature - higher will increase diversity")
+    parser.add_argument("--log_interval", type=int, default=100,
+                        help="reporting interval")
+
     return parser

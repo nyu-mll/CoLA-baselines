@@ -8,6 +8,7 @@ from torch.autograd import Variable
 from acceptability.utils import get_lm_parser, get_lm_model_instance, get_lm_experiment_name
 from acceptability.utils import Checkpoint, Timer
 from acceptability.utils import batchify, get_batch, repackage_hidden
+from acceptability.utils import seed_torch
 from .dataset import LMDataset
 from .early_stopping import EarlyStopping
 from .logger import Logger
@@ -17,17 +18,16 @@ class LMTrainer:
     def __init__(self):
         parser = get_lm_parser()
         self.args = parser.parse_args()
+
+        seed_torch(self.args)
         print("Loading datasets")
-        self.train_data = LMDataset(os.path.join(self.args.data, 'train.tsv'), self.args.vocab_file,
-                                    self.args.seq_length)
+        self.train_data = LMDataset(os.path.join(self.args.data, 'train.tsv'), self.args.vocab_file)
         print("Train dataset loaded")
 
-        self.val_data = LMDataset(os.path.join(self.args.data, 'valid.tsv'), self.args.vocab_file,
-                                  self.args.seq_length)
+        self.val_data = LMDataset(os.path.join(self.args.data, 'valid.tsv'), self.args.vocab_file)
         print("Val dataset loaded")
 
-        self.test_data = LMDataset(os.path.join(self.args.data, 'test.tsv'), self.args.vocab_file,
-                                  self.args.seq_length)
+        self.test_data = LMDataset(os.path.join(self.args.data, 'test.tsv'), self.args.vocab_file)
         print("Test dataset loaded")
 
         self.args.vocab_size = self.train_data.get_vocab_size()
