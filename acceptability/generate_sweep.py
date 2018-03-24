@@ -103,8 +103,8 @@ def generate_lm_sweeps(args):
         lines = deepcopy(all_lines)
         params_line, output_name = get_sampled_params_for_lm(current_space, index)
 
-        lines[2] += str(index)
-        lines[3] += output_name
+        lines[4] += str(index)
+        lines[7] += output_name
 
         params_line = run_line + ' ' + params_line
 
@@ -131,8 +131,8 @@ def generate_classifier_sweeps(args):
         params_line, output_name = get_sampled_params_for_classifier(current_space,
                                    index, has_pretrained_encoder)
 
-        lines[2] += str(index)
-        lines[3] += output_name
+        lines[4] += str(index)
+        lines[7] += output_name
 
         params_line = run_line + ' ' + params_line
 
@@ -167,7 +167,7 @@ def write_slurm_file(data, folder, typ, model_name, index):
 
 def generate_sbatch_params(args):
     params = {
-        'job-name': args.job_name,
+        'job-name': 'a' + args.sweep_type,
         'output': 'slurm-%j_',
         'nodes': 1,
         'cpus-per-task': args.cpus_per_task,
@@ -178,7 +178,7 @@ def generate_sbatch_params(args):
 
     lines = []
     sbatch_prepend = '#SBATCH '
-    for key in params.keys():
+    for key in sorted(list(params.keys())):
         lines.append('%s --%s=%s' % (sbatch_prepend, key, str(params[key])))
 
     return lines
