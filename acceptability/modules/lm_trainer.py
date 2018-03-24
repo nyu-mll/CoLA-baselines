@@ -22,9 +22,14 @@ class LMTrainer:
         self.train_data = LMDataset(os.path.join(self.args.data, 'train.tsv'), self.args.vocab_file,
                                     self.args.seq_length)
         print("Train dataset loaded")
+
         self.val_data = LMDataset(os.path.join(self.args.data, 'valid.tsv'), self.args.vocab_file,
                                   self.args.seq_length)
         print("Val dataset loaded")
+
+        self.test_data = LMDataset(os.path.join(self.args.data, 'test.tsv'), self.args.vocab_file,
+                                  self.args.seq_length)
+        print("Test dataset loaded")
 
         self.args.vocab_size = self.train_data.get_vocab_size()
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
@@ -34,7 +39,10 @@ class LMTrainer:
         self.train_loader = batchify(self.train_data.get_tokens(), self.args.batch_size,
                                      self.args)
         self.val_loader = batchify(self.val_data.get_tokens(), self.args.batch_size,
-                                     self.args)
+                                   self.args)
+
+        self.test_loader = batchify(self.test_data.get_tokens(), self.args.batch_size,
+                                    self.args)
 
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)
@@ -96,7 +104,7 @@ class LMTrainer:
 
                 total_loss += loss.data
 
-                if step % self.log_interval == 0:
+                if step % self.log_interval == 0 and step > 0:
                     curr_loss = total_loss[0] / self.log_interval
                     self.writer.write(
                         'Train: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
@@ -104,7 +112,7 @@ class LMTrainer:
                              curr_loss, math.exp(curr_loss)))
                     total_loss = 0
 
-                    val_loss = self.validate()
+                    val_loss = self.validate(self.val_loader)
                     stop = self.early_stopping(np.exp(val_loss), {'val_loss': val_loss}, epoch)
 
                     if stop:
@@ -121,7 +129,7 @@ class LMTrainer:
             self.print_epoch_info()
 
 
-    def validate(self):
+    def validate(self, loader):
         self.model.eval()
         total_loss = 0
         hidden = self.model.init_hidden(self.args.batch_size)
@@ -129,16 +137,16 @@ class LMTrainer:
 
         tokens = 0
 
-        for batch, i in enumerate(range(0, self.val_loader.size(0) - 1, self.args.seq_length)):
-            data, targets = get_batch(self.val_loader, i, self.args.seq_length, evaluation=True)
+        for _, i in enumerate(range(0, loader.size(0) - 1, self.args.seq_length)):
+            data, targets = get_batch(loader, i, self.args.seq_length, evaluation=True)
             output, hidden = self.model(data, hidden)
             output_flat = output.view(-1, ntokens)
             tokens += output_flat.size(0)
-            total_loss += nn.functional.cross_entropy(output_flat, targets, size_average=False).data
+            total_loss += self.criterion(output_flat, targets).data
             hidden = repackage_hidden(hidden)
 
         self.model.train()
-        return total_loss[0] / tokens
+        return total_loss[0] / (loader.size(0) / self.args.seq_length)
 
     def print_epoch_info(self):
         self.writer.write_new_line()
