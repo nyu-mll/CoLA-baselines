@@ -150,7 +150,7 @@ class LMDataset():
         return len(self.itos)
 
     def preprocess(self, x):
-        return ' '.join([self.SOS_TOKEN] + x + [self.EOS_TOKEN])
+        return [self.SOS_TOKEN] + x + [self.EOS_TOKEN]
 
     def get_tokens(self):
         return self.tokens

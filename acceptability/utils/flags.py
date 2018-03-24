@@ -116,7 +116,7 @@ def get_lm_parser():
                         help="Name of the experiment")
     parser.add_argument("-es", "--embedding_size", type=int, default=300,
                         help="Size of the embedding dimension")
-    parser.add_argument("-sl", "--seq_length", type=int, default=25,
+    parser.add_argument("-sl", "--seq_length", type=int, default=35,
                         help="Sequence length")
     parser.add_argument("-hs", "--hidden_size", type=int, default=600,
                         help="Size of the hidden dimension")
