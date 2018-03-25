@@ -97,9 +97,9 @@ def seed_torch(args):
             torch.cuda.manual_seed(args.seed)
 
 
-def pad_sentences(sentences, vocab):
+def pad_sentences(sentences, vocab, crop_length):
     sizes = np.array([len(sent) for sent in sentences])
-    max_len = sizes.max()
+    max_len = crop_length
 
     shape = (len(sentences), max_len)
     array = np.full(shape, vocab.stoi[vocab.PAD_INDEX], dtype=np.int32)
@@ -109,6 +109,7 @@ def pad_sentences(sentences, vocab):
 
         if len(sent) > max_len:
             words = words[0:max_len]
+            sizes[i] = max_len
 
         array[i, :len(words)] = words
 

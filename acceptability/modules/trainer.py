@@ -4,6 +4,7 @@ import sys
 import torchtext
 
 from torch import nn
+from torch.autograd import Variable
 from acceptability.utils import get_parser, get_model_instance, get_experiment_name
 from acceptability.utils import seed_torch, pad_sentences
 from .dataset import get_datasets, get_iter
@@ -12,9 +13,6 @@ from .early_stopping import EarlyStopping
 from .logger import Logger
 from acceptability.utils import Checkpoint
 from acceptability.utils import Timer
-
-# TODO: Add __init__ for all modules and then __all__ in all of them
-# to faciliate easy loading
 
 
 class Trainer:
@@ -49,7 +47,7 @@ class Trainer:
             self.test_loader = get_iter(self.args, self.test_dataset)
         else:
             self.vocab = sentence_field
-            self.embedding = nn.Embedding(vocab.get_size(), self.args.emb_dim)
+            self.embedding = nn.Embedding(self.vocab.get_size(), self.args.embedding_dim)
             self.train_loader = torch.utils.data.DataLoader(
                 self.train_dataset,
                 batch_size=self.args.batch_size,
@@ -99,16 +97,22 @@ class Trainer:
         for i in range(self.current_epoch + 1, self.args.epochs + 1):
             self.current_epoch = i
             self.writer.write("========= Epoch %d =========" % i)
-            self.train_loader.init_epoch()
+            if hasattr(self.train_loader, 'init_epoch'):
+                self.train_loader.init_epoch()
+
             for idx, data in enumerate(self.train_loader):
                 if self.args.glove:
                     x, y = data.sentence, data.label
                     x = self.embedding(x)
                 else:
                     x, y, _ = data
-                    x, sizes = pad_sentences(x, self.vocab)
-                    x = torch.from_numpy(x)
-                    y = torch.LongTensor(y)
+                    x, y = Variable(x).long(), Variable(y)
+
+                    if self.args.gpu:
+                        x = x.cuda()
+                        y = y.cuda()
+
+                    x = self.embedding(x)
 
                 self.optimizer.zero_grad()
 
@@ -161,14 +165,29 @@ class Trainer:
 
     def validate(self, loader: torchtext.data.Iterator):
         self.model.eval()
+        self.embedding.eval()
         self.meter.reset()
         correct = 0
         total = 0
         total_loss = 0
-        loader.init_epoch()
+
+        if hasattr(loader, 'init_epoch'):
+            loader.init_epoch()
+
         for data in loader:
-            x, y = data.sentence, data.label
-            x = self.embedding(x)
+            if self.args.glove:
+                x, y = data.sentence, data.label
+                x = self.embedding(x)
+            else:
+                x, y, _ = data
+                x, y = Variable(x).long(), Variable(y)
+
+                if self.args.gpu:
+                    x = x.cuda()
+                    y = y.cuda()
+
+                x = self.embedding(x)
+
             output = self.model(x)
 
             if type(output) == tuple:
@@ -188,7 +207,7 @@ class Trainer:
             else:
                 correct += (y == output).data.sum()
         self.model.train()
-
+        self.embedding.train()
         avg_loss = total_loss / total
 
         return correct / total * 100, avg_loss, \
@@ -230,7 +249,7 @@ class Trainer:
         if self.args.glove:
             self.writer.write("Embedding: %s" % self.args.embedding)
         else:
-            self.writer.write("Embedding: %d x %d" % self.embedding.weight.size)
+            self.writer.write("Embedding: %d x %d" % self.embedding.weight.size())
         self.writer.write("Number of layers: %d" % self.args.num_layers)
         self.writer.write("Hidden Size: %d" % self.args.hidden_size)
         self.writer.write("Encoder Size: %d" % self.args.encoding_size)

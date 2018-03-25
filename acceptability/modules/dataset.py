@@ -5,12 +5,14 @@ import torch
 from torch.utils.data import Dataset
 from torchtext import vocab, data
 from collections import defaultdict
+from acceptability.utils import pad_sentences
 
 
 class AcceptabilityDataset(Dataset):
     def __init__(self, args, path, vocab):
         self.pairs = []
         self.sentences = []
+        self.actual = []
         self.args = args
         if not os.path.exists(path):
             # TODO: log failure here
@@ -23,7 +25,13 @@ class AcceptabilityDataset(Dataset):
                 line = line.split("\t")
 
                 if len(line) >= 4:
-                    self.pairs.append((self.preprocess(line[3].strip()), line[1], line[0]))
+                    self.pairs.append((int(line[1]), line[0]))
+                    self.actual.append(line[3])
+                    self.sentences.append(self.preprocess(line[3].strip()))
+
+        # TODO: Maybe try later using collate_fn?
+        self.sentences, self.sizes = pad_sentences(self.sentences, self.vocab,
+                                                   self.args.crop_pad_length)
 
     def preprocess(self, line):
         tokenizer = lambda x: x
@@ -33,15 +41,19 @@ class AcceptabilityDataset(Dataset):
             elif self.args.preprocess_tokenizer == 'space':
                 tokenizer = lambda x: x.split(' ')
 
+        if not self.args.should_not_lowercase:
+            line = line.lower()
+
         line = tokenizer(line)
-        line = [self.vocab.stoi(word) for word in line]
+        line = [self.vocab.stoi[word] for word in line]
+
         return line
 
     def __len__(self):
         return len(self.pairs)
 
     def __getitem__(self, index):
-        return self.pairs[index]
+        return self.sentences[index], self.pairs[index][0], self.pairs[index][1]
 
 
 def nltk_tokenize(sentence):
@@ -57,7 +69,7 @@ def get_datasets(args):
     if args.glove:
         return get_datasets_glove(args)
     else:
-        vocab = Vocab(args.vocab_path, True)
+        vocab = Vocab(args.vocab_file, True)
         train_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'train.tsv'),
                                              vocab)
         valid_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'valid.tsv'),
@@ -86,7 +98,7 @@ def get_datasets_glove(args):
     )
 
     train_dataset, val_dataset, test_dataset = data.TabularDataset.splits(
-        path=args.data_dir,
+        path=args.data,
         train="train.tsv",
         validation="valid.tsv",
         test="test.tsv",
@@ -124,7 +136,7 @@ class Vocab:
     UNK_INDEX = 0
     SOS_INDEX = 1
     EOS_INDEX = 2
-    PAD_INDEX = 4
+    PAD_INDEX = 3
 
 
     def __init__(self, vocab_path, use_pad=False):

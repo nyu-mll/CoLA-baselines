@@ -5,7 +5,7 @@ import torch
 
 def get_parser():
     parser = argparse.ArgumentParser(description="Acceptability Judgments")
-    parser.add_argument("-d", "--data_dir", type=str, default="./data",
+    parser.add_argument("-d", "--data", type=str, default="./data",
                         help="Directory containing train.txt, test.txt" +
                         "and valid.txt")
     parser.add_argument("-e", "--embedding", type=str, default="glove.6B.300d",
