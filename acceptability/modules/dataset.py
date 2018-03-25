@@ -88,8 +88,7 @@ def get_iter(args, dataset):
         repeat=False
     )
 
-#TODO: Separate vocab into a class
-class LMDataset():
+class Vocab:
     UNK_TOKEN = '<unk>'
     SOS_TOKEN = '<s>'
     EOS_TOKEN = '</s>'
@@ -98,9 +97,10 @@ class LMDataset():
     SOS_INDEX = 1
     EOS_INDEX = 2
 
-    def __init__(self, dataset_path, vocab_path):
-        if not os.path.exists(dataset_path):
-            print("Dataset not found at " + dataset_path)
+
+    def __init__(self, vocab_path):
+        if not os.path.exists(vocab_path):
+            print("Vocab not found at " + vocab_path)
             sys.exit(1)
 
         self.itos = [''] * 3
@@ -122,6 +122,24 @@ class LMDataset():
                 self.stoi[line.strip()] = index
                 index += 1
 
+    def get_itos(self):
+        return self.itos
+
+
+    def get_stoi(self):
+        return self.stoi
+
+    def get_size(self):
+        return len(self.itos)
+
+
+class LMDataset():
+    def __init__(self, dataset_path, vocab_path):
+        if not os.path.exists(dataset_path):
+            print("Dataset not found at " + dataset_path)
+            sys.exit(1)
+
+        self.vocab = Vocab(vocab_path)
 
         num_tokens = 0
         with open(dataset_path, 'r') as f:
@@ -141,15 +159,15 @@ class LMDataset():
                 if len(line) >= 4:
                     words = self.preprocess(line[3].split(' '))
                     for word in words:
-                        self.tokens[num_tokens] = self.stoi[word]
+                        self.tokens[num_tokens] = self.vocab.stoi[word]
                         num_tokens += 1
 
 
     def get_vocab_size(self):
-        return len(self.itos)
+        return self.vocab.get_size()
 
     def preprocess(self, x):
-        return [self.SOS_TOKEN] + x + [self.EOS_TOKEN]
+        return [self.vocab.SOS_TOKEN] + x + [self.vocab.EOS_TOKEN]
 
     def get_tokens(self):
         return self.tokens

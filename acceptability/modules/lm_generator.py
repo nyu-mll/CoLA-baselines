@@ -4,7 +4,7 @@ import os
 
 from torch.autograd import Variable
 
-from .dataset import LMDataset
+from .dataset import Vocab
 from acceptability.utils import get_lm_generator_parser, seed_torch
 
 
@@ -29,12 +29,12 @@ class LMGenerator():
         else:
             self.model.cpu()
 
-        self.corpus = LMDataset(os.path.join(self.args.data, 'valid.tsv'), self.args.vocab_file)
-        self.ntokens = self.corpus.get_vocab_size()
+        self.vocab = Vocab(self.args.vocab_file)
+        self.ntokens = self.vocab.get_size()
 
     def generate(self):
         hidden = self.model.init_hidden(1)
-        inp = Variable(torch.LongTensor([self.corpus.SOS_INDEX]).unsqueeze(0), volatile=True)
+        inp = Variable(torch.LongTensor([self.vocab.SOS_INDEX]).unsqueeze(0), volatile=True)
         if self.args.gpu:
             inp.data = inp.data.cuda()
 
@@ -46,9 +46,9 @@ class LMGenerator():
                     word_weights = output.squeeze().data.div(self.args.temperature).exp().cpu()
                     word_idx = torch.multinomial(word_weights, 1)[0]
                     inp.data.fill_(word_idx)
-                    word = self.corpus.itos[word_idx]
+                    word = self.vocab.itos[word_idx]
 
-                    if word == '</s>':
+                    if word == self.vocab.EOS_TOKEN:
                         line = ['lm', '0', '', ' '.join(words) + '\n']
                         outf.write('\t'.join(line))
                         break

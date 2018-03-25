@@ -159,8 +159,6 @@ def get_lm_generator_parser():
     parser = argparse.ArgumentParser(description='Acceptability LM Generator')
 
     # Model parameters.
-    parser.add_argument("-d", "--data", type=str, default="./data/",
-                        help="location of the data corpus")
     parser.add_argument("-m", "--checkpoint", type=str, default="./model.pth",
                         help="model checkpoint to use")
     parser.add_argument("-o", "--outf", type=str, default="generated.txt",
