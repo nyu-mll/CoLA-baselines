@@ -5,7 +5,7 @@ import torchtext
 
 from torch import nn
 from acceptability.utils import get_parser, get_model_instance, get_experiment_name
-from acceptability.utils import seed_torch
+from acceptability.utils import seed_torch, pad_sentences
 from .dataset import get_datasets, get_iter
 from .meter import Meter
 from .early_stopping import EarlyStopping
@@ -39,14 +39,34 @@ class Trainer:
         self.train_dataset, self.val_dataset, self.test_dataset, \
             sentence_field = get_datasets(self.args)
 
-        self.train_loader = get_iter(self.args, self.train_dataset)
-        self.val_loader = get_iter(self.args, self.val_dataset)
-        self.test_loader = get_iter(self.args, self.test_dataset)
+        if self.args.glove:
+            vocab = sentence_field.vocab
+            self.embedding = nn.Embedding(len(vocab), len(vocab.vectors[0]))
+            self.embedding.weight.data.copy_(vocab.vectors)
+            self.embedding.weight.requires_grad = False
+            self.train_loader = get_iter(self.args, self.train_dataset)
+            self.val_loader = get_iter(self.args, self.val_dataset)
+            self.test_loader = get_iter(self.args, self.test_dataset)
+        else:
+            self.vocab = sentence_field
+            self.embedding = nn.Embedding(vocab.get_size(), self.args.emb_dim)
+            self.train_loader = torch.utils.data.DataLoader(
+                self.train_dataset,
+                batch_size=self.args.batch_size,
+                shuffle=True,
+                pin_memory=self.args.gpu
+            )
+            self.val_loader = torch.utils.data.DataLoader(
+                self.val_dataset,
+                batch_size=self.args.batch_size,
+                pin_memory=self.args.gpu
+            )
+            self.test_loader = torch.utils.data.DataLoader(
+                self.test_dataset,
+                batch_size=self.args.batch_size,
+                pin_memory=self.args.gpu
+            )
 
-        vocab = sentence_field.vocab
-        self.embedding = nn.Embedding(len(vocab), len(vocab.vectors[0]))
-        self.embedding.weight.data.copy_(vocab.vectors)
-        self.embedding.weight.requires_grad = False
 
     def load(self):
         self.model = get_model_instance(self.args)
@@ -81,8 +101,14 @@ class Trainer:
             self.writer.write("========= Epoch %d =========" % i)
             self.train_loader.init_epoch()
             for idx, data in enumerate(self.train_loader):
-                x, y = data.sentence, data.label
-                x = self.embedding(x)
+                if self.args.glove:
+                    x, y = data.sentence, data.label
+                    x = self.embedding(x)
+                else:
+                    x, y, _ = data
+                    x, sizes = pad_sentences(x, self.vocab)
+                    x = torch.from_numpy(x)
+                    y = torch.LongTensor(y)
 
                 self.optimizer.zero_grad()
 
@@ -200,7 +226,11 @@ class Trainer:
         self.writer.write("Epochs: %d" % self.args.epochs)
         self.writer.write("Patience: %d" % self.args.patience)
         self.writer.write("Stages per Epoch: %d" % self.args.stages_per_epoch)
-        self.writer.write("Embedding: %s" % self.args.embedding)
+
+        if self.args.glove:
+            self.writer.write("Embedding: %s" % self.args.embedding)
+        else:
+            self.writer.write("Embedding: %d x %d" % self.embedding.weight.size)
         self.writer.write("Number of layers: %d" % self.args.num_layers)
         self.writer.write("Hidden Size: %d" % self.args.hidden_size)
         self.writer.write("Encoder Size: %d" % self.args.encoding_size)

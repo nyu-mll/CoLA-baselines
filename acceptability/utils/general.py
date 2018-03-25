@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 from torch import nn
 from datetime import datetime
@@ -94,4 +95,22 @@ def seed_torch(args):
                   " so you should probably run with --cuda")
         else:
             torch.cuda.manual_seed(args.seed)
+
+
+def pad_sentences(sentences, vocab):
+    sizes = np.array([len(sent) for sent in sentences])
+    max_len = sizes.max()
+
+    shape = (len(sentences), max_len)
+    array = np.full(shape, vocab.stoi[vocab.PAD_INDEX], dtype=np.int32)
+
+    for i, sent in enumerate(sentences):
+        words = np.array(sent)
+
+        if len(sent) > max_len:
+            words = words[0:max_len]
+
+        array[i, :len(words)] = words
+
+    return array, sizes
 

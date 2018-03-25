@@ -8,21 +8,34 @@ from collections import defaultdict
 
 
 class AcceptabilityDataset(Dataset):
-    def __init__(self, path, vocab_name):
+    def __init__(self, args, path, vocab):
         self.pairs = []
         self.sentences = []
+        self.args = args
         if not os.path.exists(path):
             # TODO: log failure here
             sys.exit(1)
 
-        self.vocab = vocab.pretrained_aliases[vocab_name]
+        self.vocab = vocab
+
         with open(path, 'r') as f:
             for line in f:
                 line = line.split("\t")
 
                 if len(line) >= 4:
-                    self.sentences.append(line[3].strip())
-                    self.pairs.append((line[3].strip(), line[1], line[0]))
+                    self.pairs.append((self.preprocess(line[3].strip()), line[1], line[0]))
+
+    def preprocess(self, line):
+        tokenizer = lambda x: x
+        if not self.args.should_not_preprocess_data:
+            if self.args.preprocess_tokenizer == 'nltk':
+                tokenizer = nltk_tokenize
+            elif self.args.preprocess_tokenizer == 'space':
+                tokenizer = lambda x: x.split(' ')
+
+        line = tokenizer(line)
+        line = [self.vocab.stoi(word) for word in line]
+        return line
 
     def __len__(self):
         return len(self.pairs)
@@ -41,6 +54,21 @@ def preprocess_label(label):
         return '0'
 
 def get_datasets(args):
+    if args.glove:
+        return get_datasets_glove(args)
+    else:
+        vocab = Vocab(args.vocab_path, True)
+        train_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'train.tsv'),
+                                             vocab)
+        valid_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'valid.tsv'),
+                                             vocab)
+        test_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'test.tsv'),
+                                            vocab)
+
+        return train_dataset, valid_dataset, test_dataset, vocab
+
+
+def get_datasets_glove(args):
     tokenizer = lambda x: x
     if not args.should_not_preprocess_data:
         if args.preprocess_tokenizer == 'nltk':
@@ -79,7 +107,6 @@ def get_datasets(args):
 
     return train_dataset, val_dataset, test_dataset, sentence
 
-
 def get_iter(args, dataset):
     return data.Iterator(
         dataset,
@@ -92,13 +119,15 @@ class Vocab:
     UNK_TOKEN = '<unk>'
     SOS_TOKEN = '<s>'
     EOS_TOKEN = '</s>'
+    PAD_TOKEN = '<pad>'
 
     UNK_INDEX = 0
     SOS_INDEX = 1
     EOS_INDEX = 2
+    PAD_INDEX = 4
 
 
-    def __init__(self, vocab_path):
+    def __init__(self, vocab_path, use_pad=False):
         if not os.path.exists(vocab_path):
             print("Vocab not found at " + vocab_path)
             sys.exit(1)
@@ -108,13 +137,19 @@ class Vocab:
         self.itos[self.SOS_INDEX] = self.SOS_TOKEN
         self.itos[self.EOS_INDEX] = self.EOS_TOKEN
 
+        if use_pad:
+            self.itos.append(self.PAD_INDEX)
+
         # Return unk index by default
         self.stoi = defaultdict(lambda: self.UNK_INDEX)
         self.stoi[self.SOS_TOKEN] = self.SOS_INDEX
         self.stoi[self.EOS_TOKEN] = self.EOS_INDEX
         self.stoi[self.UNK_TOKEN] = self.UNK_INDEX
 
-        index = 3
+        if use_pad:
+            self.stoi[self.PAD_INDEX] = self.PAD_INDEX
+
+        index = len(self.itos)
 
         with open(vocab_path, 'r') as f:
             for line in f:

@@ -10,6 +10,8 @@ class Checkpoint:
                                                  self.args.experiment_name + ".ckpt")
         self.final_model_path = os.path.join(self.args.save_loc,
                                              self.args.experiment_name + ".pth")
+        self.embedding_path = os.path.join(self.args.save_loc,
+                                           self.args.experiment_name + ".emb")
 
     def load_state_dict(self):
         # First check if resume arg has been passed
@@ -19,6 +21,10 @@ class Checkpoint:
         # Then check if current experiement has a checkpoint
         elif self.args.resume and os.path.exists(self.experiment_ckpt_path):
             self._load(self.experiment_ckpt_path)
+            if os.path.exists(self.embedding_path):
+                self.trainer.embedding = torch.load(self.embedding_path)
+            elif self.args.embedding_path and os.path.exists(self.args.embedding_path):
+                self.trainer.embedding = torch.load(self.args.embedding_path)
 
     def _load(self, file):
         print("Loading checkpoint")
@@ -48,6 +54,7 @@ class Checkpoint:
         }
 
         torch.save(save, self.experiment_ckpt_path)
+        self.save_embedding()
 
     def restore(self):
         if os.path.exists(self.experiment_ckpt_path):
@@ -58,3 +65,11 @@ class Checkpoint:
             os.mkdir(os.path.dirname(self.final_model_path))
 
         torch.save(self.trainer.model, self.final_model_path)
+        self.save_embedding()
+
+    def save_embedding(self):
+        if hasattr(self.args, 'glove') and not self.args.glove:
+            if not os.path.exists(os.path.dirname(self.embedding_path)):
+                os.mkdir(os.path.dirname(self.embedding_path))
+
+            torch.save(self.trainer.embedding, self.embedding_path)

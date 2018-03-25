@@ -20,6 +20,15 @@ def get_parser():
     parser.add_argument("--preprocess_tokenizer", default='space', type=str,
                         help="Type of tokenizer to use (space|nltk)")
 
+    parser.add_argument("-v", "--vocab_file", type=str, default="./vocab_100k.tsv",
+                        help="File containing vocabulary to be used with embedding")
+    parser.add_argument("--glove", action="store_true", default=False,
+                        help="Whether to use GloVE embedidngs for models")
+    parser.add_argument("-ed", "--embedding_dim", type=int, default=300,
+                        help="Embedding dimension for custom embedding")
+    parser.add_argument("-el", "--embedding_path", type=str, default=None,
+                        help="If specified, custom embedding will be loaded from this path")
+
     parser.add_argument("-l", "--logs_dir", type=str, default="./logs",
                         help="Log directory")
     parser.add_argument("--should_not_log", action='store_true',
