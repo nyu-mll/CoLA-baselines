@@ -12,7 +12,7 @@ parser.add_argument('-f', '--folder', default="/home/$USER/acceptability-judgmen
 parser.add_argument('-n', '--num_sweeps', type=int, default=1,
                     help="Number of sweeps to generate")
 
-parser.add_argument('-j', '--job_name', default="myJob",
+parser.add_argument('-j', '--job_name', default=None,
                     help="Job name, sweep sample number will be appended to this")
 parser.add_argument('-t', '--time', default="47:00:00",
                     help="Time limit of sweep")
@@ -111,7 +111,11 @@ def generate_lm_sweeps(args):
         params_line, output_name = get_sampled_params_for_lm(current_space, index)
 
         lines[4] += str(index)
-        lines[7] += output_name
+
+        if args.email:
+            lines[9] += output_name
+        else:
+            lines[7] += output_name
 
         params_line = run_line + ' ' + params_line
 
@@ -139,7 +143,11 @@ def generate_classifier_sweeps(args):
                                    index, has_pretrained_encoder)
 
         lines[4] += str(index)
-        lines[7] += output_name
+
+        if args.email:
+            lines[9] += output_name
+        else:
+            lines[7] += output_name
 
         params_line = run_line + ' ' + params_line
 
@@ -174,7 +182,7 @@ def write_slurm_file(data, folder, typ, model_name, index):
 
 def generate_sbatch_params(args):
     params = {
-        'job-name': 'a' + args.sweep_type,
+        'job-name': 'a' + args.sweep_type if args.job_name is None else args.job_name,
         'output': 'slurm-%j_',
         'nodes': 1,
         'cpus-per-task': args.cpus_per_task,
@@ -215,7 +223,7 @@ def get_fixed_lm_run_params(args):
     return ' '.join(params)
 
 def get_fixed_classifier_run_params(args):
-    params = ['-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab_file,
+    params = ['-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab,
               '--logs_dir', args.logs_dir, '-g', '-r', '-p', str(args.patience)]
 
     if args.max_pool:
