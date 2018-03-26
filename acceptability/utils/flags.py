@@ -24,9 +24,9 @@ def get_parser():
                         help="File containing vocabulary to be used with embedding")
     parser.add_argument("--glove", action="store_true", default=False,
                         help="Whether to use GloVE embedidngs for models")
-    parser.add_argument("-ed", "--embedding_dim", type=int, default=300,
+    parser.add_argument("-es", "--embedding_size", type=int, default=300,
                         help="Embedding dimension for custom embedding")
-    parser.add_argument("-el", "--embedding_path", type=str, default=None,
+    parser.add_argument("-ep", "--embedding_path", type=str, default=None,
                         help="If specified, custom embedding will be loaded from this path")
 
     parser.add_argument("-l", "--logs_dir", type=str, default="./logs",

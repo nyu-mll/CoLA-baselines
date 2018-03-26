@@ -47,7 +47,10 @@ class Trainer:
             self.test_loader = get_iter(self.args, self.test_dataset)
         else:
             self.vocab = sentence_field
-            self.embedding = nn.Embedding(self.vocab.get_size(), self.args.embedding_dim)
+
+            self.embedding = nn.Embedding(self.vocab.get_size(), self.args.embedding_size)
+            self.embedding.weight.data.uniform_(-0.1, 0.1)
+
             self.train_loader = torch.utils.data.DataLoader(
                 self.train_dataset,
                 batch_size=self.args.batch_size,
@@ -127,7 +130,7 @@ class Trainer:
 
                 self.optimizer.step()
 
-                if idx % log_interval == 0 and idx > 0:
+                if (idx + 1) % log_interval == 0 and idx > 0:
                     acc, loss, matthews, confusion = self.validate(self.val_loader)
                     other_metrics = {
                         'acc': acc,
@@ -139,7 +142,7 @@ class Trainer:
                         self.writer.write("Early Stopping activated")
                         break
                     else:
-                        self.print_current_info(idx, len(self.train_loader),
+                        self.print_current_info(idx + 1, len(self.train_loader),
                                                 matthews, other_metrics)
 
 

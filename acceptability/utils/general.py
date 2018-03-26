@@ -11,7 +11,9 @@ from acceptability.models import LSTMLanguageModel
 
 def get_model_instance(args):
     # Get embedding size from embedding parameter
-    args.embedding_size = int(args.embedding.split('.')[-1][:-1])
+    if args.glove:
+        args.embedding_size = int(args.embedding.split('.')[-1][:-1])
+
     if args.model == "lstm_pooling_classifier":
         return LSTMPoolingClassifier(
             hidden_size=args.hidden_size,

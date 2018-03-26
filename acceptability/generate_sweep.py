@@ -31,6 +31,8 @@ parser.add_argument('-e', '--epochs', type=int, default=None,
                     help="Epochs")
 parser.add_argument('-d', '--data', default='./data',
                     help="Folder containing data tsvs")
+parser.add_argument('-eu', '--email', default=None,
+                    help="Email to be mailed for slurm notification")
 parser.add_argument('-pr', '--pre_command', default=None,
                     help="Shell command to run before running main command")
 parser.add_argument('-ps', '--post_command', default=None,
@@ -51,10 +53,14 @@ classifier_parser = subparsers.add_parser('classifier',
                             help="Generate sweeps for classifier sweeps")
 classifier_parser.set_defaults(sweep_type="classifier")
 
+classifier_parser.add_argument('-v', '--vocab', type=str, help="Vocab file location")
+
 classifier_parser.add_argument('--encoder_path', type=str, default=None,
                                   help="Location of encoder checkpoint")
 classifier_parser.add_argument('--encoding_type', type=str, default=None,
                                   help="Class of encoder")
+classifier_parser.add_argument('--embedding_path', type=str, default=None,
+                                  help="Path of embedding to load")
 classifier_parser.add_argument('--encoding_size', type=int, default=None,
                                   help="Size of encoding, only to be used if you are loading a pretrained encoder")
 classifier_parser.add_argument('--encoder_num_layers', type=int, default=None,
@@ -83,6 +89,7 @@ space = {
     }]),
     'classifier': hp.choice('classifier', [{
             'hidden_size': hp.uniform('hidden_size', 300, 1200),
+            'embedding_size': hp.uniform('embedding_size', 200, 600),
             'learning_rate': hp.uniform('learning_rate', -4, -2.5),
             'num_layers': hp.uniform('num_layers', 1, 4),
             'encoding_size': hp.uniform('encoding_size', 300, 1200),
@@ -173,8 +180,12 @@ def generate_sbatch_params(args):
         'cpus-per-task': args.cpus_per_task,
         'mem': args.mem,
         'time': args.time,
-        'gres': args.gres
+        'gres': args.gres,
     }
+
+    if args.email:
+        params['mail-type'] = 'ALL'
+        params['mail-user'] = args.email
 
     lines = []
     sbatch_prepend = '#SBATCH '
@@ -191,7 +202,7 @@ module load cudnn/8.0v5.1
 
 def get_fixed_lm_run_params(args):
     params = ['-d', args.data, '-v', args.vocab, '--save_loc', args.save_loc,
-              '--logs_dir', args.logs_dir, '-g', '-p', str(args.patience)]
+              '--logs_dir', args.logs_dir, '-g', '-r', '-p', str(args.patience)]
 
     if args.stages_per_epoch is not None:
         params.append('-se')
@@ -204,8 +215,8 @@ def get_fixed_lm_run_params(args):
     return ' '.join(params)
 
 def get_fixed_classifier_run_params(args):
-    params = ['-d', args.data, '--save_loc', args.save_loc,
-              '--logs_dir', args.logs_dir, '-g', '-p', str(args.patience)]
+    params = ['-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab_file,
+              '--logs_dir', args.logs_dir, '-g', '-r', '-p', str(args.patience)]
 
     if args.max_pool:
         params.append('--max_pool')
@@ -241,8 +252,12 @@ def get_fixed_classifier_run_params(args):
             params.append(str(args.encoding_size))
 
     if args.encoding_type is not None:
-        params.append('---encoding_type')
+        params.append('--encoding_type')
         params.append(str(args.encoding_type))
+
+    if args.embedding_path is not None:
+        params.append('--embedding_path')
+        params.append(str(args.embedding_path))
 
     return ' '.join(params)
 
@@ -250,16 +265,17 @@ def get_sampled_params_for_classifier(space, index=1, has_pretrained_encoder=Fal
     sample = stoc.sample(space)
     sample['learning_rate'] = 10 ** (sample['learning_rate'])
     sample['hidden_size'] = int(sample['hidden_size'])
+    sample['embedding_size'] = int(sample['embedding_size'])
     sample['num_layers'] = int(sample['num_layers'])
     sample['encoding_size'] = int(sample['encoding_size'])
     sample['encoder_num_layers'] = int(sample['encoder_num_layers'])
 
 
-    output = 'lr_%.5f_nl_%d_hs_%d' % (sample['learning_rate'],
-             sample['num_layers'], sample['hidden_size'])
+    output = 'lr_%.5f_nl_%d_hs_%d_ed_%d' % (sample['learning_rate'],
+             sample['num_layers'], sample['hidden_size'], sample['embedding_size'])
 
-    params = '-lr %.5f -nl %d -hs %d ' % (sample['learning_rate'],
-             sample['num_layers'], sample['hidden_size'])
+    params = '-lr %.5f -nl %d -hs %d -es %d' % (sample['learning_rate'],
+             sample['num_layers'], sample['hidden_size'], sample['embedding_size'])
 
     if has_pretrained_encoder:
         sample.pop('encoder_num_layers')
@@ -268,7 +284,7 @@ def get_sampled_params_for_classifier(space, index=1, has_pretrained_encoder=Fal
     else:
         output += 'es_%d_enl_%d.out' % (sample['encoding_size'],
                   sample['encoder_num_layers'])
-        params += '--encoding_size %d --encoder_num_layers %d' % (sample['encoding_size'],
+        params += ' --encoding_size %d --encoder_num_layers %d' % (sample['encoding_size'],
                   sample['encoder_num_layers'])
 
     print("Sweep ", index, sample)

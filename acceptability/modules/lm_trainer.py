@@ -121,7 +121,7 @@ class LMTrainer:
 
                 total_loss += loss.data
 
-                if step % self.log_interval == 0 and step > 0:
+                if (step + 1) % self.log_interval == 0 and step > 0:
                     curr_loss = total_loss[0] / self.log_interval
                     self.writer.write(
                         'Train: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
@@ -138,7 +138,7 @@ class LMTrainer:
                     else:
                         self.writer.write(
                             'Val: Epoch [%d/%d], Step[%d/%d], Loss: %.3f, Perplexity: %5.2f' %
-                                (epoch, self.args.epochs, step, len(self.train_loader) // self.args.seq_length,
+                                (epoch, self.args.epochs, step + 1, len(self.train_loader) // self.args.seq_length,
                                 val_loss, math.exp(val_loss)))
 
             if self.early_stopping.is_activated():
