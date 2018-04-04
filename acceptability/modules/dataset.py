@@ -205,6 +205,7 @@ class LMDataset():
 
                 if len(line) >= 4:
                     words = self.preprocess(line[3].strip().split(' '))
+
                     for word in words:
                         self.tokens[num_tokens] = self.vocab.stoi[word]
                         num_tokens += 1

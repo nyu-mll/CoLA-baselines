@@ -70,6 +70,10 @@ class LMTrainer:
 
         self.checkpoint.load_state_dict()
 
+        if torch.cuda.device_count() > 1:
+            print("Using ", torch.cuda.device_count(), " GPUs")
+            self.model = torch.nn.DataParallel(self.model)
+
         if self.args.gpu:
             self.model = self.model.cuda()
 
