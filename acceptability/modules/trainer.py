@@ -41,7 +41,6 @@ class Trainer:
             vocab = sentence_field.vocab
             self.embedding = nn.Embedding(len(vocab), len(vocab.vectors[0]))
             self.embedding.weight.data.copy_(vocab.vectors)
-            self.embedding.weight.requires_grad = False
             self.train_loader = get_iter(self.args, self.train_dataset)
             self.val_loader = get_iter(self.args, self.val_dataset)
             self.test_loader = get_iter(self.args, self.test_dataset)
@@ -68,6 +67,8 @@ class Trainer:
                 pin_memory=self.args.gpu
             )
 
+        if not self.args.train_embeddings:
+            self.embedding.weight.requires_grad = False
 
     def load(self):
         self.model = get_model_instance(self.args)

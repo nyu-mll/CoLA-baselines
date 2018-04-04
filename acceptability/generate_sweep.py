@@ -50,7 +50,7 @@ lm_parser.add_argument('-m', '--model', default="lstm",
 lm_parser.set_defaults(sweep_type="lm")
 
 classifier_parser = subparsers.add_parser('classifier',
-                            help="Generate sweeps for classifier sweeps")
+                            help="Generate sweeps for classifier")
 classifier_parser.set_defaults(sweep_type="classifier")
 
 classifier_parser.add_argument('-v', '--vocab', type=str, help="Vocab file location")
@@ -66,13 +66,15 @@ classifier_parser.add_argument('--encoding_size', type=int, default=None,
 classifier_parser.add_argument('--encoder_num_layers', type=int, default=None,
                                   help="Num layers of encoder, only to be used if you are loading a pretrained encoder")
 
-classifier_parser.add_argument('--max_pool', action="store_false", default=False,
+classifier_parser.add_argument('--max_pool', action="store_true", default=False,
                                   help="Use max-pooling for CBOW")
+classifier_parser.add_argument('--train_embeddings', action="store_true", default=False,
+                                  help="Train word embeddings")
 classifier_parser.add_argument('-m', '--model', type=str, default=None,
                                   help="Model")
-classifier_parser.add_argument("--should_not_preprocess_data", action="store_false", default=False,
+classifier_parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
                                   help="Whether to preprocess data? Default: true (Will preprocess)")
-classifier_parser.add_argument("--should_not_lowercase", action="store_false", default=False,
+classifier_parser.add_argument("--should_not_lowercase", action="store_true", default=False,
                                   help="Should lowercase data? Default: true (Will lowercase)")
 classifier_parser.add_argument("--preprocess_tokenizer", default=None, type=str,
                                   help="Type of tokenizer to use (space|nltk)")
@@ -234,6 +236,9 @@ def get_fixed_classifier_run_params(args):
 
     if args.should_not_lowercase:
         params.append('--should_not_lowercase')
+
+    if args.train_embeddings:
+        params.append('--train_embeddings')
 
     if args.preprocess_tokenizer is not None:
         params.append('--preprocess_tokenizer')

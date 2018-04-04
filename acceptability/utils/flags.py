@@ -28,6 +28,8 @@ def get_parser():
                         help="Embedding dimension for custom embedding")
     parser.add_argument("-ep", "--embedding_path", type=str, default=None,
                         help="If specified, custom embedding will be loaded from this path")
+    parser.add_argument("--train_embeddings", action="store_true", default=False,
+                        help="Whether to train embeddings?")
 
     parser.add_argument("-l", "--logs_dir", type=str, default="./logs",
                         help="Log directory")
@@ -109,7 +111,7 @@ def get_parser():
 
 
 def get_lm_parser():
-    parser = argparse.ArgumentParser("Acceptability Judgments Generator")
+    parser = argparse.ArgumentParser("Acceptability Judgments LM")
     parser.add_argument("-d", "--data", type=str,
                         help="Directory containing train.tsv and valid.tsv")
     parser.add_argument("-v", "--vocab_file", type=str,
