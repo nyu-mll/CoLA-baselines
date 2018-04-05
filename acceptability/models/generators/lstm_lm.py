@@ -19,7 +19,7 @@ class LSTMLanguageModel(nn.Module):
         self.embedding = nn.Embedding(self.vocab_size, self.emb_dim)
         self.lstm = nn.LSTM(input_size=emb_dim, hidden_size=self.hidden_dim,
                             num_layers=num_layers, dropout=dropout,
-                            bidirectional=bidirectional)
+                            bidirectional=bidirectional, batch_first=True)
         self.fc = nn.Linear(self.hidden_dim, vocab_size)
 
         self.init_weights()
@@ -31,16 +31,22 @@ class LSTMLanguageModel(nn.Module):
         self.fc.weight.data.uniform_(-init_range, init_range)
         self.fc.bias.data.fill_(0.0)
 
-    def forward(self, x, hidden):
+    # Target is required as a hack around data parallel
+    def forward(self, x, hidden, targets):
         x = self.dropout(self.embedding(x))
         out, hidden = self.lstm(x, hidden)
         out = self.dropout(out)
         logits = self.fc(out.view(-1, self.hidden_dim))
-        return logits, hidden
+        return logits, hidden, targets
 
     def init_hidden(self, bsz=None):
         if not bsz:
             bsz = self.batch_size
+
+        # Hacks for data parallel
+        if torch.cuda.is_available():
+            bsz //= torch.cuda.device_count()
+
         weight = next(self.parameters()).data
         return (Variable(weight.new(self.num_layers, bsz, self.hidden_dim).zero_()),
                 Variable(weight.new(self.num_layers, bsz, self.hidden_dim).zero_()))

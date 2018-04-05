@@ -117,9 +117,10 @@ class LMTrainer:
                 data, targets = Variable(data), Variable(targets)
                 hidden = repackage_hidden(hidden)
 
+                data = data.t()
                 self.model.zero_grad()
 
-                output, hidden = self.model(data, hidden)
+                output, hidden, targets = self.model(data, hidden, targets)
 
                 loss = self.criterion(output.view(-1, ntokens), targets)
                 loss.backward()
@@ -172,7 +173,8 @@ class LMTrainer:
         for _, i in enumerate(range(0, loader.size(0) - 1, self.args.seq_length)):
             data, targets = get_batch(loader, i, self.args.seq_length, evaluation=True)
             data, targets = Variable(data, volatile=True), Variable(targets, volatile=True)
-            output, hidden = self.model(data, hidden)
+            data = data.t()
+            output, hidden, targets = self.model(data, hidden, targets)
             output_flat = output.view(-1, ntokens)
             tokens += output_flat.size(0)
             total_loss += self.criterion(output_flat, targets).data
