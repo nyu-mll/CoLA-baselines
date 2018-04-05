@@ -106,7 +106,11 @@ class LMTrainer:
             self.current_epoch = epoch
             total_loss = 0
             ntokens = self.train_data.get_vocab_size()
-            hidden = self.model.init_hidden(self.args.batch_size)
+
+            if type(self.model) == torch.nn.DataParallel:
+                hidden = self.model.module.init_hidden(self.args.batch_size)
+            else:
+                hidden = self.model.init_hidden(self.args.batch_size)
 
             for step, i in enumerate(np.random.permutation(len(batches))):
                 data, targets = batches[i]
@@ -155,7 +159,12 @@ class LMTrainer:
     def validate(self, loader):
         self.model.eval()
         total_loss = 0
-        hidden = self.model.init_hidden(self.args.batch_size)
+
+        if type(self.model) == torch.nn.DataParallel:
+            hidden = self.model.module.init_hidden(self.args.batch_size)
+        else:
+            hidden = self.model.init_hidden(self.args.batch_size)
+
         ntokens = self.train_data.get_vocab_size()
 
         tokens = 0
