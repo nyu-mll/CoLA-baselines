@@ -33,7 +33,9 @@ class Checkpoint:
         print("Loading checkpoint")
 
         loaded = torch.load(file)
-        self.trainer.model.load_state_dict(loaded['model'])
+        model = self._get_model()
+
+        model.load_state_dict(loaded['model'])
         self.trainer.optimizer.load_state_dict(loaded['optimizer'])
         self.trainer.current_epoch = loaded['current_epoch']
         self.trainer.early_stopping.best_monitored_metric = loaded['best_metric']
@@ -47,8 +49,10 @@ class Checkpoint:
         if not os.path.exists(os.path.dirname(self.experiment_ckpt_path)):
             os.mkdir(os.path.dirname(self.experiment_ckpt_path))
 
+        model = self._get_model()
+
         save = {
-            'model': self.trainer.model.state_dict(),
+            'model': model.state_dict(),
             'optimizer': self.trainer.optimizer.state_dict(),
             'current_epoch': self.trainer.current_epoch,
             'best_metric': self.trainer.early_stopping.best_monitored_metric,
@@ -60,14 +64,24 @@ class Checkpoint:
         self.save_embedding()
 
     def restore(self):
+        model = self._get_model()
+
         if os.path.exists(self.experiment_ckpt_path):
-            self.trainer.model.load_state_dict(torch.load(self.experiment_ckpt_path)['model'])
+            model.load_state_dict(torch.load(self.experiment_ckpt_path)['model'])
+
+    def _get_model(self):
+        if type(self.trainer.model) == torch.nn.DataParallel:
+            model = self.trainer.model.module
+        else:
+            model = self.trainer.model
+        return model
 
     def finalize(self):
         if not os.path.exists(os.path.dirname(self.final_model_path)):
             os.mkdir(os.path.dirname(self.final_model_path))
 
-        torch.save(self.trainer.model, self.final_model_path)
+        model = self._get_model()
+        torch.save(model, self.final_model_path)
         self.save_embedding()
 
     def save_embedding(self):
