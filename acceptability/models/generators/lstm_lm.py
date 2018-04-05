@@ -34,7 +34,14 @@ class LSTMLanguageModel(nn.Module):
     # Target is required as a hack around data parallel
     def forward(self, x, hidden, targets):
         x = self.dropout(self.embedding(x))
+
+        hidden[0] = hidden[0].t()
+        hidden[1] = hidden[1].t()
+
         out, hidden = self.lstm(x, hidden)
+
+        hidden[0] = hidden[0].t()
+        hidden[1] = hidden[1].t()
         out = self.dropout(out)
         logits = self.fc(out.view(-1, self.hidden_dim))
         return logits, hidden, targets

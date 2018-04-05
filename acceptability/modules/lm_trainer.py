@@ -112,6 +112,9 @@ class LMTrainer:
             else:
                 hidden = self.model.init_hidden(self.args.batch_size)
 
+            hidden[0] = hidden[0].t()
+            hidden[1] = hidden[1].t()
+
             for step, i in enumerate(np.random.permutation(len(batches))):
                 data, targets = batches[i]
                 data, targets = Variable(data), Variable(targets)
@@ -166,6 +169,8 @@ class LMTrainer:
         else:
             hidden = self.model.init_hidden(self.args.batch_size)
 
+        hidden[0] = hidden[0].t()
+        hidden[1] = hidden[1].t()
         ntokens = self.train_data.get_vocab_size()
 
         tokens = 0
