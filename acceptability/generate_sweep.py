@@ -86,14 +86,14 @@ space = {
             'hidden_size': hp.uniform('hidden_size', 300, 1200),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
             'learning_rate': hp.uniform('learning_rate', -4, -2.5),
-            'num_layers': hp.uniform('num_layers', 1, 4),
+            'num_layers': hp.uniform('num_layers', 1, 5),
             'dropout': hp.choice('dropout', [0.2, 0.5])
     }]),
     'classifier': hp.choice('classifier', [{
             'hidden_size': hp.uniform('hidden_size', 300, 1200),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
             'learning_rate': hp.uniform('learning_rate', -4, -2.5),
-            'num_layers': hp.uniform('num_layers', 1, 4),
+            'num_layers': hp.uniform('num_layers', 1, 5 ),
             'encoding_size': hp.uniform('encoding_size', 300, 1200),
             'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 4)
     }])
@@ -115,9 +115,9 @@ def generate_lm_sweeps(args):
         lines[4] += str(index)
 
         if args.email:
-            lines[9] += output_name
+            lines[9] = lines[9] + '-' + str(index) + '-%j_' + output_name
         else:
-            lines[7] += output_name
+            lines[7] = lines[7] + '-' + str(index) + '-%j_' + output_name
 
         params_line = run_line + ' ' + params_line
 
@@ -147,9 +147,9 @@ def generate_classifier_sweeps(args):
         lines[4] += str(index)
 
         if args.email:
-            lines[9] += output_name
+            lines[9] = lines[9] + '-' + str(index) + '-%j_' + output_name
         else:
-            lines[7] += output_name
+            lines[7] = lines[7] + '-' + str(index) + '-%j_' + output_name
 
         params_line = run_line + ' ' + params_line
 
@@ -185,7 +185,7 @@ def write_slurm_file(data, folder, typ, model_name, index):
 def generate_sbatch_params(args):
     params = {
         'job-name': 'a' + args.sweep_type if args.job_name is None else args.job_name,
-        'output': 'slurm-%j_',
+        'output': 'slurm',
         'nodes': 1,
         'cpus-per-task': args.cpus_per_task,
         'mem': args.mem,
