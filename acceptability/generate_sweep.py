@@ -95,7 +95,7 @@ space = {
             'learning_rate': hp.uniform('learning_rate', -4, -2.5),
             'num_layers': hp.uniform('num_layers', 1, 5 ),
             'encoding_size': hp.uniform('encoding_size', 300, 1200),
-            'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 4)
+            'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 5)
     }])
 }
 
