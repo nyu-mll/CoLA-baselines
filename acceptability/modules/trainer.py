@@ -89,6 +89,7 @@ class Trainer:
 
         if self.args.gpu:
             self.model = self.model.cuda()
+            self.embedding = self.embedding.cuda()
 
 
     def train(self):
