@@ -79,6 +79,9 @@ def get_parser():
                         help="Number of layers for LSTM")
     parser.add_argument("-lr", "--learning_rate", type=float, default=.0005,
                         help="Learning rate")
+    parser.add_argument("-do", "--dropout", type=float, default=0.5,
+                        help="Dropout")
+
 
     # Encoder parameter
     parser.add_argument("--encoding_size", type=int, default=100,

@@ -9,6 +9,8 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('-f', '--folder', default="/home/$USER/acceptability-judgments",
                     help="Path for acceptability judgments repository")
+parser.add_argument('-sf', '--slurm_folder', default="./slurm_jobs",
+                    help="Folder in which we should generate sbatch files")
 parser.add_argument('-n', '--num_sweeps', type=int, default=1,
                     help="Number of sweeps to generate")
 
@@ -95,10 +97,11 @@ space = {
     'classifier': hp.choice('classifier', [{
             'hidden_size': hp.uniform('hidden_size', 300, 1200),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
-            'learning_rate': hp.uniform('learning_rate', -4, -2.5),
+            'learning_rate': hp.uniform('learning_rate', -5, -3.5),
             'num_layers': hp.uniform('num_layers', 1, 5 ),
             'encoding_size': hp.uniform('encoding_size', 300, 1200),
-            'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 5)
+            'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 5),
+            'dropout': hp.choice('dropout', [0.2, 0.5])
     }])
 }
 
@@ -129,7 +132,7 @@ def generate_lm_sweeps(args):
         lines = lines + post_shell
         slurm_file = '\n'.join(lines)
 
-        write_slurm_file(slurm_file, 'slurm_jobs', args.sweep_type, args.model, index)
+        write_slurm_file(slurm_file, args.slurm_folder, args.sweep_type, args.model, index)
 
 
 def generate_classifier_sweeps(args):
@@ -161,7 +164,7 @@ def generate_classifier_sweeps(args):
         lines = lines + post_shell
         slurm_file = '\n'.join(lines)
 
-        write_slurm_file(slurm_file, 'slurm_jobs', args.sweep_type, args.model, index)
+        write_slurm_file(slurm_file, args.slurm_folder, args.sweep_type, args.model, index)
 
 
 def get_fixed_lines(args):
@@ -294,11 +297,11 @@ def get_sampled_params_for_classifier(args, space, index=1, has_pretrained_encod
     sample['encoder_num_layers'] = int(sample['encoder_num_layers'])
 
 
-    output = 'lr_%.5f_nl_%d_hs_%d' % (sample['learning_rate'],
-             sample['num_layers'], sample['hidden_size'])
+    output = 'lr_%.5f_nl_%d_hs_%d_do_%.1f' % (sample['learning_rate'],
+             sample['num_layers'], sample['hidden_size'], sample['dropout'])
 
-    params = '-lr %.5f -nl %d -hs %d' % (sample['learning_rate'],
-             sample['num_layers'], sample['hidden_size'])
+    params = '-lr %.5f -nl %d -hs %d -do %.1f' % (sample['learning_rate'],
+             sample['num_layers'], sample['hidden_size'], sample['dropout'])
 
     if has_pretrained_encoder:
         sample.pop('encoder_num_layers')
@@ -307,7 +310,7 @@ def get_sampled_params_for_classifier(args, space, index=1, has_pretrained_encod
         output += '_ed_%d_es_%d_enl_%d.out' % (args.embedding_size,
                   args.encoder_num_layers, args.encoding_size)
     else:
-        output += '_ed_%d_es_%d_enl_%d.out' % (sample['emedding_size'], sample['encoding_size'],
+        output += '_ed_%d_es_%d_enl_%d.out' % (sample['embedding_size'], sample['encoding_size'],
                   sample['encoder_num_layers'])
         params += ' -es %d --encoding_size %d --encoder_num_layers %d' % (sample['embedding_size'],
                     sample['encoding_size'],

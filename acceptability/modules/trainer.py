@@ -75,6 +75,7 @@ class Trainer:
 
         if not self.args.train_embeddings:
             self.embedding.weight.requires_grad = False
+            self.embedding.eval()
 
     def load(self):
         self.model = get_model_instance(self.args)
@@ -238,7 +239,10 @@ class Trainer:
             else:
                 correct += (y == output).data.sum()
         self.model.train()
-        self.embedding.train()
+
+        if self.args.train_embeddings:
+            self.embedding.train()
+
         avg_loss = total_loss / total
 
         return correct / total * 100, avg_loss, \

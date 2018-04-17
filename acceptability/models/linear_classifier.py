@@ -11,9 +11,10 @@ class LinearClassifier(nn.Module):
     Hidden layer (encoding 2 * encoding_size * hidden_size)
     Output layer (hidden_size * 1)
     """
-    def __init__(self, hidden_size, encoding_size):
+    def __init__(self, hidden_size, encoding_size, dropout=0.5):
         super(LinearClassifier, self).__init__()
         self.hidden_size = hidden_size
+        self.dropout = nn.Dropout(dropout)
         self.enc2h = nn.Linear(2 * encoding_size, self.hidden_size)
         self.h20 = nn.Linear(self.hidden_size, 1)
         self.sigmoid = nn.Sigmoid()
@@ -21,13 +22,13 @@ class LinearClassifier(nn.Module):
         self.softmax = nn.Softmax()
 
     def forward(self, sentence_vecs):
-        hidden = self.tanh(self.enc2h(sentence_vecs))
+        hidden = self.tanh(self.dropout(self.enc2h(sentence_vecs)))
         out = self.sigmoid(self.h20(hidden))
         return out
 
 class LinearClassifierWithEncoder(nn.Module):
     def __init__(self, hidden_size, encoding_size,
-                 embedding_size, num_layers,
+                 embedding_size, num_layers, dropout=0.5,
                  encoder_type="lstm_pooling_classifier",
                  encoder_num_layers=1,
                  encoder_path=None):
@@ -38,7 +39,7 @@ class LinearClassifierWithEncoder(nn.Module):
         self.num_layers = num_layers
         self.encoder_num_layers = encoder_num_layers
 
-        self.model = LinearClassifier(self.hidden_size, self.encoding_size)
+        self.model = LinearClassifier(self.hidden_size, self.encoding_size, dropout)
         self.encoder = get_encoder_instance(encoder_type, encoding_size,
                                             embedding_size, encoder_num_layers,
                                             encoder_path)

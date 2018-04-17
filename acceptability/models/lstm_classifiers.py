@@ -26,20 +26,22 @@ class LSTMClassifier(nn.Module):
 
 
 class LSTMPoolingClassifier(nn.Module):
-    def __init__(self, hidden_size, embedding_size, num_layers):
+    def __init__(self, hidden_size, embedding_size, num_layers, dropout=0.5):
         super(LSTMPoolingClassifier, self).__init__()
         self.hidden_size = hidden_size
         self.embedding_size = embedding_size
         self.num_layers = num_layers
         self.ih2h = nn.LSTM(embedding_size, hidden_size, num_layers=num_layers,
-                            bidirectional=True, batch_first=True)
+                            bidirectional=True, batch_first=True, dropout=dropout)
         self.pool2o = nn.Linear(2 * hidden_size, 1)
         self.sigmoid = nn.Sigmoid()
         self.softmax = nn.Softmax()
+        self.dropout = nn.Dropout(p=dropout)
 
     def forward(self, x):
         o, _ = self.ih2h(x)
         pool = nn.functional.max_pool1d(o.transpose(1, 2), x.shape[1])
         pool = pool.transpose(1, 2).squeeze()
+        pool = self.dropout(pool)
         output = self.sigmoid(self.pool2o(pool))
         return output.squeeze(), pool

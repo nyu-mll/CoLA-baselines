@@ -5,7 +5,7 @@ class CBOWClassifier(nn.Module):
     """
     Continuous bag of words classifier.
     """
-    def __init__(self, hidden_size, input_size, max_pool):
+    def __init__(self, hidden_size, input_size, max_pool, dropout=0.5):
         """
         :param hidden_size:
         :param input_size:
@@ -16,6 +16,7 @@ class CBOWClassifier(nn.Module):
         self.hidden_size = hidden_size
         self.input_size = input_size
         self.max_pool = max_pool
+        self.dropout = nn.Dropout(p=dropout)
         self.i2h = nn.Linear(self.input_size, self.hidden_size)
         self.h2o = nn.Linear(self.hidden_size, 1)
         self.sigmoid = nn.Sigmoid()
@@ -28,6 +29,7 @@ class CBOWClassifier(nn.Module):
             encoding = encoding.transpose(1, 2).squeeze()
         else:
             encoding = x.sum(1)
-        hidden = self.tanh(self.i2h(encoding))
+        encoding = self.dropout(encoding)
+        hidden = self.tanh(self.dropout(self.i2h(encoding)))
         out = self.sigmoid(self.h2o(hidden))
         return out

@@ -18,7 +18,8 @@ def get_model_instance(args):
         return LSTMPoolingClassifier(
             hidden_size=args.hidden_size,
             embedding_size=args.embedding_size,
-            num_layers=args.num_layers
+            num_layers=args.num_layers,
+            dropout=args.dropout
         )
     elif args.model == "linear_classifier":
         # TODO: Add support for encoder here later
@@ -29,13 +30,15 @@ def get_model_instance(args):
             num_layers=args.num_layers,
             encoder_type=args.encoding_type,
             encoder_num_layers=args.encoder_num_layers,
-            encoder_path=args.encoder_path
+            encoder_path=args.encoder_path,
+            dropout=args.dropout
         )
     elif args.model == "cbow_classifier":
         return CBOWClassifier(
             hidden_size=args.hidden_size,
             input_size=args.embedding_size,
-            max_pool=args.max_pool
+            max_pool=args.max_pool,
+            dropout=args.dropout
         )
     else:
         return None
@@ -76,12 +79,13 @@ def get_experiment_name(args):
     # l -> layers
     # lr -> learning rate
     # e -> encoding_size
-    name = "experiment_%s_h_%d_l_%d_lr_%.4f_e_%d" % (
+    name = "experiment_%s_h_%d_l_%d_lr_%.4f_e_%d_do_%.1f" % (
         args.model,
         args.hidden_size,
         args.num_layers,
         args.learning_rate,
-        args.encoding_size
+        args.embedding_size,
+        args.dropout
     )
 
     return name
