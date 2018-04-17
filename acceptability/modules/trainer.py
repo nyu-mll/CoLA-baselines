@@ -37,7 +37,7 @@ class Trainer:
         if self.args.imbalance:
             self.weights = np.array([0.705, 0.295])
         else:
-            self.weights = np.array([1, 1])
+            self.weights = None
 
     def load_datasets(self):
         self.train_dataset, self.val_dataset, self.test_dataset, \
@@ -133,9 +133,17 @@ class Trainer:
                     output = output[0]
                 output = output.squeeze()
 
-                weights = torch.from_numpy(self.weights[y.numpy()]).float()
-                loss = nn.functional.binary_cross_entropy(output, y.float(),
-                                                          weight=weights)
+                if self.weights is not None:
+                    weights = torch.from_numpy(self.weights[y.data.cpu().numpy()])
+                    weights = weights.float()
+
+                    if self.args.gpu:
+                        weights = weights.cuda()
+
+                    loss = nn.functional.binary_cross_entropy(output, y.float(),
+                                                              weight=weights)
+                else:
+                    loss = self.criterion(output, y.float())
                 loss.backward()
 
                 self.optimizer.step()
@@ -207,9 +215,18 @@ class Trainer:
                 output = output[0]
             output = output.squeeze()
 
-            weights = torch.from_numpy(self.weights[y.numpy()]).float()
-            loss = nn.functional.binary_cross_entropy(output, y.float(), weight=weights,
-                                                      size_average=False)
+            if self.weights is not None:
+                weights = torch.from_numpy(self.weights[y.data.cpu().numpy()])
+                weights = weights.float()
+                if self.args.gpu:
+                    weights = weights.cuda()
+
+                loss = nn.functional.binary_cross_entropy(output, y.float(),
+                                                          weight=weights,
+                                                          size_average=False)
+            else:
+                loss = nn.functional.binary_cross_entropy(output, y.float(),
+                                                          size_average=False)
             total_loss = loss.data[0]
             total += len(y)
             output = (output > 0.5).long()

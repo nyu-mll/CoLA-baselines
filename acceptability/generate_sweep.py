@@ -228,7 +228,7 @@ def get_fixed_lm_run_params(args):
     return ' '.join(params)
 
 def get_fixed_classifier_run_params(args):
-    params = ['-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab,
+    params = ['-m', args.model, '-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab,
               '--logs_dir', args.logs_dir, '-g', '-r', '-p', str(args.patience)]
 
     if args.max_pool:
@@ -259,12 +259,12 @@ def get_fixed_classifier_run_params(args):
         params.append(str(args.epochs))
 
     if args.encoder_path is not None:
-        params.append('---encoder_path')
+        params.append('--encoder_path')
         params.append(str(args.encoder_path))
 
-        if args.encoding_num_layers is not None:
-            params.append('--encoding_num_layers')
-            params.append(str(args.encoding_num_layers))
+        if args.encoder_num_layers is not None:
+            params.append('--encoder_num_layers')
+            params.append(str(args.encoder_num_layers))
 
         if args.encoding_size is not None:
             params.append('--encoding_size')

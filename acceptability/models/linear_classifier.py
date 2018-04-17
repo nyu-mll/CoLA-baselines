@@ -62,7 +62,7 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
         )
 
         if encoder_path is not None:
-            encoder.load_state_dict(torch.load(encoder_path))
+            encoder.load_state_dict(torch.load(encoder_path)['model'])
 
             # Since we have loaded freeze params
             for p in encoder.parameters():
