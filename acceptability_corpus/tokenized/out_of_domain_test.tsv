@@ -1,0 +1,533 @@
+clc95	1		they claimed they had settled on something , but it was n't clear what .
+clc95	1		somebody just left - guess who just left .
+clc95	1		this opera was written in the 19th century , but we 're not sure by whom .
+clc95	1		he 's going to give us one old problem for the test , but which problem is n't clear .
+clc95	1		she 's reading something . i ca n't imagine what .
+clc95	1		if sam was going somewhere , sally would know where .
+clc95	1		they 're going to serve the guests , but it 's unclear what .
+clc95	1		joan ate dinner but i do n't know with whom .
+clc95	1		i served leek soup .
+clc95	1		i served my guests leek soup .
+clc95	1		she served the soup , but i do n't know to whom .
+clc95	0	*	she served the soup , but i do n't know who .
+clc95	1		she served the students , but i do n't know what .
+clc95	1		she was reading , but i could n't make out what .
+clc95	0	*	the ship sank with a torpedo .
+clc95	0	*	they noticed the painting for an hour .
+clc95	0	*	she knew french , but i do n't know for whom .
+clc95	1		since jill said joe had invited sue , we did n't have to ask who .
+clc95	1		because we suspected joe had given it to max , we then asked who he had given it to .
+clc95	1		she did n't talk to one student ; i wonder who .
+clc95	1		the newspaper has reported that they are about to appoint someone , but i ca n't remember who .
+clc95	1		most columnists claim that a senior white house official has been briefing them .
+clc95	1		most columnists claim that a senior white house official has been briefing them , but none will reveal which one has been briefing them .
+clc95	1		we know how many papers this reviewer has read , but we do n't know which ones .
+clc95	1		joan said she talked to some students but i do n't know who .
+clc95	1		john read three of the books but i do n't know which ones .
+clc95	1		we should put them in the dining room but it 's not clear where .
+clc95	1		we should put them somewhere in the dining room but it 's not clear where .
+clc95	1		they were going to meet sometime on sunday , but the faculty did n't know when they were going to meet .
+clc95	1		i do n't know who the students john likes are .
+clc95	1		he announced he had eaten the asparagus , but we did n't know which asparagus .
+clc95	1		she read until midnight , and i wonder what she read .
+clc95	1		they were eating , and i wonder what they were eating .
+clc95	0	*	she found out , and i wonder what .
+clc95	0	*	they applied yesterday , and i wonder what for .
+clc95	1		john is working on war and peace but i do n't know which chapter .
+clc95	1		she read one of the books but i do n't know whose .
+clc95	1		she talked to several students but i do n't know how many .
+clc95	0	*	she said she talked to few students , but i do n't know how many .
+clc95	0	*	everyone said they would come but i do n't know how many of them .
+clc95	1		she was dancing , but i do n't know who with .
+clc95	1		charles was criticized , but i ca n't remember who by .
+clc95	1		charles was criticized by some students , but i ca n't remember which ones .
+clc95	1		meg is attracted to somebody , but they do n't know who .
+clc95	0	*	meg is attracted to harry , but they do n't know who .
+clc95	1		meg is attracted to somebody , but they do n't know who she .
+clc95	1		that certain countries would vote against the resolution has been widely reported , but i 'm not sure which ones .
+clc95	1		the administration has issued a statement that it is willing to meet with one of the student groups , but i 'm not sure which one .
+clc95	0	*	that certain countries would vote against the resolution has been widely reported , but i 'm not sure which ones .
+clc95	0	*	the administration has issued a statement that it is willing to meet with one of the student groups , but i 'm not sure which one .
+clc95	0	*	what circumstances will we use force under ?
+clc95	0	*	what sense is this theory right in ?
+clc95	1		we are willing to use force under certain circumstances , but we will not say in advance which ones , .
+clc95	1		this theory is surely right in some sense ; it 's just not clear which .
+clc95	0	*	they persuaded kennedy and some other senator to jointly sponsor the legislation , but i ca n't remember which one .
+clc95	1		it has been determined that somebody will be appointed ; it 's just not clear yet who .
+clc95	1		sally asked if somebody was going to fail syntax one , but i ca n't remember who .
+clc95	0	*	why is sandy wondering whether there will be students who have to drop the class ?
+clc95	1		that certain countries would vote against the resolution has been widely reported .
+clc95	1		sandy was trying to work out which students would be able to solve a problem , but she would n't tell us which one .
+clc95	0	*	that tom will win is likely , but it 's not clear which race .
+clc95	1		it 's likely that tom will win , but it 's not clear which race .
+clc95	0	*	bob found a plumber to fix the sink but it 's not clear what with .
+clc95	0	*	sandy is very anxious to see which students will be able to solve the homework problem , but she wo n't say how .
+clc95	0	*	clinton is anxious to find out which budget dilemmas panetta would be willing to tackle , but he wo n't say how .
+clc95	1		we do n't know with whom she 's been dancing .
+c-05	1		john wrote the book .
+c-05	1		the book was written by john .
+c-05	1		danger was sensed by john .
+c-05	1		a black smoke was emitted by the radiator .
+c-05	1		a copy of guns , germs , and steel has now been received by each member of the incoming class .
+c-05	1		i was told that by a little bird .
+c-05	1		the argument was summed up by the coach .
+c-05	1		john has seen the book .
+c-05	0	*	the book has seen by mary .
+c-05	1		breakfast is eaten nude by the campers .
+c-05	1		breakfast is eaten by the campers nude .
+c-05	1		the metal was hammered flat by john .
+c-05	0	*	the metal was hammered by john flat .
+c-05	1		mary was given the book by john .
+c-05	1		i was convinced to leave by john .
+c-05	1		i was convinced by john to leave .
+c-05	1		the car was driven to maine by john .
+c-05	1		the book was given to mary by john .
+c-05	1		the book was given by john to mary .
+c-05	0	*	testimony was given about himself by the suspect .
+c-05	0	*	books were sent to each other by the students .
+c-05	0	*	money was hidden from himself by bill .
+c-05	0	*	medals were given to themselves by the generals .
+c-05	0	*	medals were given to each other by the generals .
+c-05	0	*	tabs were kept on each other by the agents .
+c-05	1		testimony was given by the suspect about himself .
+c-05	0	*	money was given to his mother by every boy .
+c-05	1		books were given to no student by any professor .
+c-05	1		tabs were kept on no criminal by any agent .
+c-05	1		books were given to each student by the other .
+c-05	1		chocolate eggs were hidden from each child by the other .
+c-05	1		books were given to every student by his mother .
+c-05	1		tabs were kept on every agent by his supervisor .
+c-05	1		books were taken from no student by any professor .
+j_71	1		max ate the apple and sally the hamburgers .
+j_71	1		ivan plays bassoon , boris oboe , and schwarz english horn .
+j_71	1		mary is believed to be , and sue definitely is , pregnant .
+j_71	0	*	dolores gave incriminating evidence about harry to the fbi , and frank sent to his mother-in-law .
+j_71	1		sam plays the bassoon , and max the saxophone .
+j_71	0	*	sam played tuba whenever max sax .
+j_71	0	*	john plays bagpipe despite the fact that bill the bassoon .
+j_71	1		bill ate the peaches and harry the grapes .
+j_71	1		john has written the words , and paul the music .
+j_71	0	*	john has written the words , and paul has the music .
+j_71	0	*	simon quickly dropped the gold , and jack suddenly the diamonds .
+j_71	0	*	max sometimes beats his wife , and ted frequently his dog .
+j_71	1		are quickly drops and sometimes beats , not just dropped and beats : .
+j_71	1		max sometimes beats his wife , and ted his dog .
+j_71	1		i did n't eat fish , bill did n't eat rice , and harry did n't eat roast beef .
+j_71	0	*	i did n't eat fish , bill rice , and harry roast beef .
+j_71	1		john writes poetry in the garden , and max in the bathroom .
+j_71	1		charlie went into the bedroom at 5:30 , and lola at 5:35 .
+j_71	0	*	i want bob to shave himself , and mary to wash himself .
+j_71	0	*	bill is depending on harry to find the way to the party , and sue to find the way home .
+j_71	1		arizona elected goldwater senator , and pennsylvania , goldstein .
+j_71	1		max writes poetry in the bathroom , and schwarz radical pamphlets .
+j_71	1		maytag will give a brand new dryer to the winner of the mrs. albania contest , and general electric , four hundred light bulbs .
+j_71	1		jack begged elsie to get married , and wilfred , phoebe .
+j_71	1		harry told sue , and tom sally , that albania is a lovely place for a vacation .
+j_71	0	*	joe informed lucy that tagalog is spoken in the philippines , and bill jane that khmer is spoken in cambodia .
+j_71	0	*	frank forced tom to shave himself , and sam , harry to watch .
+j_71	0	*	willy put the flowers in a vase , and charlie the book on the table .
+j_71	1		arizona elected goldwater senator and massachusetts mccormack .
+j_71	1		arizona elected goldwater senator and mccormack congressman .
+j_71	0	*	bill ate the peaches , and harry .
+j_71	1		bill ate the peaches , and harry , too .
+j_71	1		either bill ate the peaches , or harry .
+j_71	1		either ivan will write the play , or boris will .
+j_71	1		tom has n't smoked the grass , nor has reuben .
+j_71	1		frank may have told chet , and joe may have , too .
+j_71	1		bill must quickly eat the peaches , and harry must , too .
+j_71	1		charlie will leave town if his mother-in-law does n't .
+j_71	1		tom swam the english channel because he believed that suzy ex .
+j_71	1		anyone who can , should show me how to wiggle my ears .
+j_71	1		if he has n't yet , john should try to climb the eiffel tower .
+j_71	1		i like bill 's wine , but max 's is even better .
+j_71	0	*	i like bill 's new wine , but max 's old is even better .
+j_71	1		bill 's funny story about sue and max 's about kathy both amazed me .
+j_71	0	*	bill 's funny story about sue and max 's boring about kathy both amazed me .
+j_71	1		we may safely disregard both nixon 's assurances to us that the war will end and agnew 's that we are incapacitated .
+j_71	0	*	klemperer 's recording of ives ' 1st on columbia and von karajan 's of beethoven 's 6th are my favorite .
+j_71	0	*	i was astounded by sam 's stunning defeat of ira in the chess tournament , and walt 's of willy in the hopscotch contest .
+j_71	1		either ted 's gin from new jersey or bill 's from iowa will satisfy the uneducated palates of our guests .
+j_71	0	*	i borrowed fred 's diagram of a snake 's fang because steve 's of a spider 's eye had been stolen .
+j_71	1		richter 's performance of bach on the piano does n't please me as much as glenn gould 's .
+j_71	1		jerry 's attempt to blow up the pentagon .
+s_97	1	 	whose sister always drinks milk ?
+s_97	1		i know the person whose mother 's dog died .
+s_97	1		i know the person to whom they dedicated the building .
+s_97	1		i wonder what inspired them .
+s_97	1		i wonder whose mother 's dog we were all fond of .
+s_97	1		my uncle from iowa , whose talking to sandy yesterday annoyed john , is arriving on tuesday .
+s_97	0	*	my uncle from iowa , whom talking to sandy yesterday annoyed john , is arriving on tuesday .
+s_97	0	*	goes to the store is bothering them .
+s_97	0	*	i want to be raining .
+s_97	0	*	i 'm looking for a yard in which to be a party .
+s_97	0	*	bother yourself that kim left !
+s_97	0	*	kim read which book .
+s_97	0	*	i think that who went home .
+s_97	0	*	a student whom to talk to us just walked in .
+s_97	1		i ran into the baker whose bagels i like .
+s_97	1		i ran into the baker from whom i bought these bagels .
+s_97	1		from whom did you buy these bagels ?
+s_97	1		i can find the baker in whom to place your trust .
+s_97	1		i wonder who to trust .
+s_97	0	*	these bagels , likes .
+s_97	0	*	i ran into the baker whose bagels likes .
+s_97	0	*	i ran into the baker from whom bought these bagels .
+s_97	0	*	when did you wonder what you should say to sandy ?
+s_97	0	*	it was to amuse us that they wanted .
+s_97	0	*	it was to show us that kim was singing that they wanted .
+s_97	0	*	they persuaded us to be no one available .
+s_97	1		i prefer for sandy to do the washing and kim to do the drying .
+s_97	1		kim gave a book to sandy and a record to dana .
+s_97	1		joan offered , and mary actually gave , a gold cadillac to billy .
+s_97	1		he does n't intend that , in these circumstances , we be rehired .
+s_97	0	*	he does n't intend for , in these circumstances , us to be rehired .
+s_97	1		there seems to be no way out .
+s_97	1		it seems to be raining .
+s_97	0	*	i wonder in whom for them to place their trust .
+s_97	0	*	i wonder whom for us to trust .
+s_97	0	*	i wonder who us to trust .
+s_97	0	*	i ran into the baker who to place your trust in .
+s_97	0	*	i ran into the baker whom to place your trust in .
+s_97	1		i supported each argument that sandy thought was unconvincing .
+s_97	0	*	i dislike all the people that i thought that voted in the election .
+s_97	0	*	every essay she 's written and which i 've read is on that pile .
+s_97	0	*	every essay she 's written and that i 've read is on that pile .
+s_97	1		every essay which she 's written and that i 've read is on that pile .
+s_97	1		every essay that she 's written and which i 've read is on that pile .
+s_97	0	*	i dislike the person with what we were talking .
+s_97	0	*	i dislike the person with who we were talking .
+s_97	1		the people who take this course who dana likes usually .
+s_97	1		the person i like which everyone else in the class hates is pat .
+s_97	1		the only person dana is willing to put up with who i like is pat .
+s_97	1		who that you like does sandy also like ?
+s_97	1		who whose parents attended the meeting is still enrolled in school ?
+s_97	0	*	who you like does sandy also like ?
+s_97	1		the only person for us to visit whose kids dana is willing to put up with is sue .
+s_97	1		one book for us to read that leslie praised was sense and sensibility .
+s_97	0	*	one book that leslie praised for us to read was sense and sensibility .
+s_97	1		the bills that we objected to passed by the house last week were vetoed .
+s_97	1		the only people who were at harvard being added to our group were students .
+swb04	0	*	we like us .
+swb04	1		she likes herself .
+swb04	0	*	ourselves like us .
+swb04	1		she voted for her .
+swb04	1		we voted for her .
+swb04	0	*	we voted for herself .
+swb04	0	*	we gave presents to us .
+swb04	1		leslie told us about ourselves .
+swb04	0	*	leslie told ourselves about ourselves .
+swb04	0	*	our friends like ourselves .
+swb04	0	*	those pictures of us offended ourselves .
+swb04	1		we found your letter to us in the trash .
+swb04	1		vote for us !
+swb04	0	*	vote for ourselves !
+swb04	1		we appealed to them to vote for themselves .
+swb04	1		we appealed to them to vote for us .
+swb04	1		we appeared to them to vote for them .
+swb04	1		we appeared to them to vote for ourselves .
+swb04	1		we wrapped the blankets around us .
+swb04	1		we wrapped the blankets around ourselves .
+swb04	1		the judge sent them to the pen for a decade .
+swb04	1		the cheetah will run down the hill .
+swb04	1		the president will run .
+swb04	1		this trail should run over the hill .
+swb04	1		this room will run $ 200 or more .
+swb04	1		they will run the risk .
+swb04	1		there is a run in that stocking .
+swb04	1		fats won with a run of 20 .
+swb04	1		an earthquake in romania moved buildings as far away as moscow and rome .
+swb04	1		the german shepherd turned on its master .
+swb04	1		i saw that gas can explode .
+swb04	1		the only thing capable of consuming this food has four legs and flies .
+swb04	1		they found the book on the table .
+swb04	1		which experts testified against defendants who exposed themselves ?
+swb04	1		list all experts for the defendant who represented themselves .
+swb04	1		list associates of each defendant who speak spanish .
+swb04	0	*	we persuaded there to be several students at the talk .
+swb04	0	*	sentences some go on and on .
+swb04	1		some sentences go on and on and on and on and on .
+swb04	1		a dog with brown spots chased a cat with no tail .
+swb04	1		some people yell at the noisy dogs in my neighborhood .
+swb04	1		some people yell at the noisy dogs .
+swb04	1		some people yell at dogs in my neighborhood .
+swb04	1		some people consider the noisy dogs in my neighborhood dangerous .
+swb04	1		we enjoyed the movie with cher .
+swb04	1		the room was filled with noisy children and animals .
+swb04	1		i saw the astronomer with a telescope .
+swb04	1		the fool yelled at noon .
+swb04	1		a tourist in rome laughed .
+swb04	1		the museum displayed no painting by miro or drawing by klee .
+swb04	1		you asked me to fix the drain , and fix the drain , i shall .
+swb04	1		in the morning , they drink tea .
+swb04	1		it was a book about syntax that she was reading .
+swb04	1		it is study for the exam that i urgently need to do .
+swb04	1		it is after lunch that they always fall asleep .
+swb04	0	*	many artists were represented , but painting by klee or drawing by miro the museum displayed no .
+swb04	1		the problem disappeared .
+swb04	0	*	the defendant denied .
+swb04	1		the teacher handed the student a book .
+swb04	0	*	the teacher handed a book .
+swb04	0	*	the teacher handed .
+swb04	1		birds sing .
+swb04	1		the bird devours the worm .
+swb04	1		the birds devour the worm .
+swb04	0	*	the bird devour the worm .
+swb04	0	*	the birds devours the worm .
+swb04	1		the bird gives the worm a tug .
+swb04	1		kerry remarked that it was late .
+swb04	0	*	kerry remarked .
+swb04	0	*	kerry remarked the time .
+swb04	1		everyone loves puppies .
+swb04	1		puppies are loved by everyone .
+swb04	1		i have the information .
+swb04	1		i have information .
+swb04	1		i was already aware of that fact .
+swb04	1		i know you .
+swb04	0	*	i know the you .
+swb04	1		the defendant denies the allegation .
+swb04	1		the defendants deny the allegation .
+swb04	1		the defendants walk .
+swb04	1		how many feature structure categories can label the mother node ?
+swb04	1		how many feature structures categories can label the second daughter ?
+swb04	1		pat relies on kim .
+swb04	0	*	pat relies .
+swb04	0	*	the child put the toy .
+swb04	1		the guests devoured the meal .
+swb04	0	*	the guests devoured .
+swb04	0	*	the guests dined the meal .
+swb04	1		the guests ate the meal .
+swb04	1		the guests ate .
+swb04	1		we relied upon leslie .
+swb04	0	*	we relied over leslie .
+swb04	0	*	we relied with leslie .
+swb04	0	*	we relied on top of leslie .
+swb04	1		the children are happy .
+swb04	1		the children are happy with the ice cream .
+swb04	1		the children are happy that they have ice cream .
+swb04	0	*	the children are fond .
+swb04	1		the children are fond of ice cream .
+swb04	1		the report surprised many people .
+swb04	1		the storm arrived after we ate lunch .
+swb04	1		the storm arrived during the picnic .
+swb04	0	*	the storm arrived during we ate lunch .
+swb04	1		this dog barked .
+swb04	0	*	these dog barked .
+swb04	1		much furniture was broken .
+swb04	0	*	a furniture was broken .
+swb04	0	*	much chair was broken .
+swb04	1		we want them on our team .
+swb04	1		with them on our team , we 'll be sure to win .
+swb04	1		kim walks .
+swb04	1		the child walks .
+swb04	0	*	the children walks .
+swb04	1		a dog barked .
+swb04	0	*	a dogs barked .
+swb04	1		few dogs barked .
+swb04	1		the dog barked .
+swb04	1		two cats and one dog live there .
+swb04	1		we like them .
+swb04	0	*	we like they .
+swb04	1		a rat died yesterday .
+swb04	0	*	a rat yesterday died .
+swb04	1		chris walks , eats broccoli , and plays squash .
+swb04	1		every family was saved by some dog or other .
+swb04	1		john frightens himself .
+swb04	1		susan told herself a story .
+swb04	1		susan told a story to herself .
+swb04	0	*	susan devoted her to linguistics .
+swb04	1		nobody told susan about her .
+swb04	1		susan thinks that nobody likes herself .
+swb04	1		susan thinks that nobody likes her .
+swb04	0	*	that picture of susan offended herself .
+swb04	1		sandy offended jason .
+swb04	0	*	he enjoys themselves .
+swb04	0	*	she enjoys himself .
+swb04	0	*	nobody told susan .
+swb04	1		nobody talked to susan .
+swb04	0	*	nobody talked to susan .
+swb04	1		we compared him .
+swb04	1		we compared them .
+swb04	1		i met the person who they visited .
+swb04	1		despite their average age , the charge boasts an experienced roster .
+swb04	1		the cardinal plays arizona state at 7 p.m saturday at stanford .
+swb04	1		the picture of sandy was awesome .
+swb04	1		the picture was awesome .
+swb04	1		we could n't find any pictures of blind mello jello .
+swb04	0	*	leslie slept the baby .
+swb04	0	*	dana relied .
+swb04	0	*	pat devoured .
+swb04	0	*	chris handed .
+swb04	0	*	chris handed a ticket .
+swb04	0	*	we put .
+swb04	0	*	we put on the shelf .
+swb04	0	*	we put the book .
+swb04	1		dana relied on hilary .
+swb04	1		pat devoured the sandwich .
+swb04	1		chris handed bo a ticket .
+swb04	1		we put the book on the shelf .
+swb04	0	*	dana walked and leslie running .
+swb04	0	*	the putter of books on the table left .
+swb04	0	*	the putter on the table left .
+swb04	1		jan gave dale a book .
+swb04	1		jan gave a book to dale .
+swb04	1		jan handed dale a book .
+swb04	1		jan handed a book to dale .
+swb04	0	*	kris donated the library a book .
+swb04	1		dale gave brooke a hard time .
+swb04	0	??	dale gave a hard time to brooke .
+swb04	1		pat coughed .
+swb04	1		pat coughed the napkin off the table .
+swb04	1		the horse kicked me .
+swb04	1		they yelled their way into the meeting .
+swb04	1		kim is standing here .
+swb04	1		sandy has eaten dinner .
+swb04	1		the boat floated down the river sank .
+swb04	1		the horse taken to the hospital died .
+swb04	1		the boat that was floated down the river sank .
+swb04	1		the thief seized by the police turned out to be our cousin .
+swb04	1		the evidence that was assembled by the prosecution convinced the jury .
+swb04	1		the thief who was seized by the police turned out to be our cousin .
+swb04	1		lou forgot the umbrella was broken .
+swb04	1		dana learned the umbrella was broken .
+swb04	1		dana learned a new theorem in class .
+swb04	1		lynn likes the hat on the shelf .
+swb04	1		the artist drew the child with a bicycle .
+swb04	1		lynn bought the hat on the shelf .
+swb04	1		the cat was bitten by the dog .
+swb04	1		the cat was bitten .
+swb04	1		pat handed chris a note .
+swb04	1		chris was handed a note by pat .
+swb04	0	*	dumb ideas are put notions in children 's heads .
+swb04	0	*	the patient was died by the doctor .
+swb04	0	*	the doctor died the patient .
+swb04	0	*	pat handed chris .
+swb04	0	*	chris was handed by pat .
+swb04	1		tv puts dumb ideas into their heads .
+swb04	1		dumb ideas are put into their heads by tv .
+swb04	1		dumb ideas are put into their heads .
+swb04	0	*	dumb ideas are put .
+swb04	0	*	dumb ideas are put by tv .
+swb04	0	*	him was arrested by the police .
+swb04	1		the cat got bitten by the dog .
+swb04	1		liked by many people but respected by few , jean will have to run an aggressive reelection campaign .
+swb04	1		anyone handed a note will be watched closely .
+swb04	1		there are storm clouds gathering .
+swb04	1		the fbi is keeping close tabs on pat .
+swb04	1		pat is on the roof .
+swb04	1		pat is fond of chris .
+swb04	1		pat is singing the blues .
+swb04	0	*	pat is likes chris .
+swb04	0	*	pat is mere .
+swb04	1		there were many people fond of pat .
+swb04	1		there are people looking through the window .
+swb04	0	*	pat took a seat available .
+swb04	0	*	i looked for a seat available .
+swb04	1		a unicorn is in the garden .
+swb04	0	*	merle gave there a book .
+swb04	1		that the giants had lost really mattered .
+swb04	1		that the giants had lost mattered .
+swb04	1		it really mattered that the giants had lost .
+swb04	1		that chris knew the answer never occurred to pat .
+swb04	1		it occurred to pat that chris knew the answer .
+swb04	1		that the media discuss celebrities ' sex lives disturbs many americans .
+swb04	1		it disturbs many americans that the media discuss celebrities ' sex lives .
+swb04	1		that the giants lost the series sucks .
+swb04	1		it sucks that the giants lost the series .
+swb04	1		that the giants lost the series bites .
+swb04	1		it bites that the giants lost the series .
+swb04	0	*	that pat is innocent proves .
+swb04	1		it proves that pat is innocent .
+swb04	1		it suggested that sandy had lied .
+swb04	0	*	i gave it to pat .
+swb04	1		we forgot that we needed invitations .
+swb04	1		nobody saw that pat had arrived .
+swb04	1		carrie kicked the bucket last night .
+swb04	1		the fbi kept tabs on sandy .
+swb04	1		the candidates take advantage of the voters .
+swb04	1		the police put tabs on undocumented workers .
+w_80	1		john ate the meat raw .
+w_80	1		john ate the meat nude .
+w_80	1		john made bill mad .
+w_80	1		john loaded the hay into the wagon green .
+w_80	0	*	john loaded the hay into the wagon full .
+w_80	1		i presented it to john dead .
+w_80	1		john thinks of bill as silly .
+w_80	1		bill was thought of as silly .
+w_80	1		who do you think of as silly ?
+w_80	0	*	of whom do you think as silly ?
+w_80	1		john made bill sick .
+w_80	1		john left nude .
+w_80	1		john became sick .
+w_80	1		john strikes bill as stupid .
+w_80	1		john arrived dead .
+w_80	1		john persuaded bill to leave .
+w_80	1		john died waiting for a bus .
+w_80	1		to leave would be john 's pleasure .
+w_80	1		for john to leave would be my pleasure .
+w_80	1		john died nude .
+w_80	1		john promised bill to be examined .
+w_80	1		john was promised .
+w_80	1		john was promised the book .
+w_80	0	*	good cooks are made by them .
+w_80	1		what to do is a mystery .
+w_80	1		what to do is a mystery to john .
+w_80	1		john has something to do .
+w_80	0	*	1 wondered what bill to do .
+w_80	1		i am counting on you for mary to get there on time .
+w_80	1		john wants to win .
+w_80	1		john wants for bill to win .
+w_80	1		i would hate to leave .
+w_80	1		i arranged to leave .
+w_80	1		i arranged for pete to leave .
+w_80	1		it was arranged to have dinner at 6 .
+w_80	1		it was preferred to have dinner at 6 .
+w_80	1		it was decided to have dinner at 6 .
+w_80	1		it was decided by the committee to have dinner at 6 .
+w_80	1		it is important to john to leave .
+w_80	1		i want to leave .
+w_80	1		to leave would be my pleasure .
+w_80	1		it is important to me to leave .
+w_80	1		i bought a book to read .
+w_80	0	*	john promised mary to leave together .
+w_80	1		i want to meet at 6 .
+w_80	0	*	i will try to meet at 6 .
+w_80	0	*	john 's arrival dead surprised me .
+w_80	0	*	the arrival of john dead surprised me .
+w_80	1		john 's attempt to leave surprised me .
+w_80	1		any attempt to leave surprises me .
+w_80	1		john left orders for bill not to leave .
+w_80	1		it is clear that he is here .
+w_80	0	*	john 's reluctance is clear that he is here .
+w_80	1		it is upsetting , the way he goes on that he wo n't help .
+w_80	1		john considers it clear that bill is here .
+w_80	1		john saw to it that bill had a good time .
+w_80	0	*	john stated it succinctly that he was leaving .
+w_80	1		it was felt that bill was tardy .
+w_80	0	*	john 's reluctance seems .
+w_80	1		john seems t to be here .
+w_80	1		to leave is to give up .
+w_80	0	*	it proves that john was lying that he left town .
+w_80	1		many people said they were sick who were n't .
+w_80	1		it 's that john wo n't help that bothers me .
+w_80	0	*	it is believed to be the problem that he is here .
+w_80	1		that john is here seems to be believed to be the problem .
+w_80	0	*	it seems to be believed to be the problem that john is here .
+w_80	0	*	it is believed to have been shown that movement is cyclic , but it is n't that vp deletion is .
+w_80	1		it is believed that movement is cyclic , but it is n't that vp deletion is .
+w_80	1		it is believed to be true by everyone that movement is cyclic .
+w_80	1		it was john that i saw .
+w_80	1		i bought it dead .
+w_80	1		i gave it to pete dead .
+w_80	1		i wrote a letter to bill to read .
+w_80	0	*	i wrote to bill to read .
+w_80	1		it was bought to read .
+w_80	1		the book was bought by bill to read .
+w_80	1		i bought it for bill to read .
+w_80	1		i bought it to hold books .
+w_80	1		john is proud that there are pictures of himself here .
+w_80	1		john thinks that it is appropriate for there to be a picture of himself in the corridor .
+w_80	0	*	john thinks it would upset himself to die .
+w_80	1		john made bill be mad at himself .
+w_80	0	*	john knew that the book for himself to read was parnell .
+w_80	1		john knew that for himself to be there would cause problems .
+w_80	1		a picture of himself frightened john .
