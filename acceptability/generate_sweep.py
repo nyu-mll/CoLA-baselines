@@ -65,7 +65,8 @@ classifier_parser.add_argument('--encoding_size', type=int, default=None,
                                   help="Size of encoding, only to be used if you are loading a pretrained encoder")
 classifier_parser.add_argument('--encoder_num_layers', type=int, default=None,
                                   help="Num layers of encoder, only to be used if you are loading a pretrained encoder")
-
+classifier_parser.add_argument('--embedding_size', type=int, default=None,
+                                  help="Embedding size, only to used if you are loading a pretrained encoder")
 classifier_parser.add_argument('--max_pool', action="store_true", default=False,
                                   help="Use max-pooling for CBOW")
 classifier_parser.add_argument('--train_embeddings', action="store_true", default=False,
@@ -74,6 +75,8 @@ classifier_parser.add_argument('-m', '--model', type=str, default=None,
                                   help="Model")
 classifier_parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
                                   help="Whether to preprocess data? Default: true (Will preprocess)")
+classifier_parser.add_argument("--imbalance", action="store_true", default=False,
+                                  help="Is there class imbalance?")
 classifier_parser.add_argument("--should_not_lowercase", action="store_true", default=False,
                                   help="Should lowercase data? Default: true (Will lowercase)")
 classifier_parser.add_argument("--preprocess_tokenizer", default=None, type=str,
@@ -141,7 +144,7 @@ def generate_classifier_sweeps(args):
     for index in range(args.num_sweeps):
         lines = deepcopy(all_lines)
 
-        params_line, output_name = get_sampled_params_for_classifier(current_space,
+        params_line, output_name = get_sampled_params_for_classifier(args, current_space,
                                    index, has_pretrained_encoder)
 
         lines[4] += str(index)
@@ -237,6 +240,9 @@ def get_fixed_classifier_run_params(args):
     if args.should_not_lowercase:
         params.append('--should_not_lowercase')
 
+    if args.imbalance:
+        params.append('--imbalance')
+
     if args.train_embeddings:
         params.append('--train_embeddings')
 
@@ -264,6 +270,10 @@ def get_fixed_classifier_run_params(args):
             params.append('--encoding_size')
             params.append(str(args.encoding_size))
 
+        if args.embedding_size is not None:
+            params.append('--embedding_size')
+            params.append(str(args.embedding_size))
+
     if args.encoding_type is not None:
         params.append('--encoding_type')
         params.append(str(args.encoding_type))
@@ -274,7 +284,7 @@ def get_fixed_classifier_run_params(args):
 
     return ' '.join(params)
 
-def get_sampled_params_for_classifier(space, index=1, has_pretrained_encoder=False):
+def get_sampled_params_for_classifier(args, space, index=1, has_pretrained_encoder=False):
     sample = stoc.sample(space)
     sample['learning_rate'] = 10 ** (sample['learning_rate'])
     sample['hidden_size'] = int(sample['hidden_size'])
@@ -284,21 +294,24 @@ def get_sampled_params_for_classifier(space, index=1, has_pretrained_encoder=Fal
     sample['encoder_num_layers'] = int(sample['encoder_num_layers'])
 
 
-    output = 'lr_%.5f_nl_%d_hs_%d_ed_%d' % (sample['learning_rate'],
-             sample['num_layers'], sample['hidden_size'], sample['embedding_size'])
+    output = 'lr_%.5f_nl_%d_hs_%d' % (sample['learning_rate'],
+             sample['num_layers'], sample['hidden_size'])
 
-    params = '-lr %.5f -nl %d -hs %d -es %d' % (sample['learning_rate'],
-             sample['num_layers'], sample['hidden_size'], sample['embedding_size'])
+    params = '-lr %.5f -nl %d -hs %d' % (sample['learning_rate'],
+             sample['num_layers'], sample['hidden_size'])
 
     if has_pretrained_encoder:
         sample.pop('encoder_num_layers')
         sample.pop('encoding_size')
-        output += '.out'
+        sample.pop('embedding_size')
+        output += '_ed_%d_es_%d_enl_%d.out' % (args.embedding_size,
+                  args.encoder_num_layers, args.encoding_size)
     else:
-        output += 'es_%d_enl_%d.out' % (sample['encoding_size'],
+        output += '_ed_%d_es_%d_enl_%d.out' % (sample['emedding_size'], sample['encoding_size'],
                   sample['encoder_num_layers'])
-        params += ' --encoding_size %d --encoder_num_layers %d' % (sample['encoding_size'],
-                  sample['encoder_num_layers'])
+        params += ' -es %d --encoding_size %d --encoder_num_layers %d' % (sample['embedding_size'],
+                    sample['encoding_size'],
+                    sample['encoder_num_layers'])
 
     print("Sweep ", index, sample)
 
