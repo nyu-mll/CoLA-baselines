@@ -1,2 +1,3 @@
 -r https://raw.githubusercontent.com/pytorch/text/master/requirements.txt
 git+https://github.com/pytorch/text.git
+git+https://github.com/pytorch/tnt.git@master
