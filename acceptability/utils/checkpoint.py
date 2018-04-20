@@ -24,15 +24,15 @@ class Checkpoint:
 
             # Try loading embedding
             if os.path.exists(self.embedding_path):
-                self.trainer.embedding = torch.load(self.embedding_path)
+                self.trainer.embedding = self._torch_load(self.embedding_path)
             elif hasattr(self.args, 'embedding_path') and self.args.embedding_path \
                 and os.path.exists(self.args.embedding_path):
-                self.trainer.embedding = torch.load(self.args.embedding_path)
+                self.trainer.embedding = self._torch_load(self.args.embedding_path)
 
     def _load(self, file):
         print("Loading checkpoint")
 
-        loaded = torch.load(file)
+        loaded = self._torch_load(file)
         self.trainer.model.load_state_dict(loaded['model'])
         self.trainer.optimizer.load_state_dict(loaded['optimizer'])
         self.trainer.current_epoch = loaded['current_epoch']
@@ -59,9 +59,15 @@ class Checkpoint:
         torch.save(save, self.experiment_ckpt_path)
         self.save_embedding()
 
+    def _torch_load(self, file):
+        if self.args.gpu:
+            torch.load(file)
+        else:
+            torch.load(file, map_location=lambda storage, loc: storage)
+
     def restore(self):
         if os.path.exists(self.experiment_ckpt_path):
-            self.trainer.model.load_state_dict(torch.load(self.experiment_ckpt_path)['model'])
+            self.trainer.model.load_state_dict(self._torch_load(self.experiment_ckpt_path)['model'])
 
     def finalize(self):
         if not os.path.exists(os.path.dirname(self.final_model_path)):
