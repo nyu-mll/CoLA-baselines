@@ -218,3 +218,35 @@ class LMDataset():
 
     def get_tokens(self):
         return self.tokens
+
+
+
+class LMEvalDataset():
+    def __init__(self, dataset_path, vocab_path):
+        if not os.path.exists(dataset_path):
+            print("Dataset not found at " + dataset_path)
+            sys.exit(1)
+
+        self.vocab = Vocab(vocab_path)
+        self.sentences = []
+
+        with open(dataset_path, 'r') as f:
+            for line in f:
+                line = line.split("\t")
+
+                if len(line) >= 4:
+                    words = self.preprocess(line[3].strip().split(' '))
+                    self.sentences.append([self.vocab.stoi[x] for x in words])
+
+        # # TODO: Maybe try later using collate_fn?
+        # self.sentences, self.sizes = pad_sentences(self.sentences, self.vocab)
+
+
+    def get_vocab_size(self):
+        return self.vocab.get_size()
+
+    def preprocess(self, x):
+        return [self.vocab.SOS_TOKEN] + x + [self.vocab.EOS_TOKEN]
+
+    def get_tokens(self):
+        return self.tokens

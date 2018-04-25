@@ -196,3 +196,30 @@ def get_lm_generator_parser():
                         help="reporting interval")
 
     return parser
+
+def get_lm_evaluator_parser():
+    parser = argparse.ArgumentParser(description='Acceptability LM Evaluator')
+
+    # Model parameters.
+    parser.add_argument("-m", "--checkpoint", type=str, default="./model.pth",
+                        help="model checkpoint to use")
+    parser.add_argument("-d", "--data", type=str,
+                        help="Directory containing data.tsv")
+    parser.add_argument("-o", "--outf", type=str, default="generated.txt",
+                        help="output file for log probs")
+    parser.add_argument("-v", "--vocab_file", type=str, default="vocab_100k.tsv",
+                        help="vocab location")
+    parser.add_argument("--seed", type=int, default=1111,
+                        help="random seed")
+    # TODO: Change default value to False and check later explicity
+    parser.add_argument("-g", "--gpu", action="store_true", default=torch.cuda.is_available(),
+                        help="use CUDA")
+    parser.add_argument("--log_interval", type=int, default=100,
+                        help="reporting interval")
+    parser.add_argument("-b", "--batch_size", type=int, default=32,
+                        help="Batch size")
+
+    return parser
+
+# python -u acceptability/lm_evaluate.py -d acceptability_corpus/tokenized/in_domain_test.tsv -m checkpoints/experiment_lstm_s_35_h_891_l_2_lr_0.0002_d_0.20.pth -o logs -v ../data/vocabs/vocab_100k.tsv
+
