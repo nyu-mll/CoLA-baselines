@@ -192,7 +192,7 @@ class Trainer:
             }
             self.writer.write("Test Set:")
             self.print_current_info(0, 0, matthews, other_metrics)
-        except _:
+        except Exception:
             pass
         self.checkpoint.finalize()
 
