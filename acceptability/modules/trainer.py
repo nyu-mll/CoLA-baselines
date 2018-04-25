@@ -183,6 +183,14 @@ class Trainer:
                 break
 
         self.checkpoint.restore()
+        acc, loss, matthews, confusion = self.validate(self.test_loader)
+        other_metrics = {
+            'acc': acc,
+            'val_loss': loss,
+            'confusion_matrix': confusion
+        }
+        self.writer.write("Test Set:")
+        self.print_current_info(0, 0, matthews, other_metrics)
         self.checkpoint.finalize()
 
     def validate(self, loader: torchtext.data.Iterator):
