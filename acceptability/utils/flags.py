@@ -67,9 +67,11 @@ def get_parser():
                         help="Number of epochs")
     parser.add_argument("-b", "--batch_size", type=int, default=32,
                         help="Batch size")
-    parser.add_argument("--by_source", type=bool, default=False,
+
+    # by_source doesn'tw ork at the moment
+    parser.add_argument("--by_source", action="store_true", default=False,
                         help="Break output stats by source")
-    parser.add_argument("--max_pool", type=bool, default=False,
+    parser.add_argument("--max_pool", action="store_true", default=False,
                         help="Use max pooling for CBOW")
 
     # Tuneable parameters

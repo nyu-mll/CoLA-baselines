@@ -61,9 +61,9 @@ class Checkpoint:
 
     def _torch_load(self, file):
         if self.args.gpu:
-            torch.load(file)
+            return torch.load(file)
         else:
-            torch.load(file, map_location=lambda storage, loc: storage)
+            return torch.load(file, map_location=lambda storage, loc: storage)
 
     def restore(self):
         if os.path.exists(self.experiment_ckpt_path):
