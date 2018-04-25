@@ -13,7 +13,7 @@ Install [PyTorch](https://pytorch.org/). Then run:
 ```
 git clone https://github.com/nyu-mll/acceptability-judgments.git
 cd acceptability-judgments
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 python setup.py develop
 ```
 
