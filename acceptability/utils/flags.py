@@ -228,7 +228,20 @@ def get_test_parser():
 
     parser.add_argument("-mf", "--model_file", type=str, help="Model file to load")
     parser.add_argument("-vf", "--vocab_file", type=str, help="Vocab file to load")
+    parser.add_argument("-ef", "--embedding_file", type=str, help="Embedding file to load")
     parser.add_argument("-d", "--dataset_path", type=str, help="Test file")
+    parser.add_argument("-s", "--seed", type=int, default=11111, help="Random seed")
     parser.add_argument("-g", "--gpu", action="store_true", default=False, help="Use GPU")
+
+    # Preprocess arguments
+    parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
+                        help="Whether to preprocess data? Default: true (Will preprocess)")
+    parser.add_argument("--should_not_lowercase", action="store_true", default=False,
+                        help="Should lowercase data? Default: true (Will lowercase)")
+    parser.add_argument("--preprocess_tokenizer", default='space', type=str,
+                        help="Type of tokenizer to use (space|nltk)")
+    parser.add_argument("-cp", "--crop_pad_length", type=int, default=30,
+                        help="Padding Crop length")
+
 
     return parser

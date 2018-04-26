@@ -6,7 +6,7 @@ from acceptability.utils import get_test_parser
 
 
 def test(args):
-    vocab_path = args.vocab_path
+    vocab_path = args.vocab_file
     dataset_path = args.dataset_path
     gpu = args.gpu
 
@@ -33,7 +33,7 @@ def test(args):
     embedding.eval()
 
     for data in loader:
-        x, y = data.sentence, data.label
+        x, y, _ = data
         x, y = Variable(x).long(), Variable(y)
 
         if gpu:
@@ -48,8 +48,9 @@ def test(args):
             output = output[0]
         output = output.squeeze()
         output = (output > 0.5).long()
-        print(output)
+        print(output,data[0])
 
 
 if __name__ == '__main__':
-    test(args)
+    parser = get_test_parser()
+    test(parser.parse_args())
