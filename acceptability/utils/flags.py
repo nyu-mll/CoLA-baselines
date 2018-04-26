@@ -223,3 +223,12 @@ def get_lm_evaluator_parser():
 
 # python -u acceptability/lm_evaluate.py -d acceptability_corpus/tokenized/in_domain_test.tsv -m checkpoints/experiment_lstm_s_35_h_891_l_2_lr_0.0002_d_0.20.pth -o logs -v ../data/vocabs/vocab_100k.tsv
 
+def get_test_parser():
+    parser = argparse.ArgumentParser(description='Acceptability Test')
+
+    parser.add_argument("-mf", "--model_file", type=str, help="Model file to load")
+    parser.add_argument("-vf", "--vocab_file", type=str, help="Vocab file to load")
+    parser.add_argument("-d", "--dataset_path", type=str, help="Test file")
+    parser.add_argument("-g", "--gpu", action="store_true", default=False, help="Use GPU")
+
+    return parser
