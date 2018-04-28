@@ -8,7 +8,7 @@ from torch import nn
 from torch.autograd import Variable
 from acceptability.utils import get_parser, get_model_instance, get_experiment_name
 from acceptability.utils import seed_torch, pad_sentences
-from .dataset import get_datasets, get_iter
+from .dataset import get_datasets
 from .meter import Meter
 from .early_stopping import EarlyStopping
 from .logger import Logger
@@ -41,37 +41,34 @@ class Trainer:
 
     def load_datasets(self):
         self.train_dataset, self.val_dataset, self.test_dataset, \
-            sentence_field = get_datasets(self.args)
+            vocab = get_datasets(self.args)
 
         if self.args.glove:
-            vocab = sentence_field.vocab
+            self.vocab = vocab
             self.embedding = nn.Embedding(len(vocab), len(vocab.vectors[0]))
             self.embedding.weight.data.copy_(vocab.vectors)
-            self.train_loader = get_iter(self.args, self.train_dataset)
-            self.val_loader = get_iter(self.args, self.val_dataset)
-            self.test_loader = get_iter(self.args, self.test_dataset)
         else:
-            self.vocab = sentence_field
+            self.vocab = vocab
 
             self.embedding = nn.Embedding(self.vocab.get_size(), self.args.embedding_size)
             self.embedding.weight.data.uniform_(-0.1, 0.1)
 
-            self.train_loader = torch.utils.data.DataLoader(
-                self.train_dataset,
-                batch_size=self.args.batch_size,
-                shuffle=True,
-                pin_memory=self.args.gpu
-            )
-            self.val_loader = torch.utils.data.DataLoader(
-                self.val_dataset,
-                batch_size=self.args.batch_size,
-                pin_memory=self.args.gpu
-            )
-            self.test_loader = torch.utils.data.DataLoader(
-                self.test_dataset,
-                batch_size=self.args.batch_size,
-                pin_memory=self.args.gpu
-            )
+        self.train_loader = torch.utils.data.DataLoader(
+            self.train_dataset,
+            batch_size=self.args.batch_size,
+            shuffle=True,
+            pin_memory=self.args.gpu
+        )
+        self.val_loader = torch.utils.data.DataLoader(
+            self.val_dataset,
+            batch_size=self.args.batch_size,
+            pin_memory=self.args.gpu
+        )
+        self.test_loader = torch.utils.data.DataLoader(
+            self.test_dataset,
+            batch_size=self.args.batch_size,
+            pin_memory=self.args.gpu
+        )
 
         if not self.args.train_embeddings:
             self.embedding.weight.requires_grad = False
@@ -109,22 +106,16 @@ class Trainer:
         for i in range(self.current_epoch + 1, self.args.epochs + 1):
             self.current_epoch = i
             self.writer.write("========= Epoch %d =========" % i)
-            if hasattr(self.train_loader, 'init_epoch'):
-                self.train_loader.init_epoch()
 
             for idx, data in enumerate(self.train_loader):
-                if self.args.glove:
-                    x, y = data.sentence, data.label
-                    x = self.embedding(x)
-                else:
-                    x, y, _ = data
-                    x, y = Variable(x).long(), Variable(y)
+                x, y, _ = data
+                x, y = Variable(x).long(), Variable(y)
 
-                    if self.args.gpu:
-                        x = x.cuda()
-                        y = y.cuda()
+                if self.args.gpu:
+                    x = x.cuda()
+                    y = y.cuda()
 
-                    x = self.embedding(x)
+                x = self.embedding(x)
 
                 self.optimizer.zero_grad()
 
@@ -193,7 +184,7 @@ class Trainer:
         self.print_current_info(0, 0, matthews, other_metrics)
         self.checkpoint.finalize()
 
-    def validate(self, loader: torchtext.data.Iterator):
+    def validate(self, loader: torch.utils.data.DataLoader):
         self.model.eval()
         self.embedding.eval()
         self.meter.reset()
@@ -201,22 +192,15 @@ class Trainer:
         total = 0
         total_loss = 0
 
-        if hasattr(loader, 'init_epoch'):
-            loader.init_epoch()
-
         for data in loader:
-            if self.args.glove:
-                x, y = data.sentence, data.label
-                x = self.embedding(x)
-            else:
-                x, y, _ = data
-                x, y = Variable(x).long(), Variable(y)
+            x, y, _ = data
+            x, y = Variable(x).long(), Variable(y)
 
-                if self.args.gpu:
-                    x = x.cuda()
-                    y = y.cuda()
+            if self.args.gpu:
+                x = x.cuda()
+                y = y.cuda()
 
-                x = self.embedding(x)
+            x = self.embedding(x)
 
             output = self.model(x)
 
