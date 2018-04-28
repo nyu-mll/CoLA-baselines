@@ -45,7 +45,7 @@ class Trainer:
 
         if self.args.glove:
             self.vocab = vocab
-            self.embedding = nn.Embedding(len(vocab), len(vocab.vectors[0]))
+            self.embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
             self.embedding.weight.data.copy_(vocab.vectors)
         else:
             self.vocab = vocab

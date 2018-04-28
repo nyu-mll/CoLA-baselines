@@ -80,28 +80,6 @@ def get_datasets(args):
 
     return train_dataset, valid_dataset, test_dataset, vocab
 
-class GloVeIntersectedVocab(Vocab):
-    def __init__(self, args, use_pad=True):
-        super(GloVeIntersectedVocab, self).__init__(args.vocab_file, use_pad)
-        name = args.embedding.split('.')[1]
-        dim = args.embedding.split('.')[2][:-1]
-        glove = vocab.GloVe(name, int(dim))
-
-        self.vectors = torch.FloatTensor(self.get_size(), len(glove.vectors[0]))
-        self.vectors[0].zero_()
-
-        for i in range(1, 4):
-            self.vectors[i] = self.vectors[i].ones() * (0.1) * i
-
-        for i in range(4, self.get_size()):
-            word = self.itos[i]
-            glove_index = glove.stoi.get(word, None)
-
-            if glove_index is None:
-                self.vectors[i] = self.vectors[self.UNK_INDEX].copy()
-            else:
-                self.vectors[i] = glove.vectors[glove_index]
-
 class Vocab:
     UNK_TOKEN = '<unk>'
     SOS_TOKEN = '<s>'
@@ -154,6 +132,28 @@ class Vocab:
     def get_size(self):
         return len(self.itos)
 
+
+class GloVeIntersectedVocab(Vocab):
+    def __init__(self, args, use_pad=True):
+        super(GloVeIntersectedVocab, self).__init__(args.vocab_file, use_pad)
+        name = args.embedding.split('.')[1]
+        dim = args.embedding.split('.')[2][:-1]
+        glove = vocab.GloVe(name, int(dim))
+
+        self.vectors = torch.FloatTensor(self.get_size(), len(glove.vectors[0]))
+        self.vectors[0].zero_()
+
+        for i in range(1, 4):
+            self.vectors[i] = torch.ones_like(self.vectors[i]) * 0.1 * i
+
+        for i in range(4, self.get_size()):
+            word = self.itos[i]
+            glove_index = glove.stoi.get(word, None)
+
+            if glove_index is None:
+                self.vectors[i] = self.vectors[self.UNK_INDEX].copy()
+            else:
+                self.vectors[i] = glove.vectors[glove_index]
 
 class LMDataset():
     def __init__(self, dataset_path, vocab_path):
