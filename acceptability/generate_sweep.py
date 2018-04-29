@@ -73,6 +73,8 @@ classifier_parser.add_argument('--max_pool', action="store_true", default=False,
                                   help="Use max-pooling for CBOW")
 classifier_parser.add_argument('--train_embeddings', action="store_true", default=False,
                                   help="Train word embeddings")
+classifier_parser.add_argument('--glove', action="store_true", default=False,
+                                  help="Use glove")
 classifier_parser.add_argument('-m', '--model', type=str, default=None,
                                   help="Model")
 classifier_parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
@@ -248,6 +250,9 @@ def get_fixed_classifier_run_params(args):
 
     if args.train_embeddings:
         params.append('--train_embeddings')
+
+    if args.glove:
+        params.append('--glove')
 
     if args.preprocess_tokenizer is not None:
         params.append('--preprocess_tokenizer')

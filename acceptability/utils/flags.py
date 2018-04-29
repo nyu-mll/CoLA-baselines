@@ -223,3 +223,25 @@ def get_lm_evaluator_parser():
 
 # python -u acceptability/lm_evaluate.py -d acceptability_corpus/tokenized/in_domain_test.tsv -m checkpoints/experiment_lstm_s_35_h_891_l_2_lr_0.0002_d_0.20.pth -o logs -v ../data/vocabs/vocab_100k.tsv
 
+def get_test_parser():
+    parser = argparse.ArgumentParser(description='Acceptability Test')
+
+    parser.add_argument("-mf", "--model_file", type=str, help="Model file to load")
+    parser.add_argument("-vf", "--vocab_file", type=str, help="Vocab file to load")
+    parser.add_argument("-ef", "--embedding_file", type=str, help="Embedding file to load")
+    parser.add_argument("-d", "--dataset_path", type=str, help="Test file")
+    parser.add_argument("-s", "--seed", type=int, default=11111, help="Random seed")
+    parser.add_argument("-g", "--gpu", action="store_true", default=False, help="Use GPU")
+
+    # Preprocess arguments
+    parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
+                        help="Whether to preprocess data? Default: true (Will preprocess)")
+    parser.add_argument("--should_not_lowercase", action="store_true", default=False,
+                        help="Should lowercase data? Default: true (Will lowercase)")
+    parser.add_argument("--preprocess_tokenizer", default='space', type=str,
+                        help="Type of tokenizer to use (space|nltk)")
+    parser.add_argument("-cp", "--crop_pad_length", type=int, default=30,
+                        help="Padding Crop length")
+
+
+    return parser

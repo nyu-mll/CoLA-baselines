@@ -67,65 +67,18 @@ def preprocess_label(label):
 
 def get_datasets(args):
     if args.glove:
-        return get_datasets_glove(args)
+        vocab = GloVeIntersectedVocab(args, True)
     else:
         vocab = Vocab(args.vocab_file, True)
-        train_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'train.tsv'),
-                                             vocab)
-        valid_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'valid.tsv'),
-                                             vocab)
-        test_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'test.tsv'),
+
+    train_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'train.tsv'),
                                             vocab)
+    valid_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'valid.tsv'),
+                                            vocab)
+    test_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'test.tsv'),
+                                        vocab)
 
-        return train_dataset, valid_dataset, test_dataset, vocab
-
-
-def get_datasets_glove(args):
-    tokenizer = lambda x: x
-    if not args.should_not_preprocess_data:
-        if args.preprocess_tokenizer == 'nltk':
-            tokenizer = nltk_tokenize
-        elif args.preprocess_tokenizer == 'space':
-            tokenizer = lambda x: x.split(' ')
-
-    sentence = data.Field(
-        sequential=True,
-        fix_length=args.crop_pad_length,
-        tokenize=tokenizer,
-        tensor_type=torch.cuda.LongTensor if args.gpu else torch.LongTensor,
-        lower=not args.should_not_lowercase,
-        batch_first=True
-    )
-
-    train_dataset, val_dataset, test_dataset = data.TabularDataset.splits(
-        path=args.data,
-        train="train.tsv",
-        validation="valid.tsv",
-        test="test.tsv",
-        format="tsv",
-        fields=[
-            ('source', data.field.RawField()),
-            ('label', data.field.LabelField(use_vocab=False,
-                                            preprocessing=preprocess_label)),
-            ('mark', None),
-            ('sentence', sentence)
-        ]
-    )
-
-    sentence.build_vocab(
-        train_dataset,
-        vectors=args.embedding
-    )
-
-    return train_dataset, val_dataset, test_dataset, sentence
-
-def get_iter(args, dataset):
-    return data.Iterator(
-        dataset,
-        batch_size=args.batch_size,
-        device=0 if args.gpu else -1,
-        repeat=False
-    )
+    return train_dataset, valid_dataset, test_dataset, vocab
 
 class Vocab:
     UNK_TOKEN = '<unk>'
@@ -179,6 +132,28 @@ class Vocab:
     def get_size(self):
         return len(self.itos)
 
+
+class GloVeIntersectedVocab(Vocab):
+    def __init__(self, args, use_pad=True):
+        super(GloVeIntersectedVocab, self).__init__(args.vocab_file, use_pad)
+        name = args.embedding.split('.')[1]
+        dim = args.embedding.split('.')[2][:-1]
+        glove = vocab.GloVe(name, int(dim))
+
+        self.vectors = torch.FloatTensor(self.get_size(), len(glove.vectors[0]))
+        self.vectors[0].zero_()
+
+        for i in range(1, 4):
+            self.vectors[i] = torch.ones_like(self.vectors[i]) * 0.1 * i
+
+        for i in range(4, self.get_size()):
+            word = self.itos[i]
+            glove_index = glove.stoi.get(word, None)
+
+            if glove_index is None:
+                self.vectors[i] = self.vectors[self.UNK_INDEX].copy()
+            else:
+                self.vectors[i] = glove.vectors[glove_index]
 
 class LMDataset():
     def __init__(self, dataset_path, vocab_path):
@@ -248,5 +223,3 @@ class LMEvalDataset():
     def preprocess(self, x):
         return [self.vocab.SOS_TOKEN] + x + [self.vocab.EOS_TOKEN]
 
-    def get_tokens(self):
-        return self.tokens
