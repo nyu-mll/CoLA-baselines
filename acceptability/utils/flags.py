@@ -221,7 +221,6 @@ def get_lm_evaluator_parser():
 
     return parser
 
-# python -u acceptability/lm_evaluate.py -d acceptability_corpus/tokenized/in_domain_test.tsv -m checkpoints/experiment_lstm_s_35_h_891_l_2_lr_0.0002_d_0.20.pth -o logs -v ../data/vocabs/vocab_100k.tsv
 
 def get_test_parser():
     parser = argparse.ArgumentParser(description='Acceptability Test')

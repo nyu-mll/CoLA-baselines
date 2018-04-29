@@ -2,6 +2,7 @@ import torch
 
 from torch import nn
 from .lstm_classifiers import LSTMPoolingClassifier
+from .generators.lstm_lm import LSTMLanguageModel
 
 class LinearClassifier(nn.Module):
     """
@@ -49,6 +50,40 @@ class LinearClassifierWithEncoder(nn.Module):
         output = self.model.forward(encoding)
         return output, None
 
+class LinearClassifierWithLM(nn.Module):
+    def __init__(self, hidden_size, encoding_size,
+                 embedding_size, num_layers, dropout=0.5,
+                 encoder_type="LM",
+                 encoder_num_layers=1,
+                 encoder_path=None):
+        super(LinearClassifierWithLM, self).__init__()
+        self.hidden_size = hidden_size
+        self.encoding_size = encoding_size
+        self.embedding_size = embedding_size
+        self.num_layers = num_layers
+        self.encoder_num_layers = encoder_num_layers
+
+        self.model = LinearClassifier(self.hidden_size, self.encoding_size, dropout)
+        self.encoder = get_encoder_instance(encoder_type, encoding_size,
+                                            embedding_size, encoder_num_layers,
+                                            encoder_path)
+        with open(self.args.checkpoint, 'rb') as f:
+            self.encoder = torch.load(f, map_location=lambda storage, loc: storage)
+        self.encoder.eval()
+
+        if self.args.gpu:
+            self.encoder.cuda()
+        else:
+            self.encoder.cpu()
+
+    def forward(self, x):
+        _, hiddens = self.encoder(x)
+        pool = nn.functional.max_pool1d(hiddens.transpose(1, 2), x.shape[1])
+        pool = pool.transpose(1, 2).squeeze()
+        output = self.model.forward(pool)
+        return output, None
+
+
 
 def get_encoder_instance(encoder_type, encoding_size, embedding_size,
                          encoder_num_layers,
@@ -68,6 +103,8 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
             # Since we have loaded freeze params
             for p in encoder.parameters():
                 p.requires_grad = False
+
+
 
     return encoder
 
