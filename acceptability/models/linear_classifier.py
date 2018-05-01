@@ -59,7 +59,6 @@ class LinearClassifierWithLM(nn.Module):
                  encoder_path=None
                  ):
         super(LinearClassifierWithLM, self).__init__()
-        print("initialize linear classifier with lm")
         self.hidden_size = hidden_size
         self.encoding_size = encoding_size
         self.embedding_size = embedding_size
@@ -72,7 +71,6 @@ class LinearClassifierWithLM(nn.Module):
         self.encoder = get_encoder_instance(encoder_type, encoding_size,
                                             embedding_size, encoder_num_layers,
                                             encoder_path)
-        print("just before gpu")
         if not self.gpu:
             with open(encoder_path, 'rb') as f:
                 self.encoder = torch.load(f, map_location=lambda storage, loc: storage)
@@ -103,6 +101,13 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
             embedding_size=embedding_size,
             num_layers=encoder_num_layers
         )
+        if encoder_path is not None:
+            encoder.load_state_dict(torch.load(encoder_path)['model'])
+
+            # Since we have loaded freeze params
+            for p in encoder.parameters():
+                p.requires_grad = False
+
     if encoder_type == "LM":
         encoder = LSTMLanguageModel(
             embedding_size,
@@ -112,15 +117,13 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
             vocab_size=100003,
             num_layers=encoder_num_layers,
         )
-    else:
-        return encoder
 
-    if encoder_path is not None:
-        encoder.load_state_dict(torch.load(encoder_path)['model'])
+        if encoder_path is not None:
+            encoder.load_state_dict(torch.load(encoder_path))
 
-        # Since we have loaded freeze params
-        for p in encoder.parameters():
-            p.requires_grad = False
+            # Since we have loaded freeze params
+            for p in encoder.parameters():
+                p.requires_grad = False
 
     return encoder
 
