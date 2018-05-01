@@ -47,6 +47,9 @@ class Trainer:
             self.vocab = vocab
             self.embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
             self.embedding.weight.data.copy_(vocab.vectors)
+        if self.args.model == 'linear_classifier_with_lm':
+            self.vocab = vocab
+            self.embedding = lambda x: x
         else:
             self.vocab = vocab
 
@@ -70,7 +73,7 @@ class Trainer:
             pin_memory=self.args.gpu
         )
 
-        if not self.args.train_embeddings:
+        if not self.args.train_embeddings and self.args.model != 'linear_classifier_with_lm':
             self.embedding.weight.requires_grad = False
             self.embedding.eval()
 
@@ -94,6 +97,7 @@ class Trainer:
         if self.args.gpu:
             self.model = self.model.cuda()
             self.embedding = self.embedding.cuda()
+
 
 
     def train(self):
@@ -186,7 +190,8 @@ class Trainer:
 
     def validate(self, loader: torch.utils.data.DataLoader):
         self.model.eval()
-        self.embedding.eval()
+        if self.args.model != 'linear_classifier_with_lm':
+            self.embedding.eval()
         self.meter.reset()
         correct = 0
         total = 0
@@ -275,6 +280,8 @@ class Trainer:
 
         if self.args.glove:
             self.writer.write("Embedding: %s" % self.args.embedding)
+        if self.args.model == "linear_classifier_with_lm":
+            self.writer.write("Embedding: %d x %d" % self.model.encoder.embedding.weight.size())
         else:
             self.writer.write("Embedding: %d x %d" % self.embedding.weight.size())
         self.writer.write("Number of layers: %d" % self.args.num_layers)

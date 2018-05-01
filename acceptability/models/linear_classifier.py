@@ -52,34 +52,41 @@ class LinearClassifierWithEncoder(nn.Module):
 
 class LinearClassifierWithLM(nn.Module):
     def __init__(self, hidden_size, encoding_size,
-                 embedding_size, num_layers, dropout=0.5,
+                 embedding_size, num_layers, gpu,
+                 dropout=0.5,
                  encoder_type="LM",
                  encoder_num_layers=1,
-                 encoder_path=None):
+                 encoder_path=None
+                 ):
         super(LinearClassifierWithLM, self).__init__()
+        print("initialize linear classifier with lm")
         self.hidden_size = hidden_size
         self.encoding_size = encoding_size
         self.embedding_size = embedding_size
         self.num_layers = num_layers
+        self.gpu = gpu
         self.encoder_num_layers = encoder_num_layers
 
         self.model = LinearClassifier(self.hidden_size, self.encoding_size, dropout)
+        self.model.enc2h = nn.Linear(encoding_size, self.hidden_size)
         self.encoder = get_encoder_instance(encoder_type, encoding_size,
                                             embedding_size, encoder_num_layers,
                                             encoder_path)
-        with open(self.args.checkpoint, 'rb') as f:
-            self.encoder = torch.load(f, map_location=lambda storage, loc: storage)
+        print("just before gpu")
+        if not self.gpu:
+            with open(encoder_path, 'rb') as f:
+                self.encoder = torch.load(f, map_location=lambda storage, loc: storage)
+            self.encoder.cpu()
+        else:
+            self.encoder.cuda()
         self.encoder.eval()
 
-        if self.args.gpu:
-            self.encoder.cuda()
-        else:
-            self.encoder.cpu()
 
     def forward(self, x):
-        _, hiddens = self.encoder(x)
-        pool = nn.functional.max_pool1d(hiddens.transpose(1, 2), x.shape[1])
-        pool = pool.transpose(1, 2).squeeze()
+        hidden = self.encoder.init_hidden(x.data.shape[0])
+        hiddens = self.encoder.forward_encoder(x.transpose(0,1), hidden)
+        pool = nn.functional.max_pool1d(hiddens.transpose(2,0), x.data.shape[-1])
+        pool = pool.transpose(0, 1).squeeze()
         output = self.model.forward(pool)
         return output, None
 

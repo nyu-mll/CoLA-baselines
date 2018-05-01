@@ -5,6 +5,7 @@ from torch import nn
 from datetime import datetime
 from acceptability.models import LSTMPoolingClassifier
 from acceptability.models import LinearClassifierWithEncoder
+from acceptability.models import LinearClassifierWithLM
 from acceptability.models import CBOWClassifier
 from acceptability.models import LSTMLanguageModel
 
@@ -39,6 +40,17 @@ def get_model_instance(args):
             input_size=args.embedding_size,
             max_pool=args.max_pool,
             dropout=args.dropout
+        )
+    elif args.model == 'linear_classifier_with_lm':
+        return LinearClassifierWithLM(
+            hidden_size=args.hidden_size,
+            encoding_size=args.encoding_size,
+            embedding_size=args.embedding_size,
+            num_layers=args.num_layers,
+            gpu=args.gpu,
+            dropout=args.dropout,
+            encoder_num_layers=args.encoder_num_layers,
+            encoder_path=args.encoder_path
         )
     else:
         return None

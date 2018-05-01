@@ -77,7 +77,7 @@ class Checkpoint:
         self.save_embedding()
 
     def save_embedding(self):
-        if hasattr(self.args, 'glove') and not self.args.glove:
+        if not self.args.model == 'linear_classifier_with_lm' and hasattr(self.args, 'glove') and not self.args.glove:
             if not os.path.exists(os.path.dirname(self.embedding_path)):
                 os.mkdir(os.path.dirname(self.embedding_path))
 

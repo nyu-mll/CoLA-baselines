@@ -38,6 +38,11 @@ class LSTMLanguageModel(nn.Module):
         logits = self.fc(out.view(-1, self.hidden_dim))
         return logits, hidden
 
+    def forward_encoder(self, x, hidden):
+        x = self.dropout(self.embedding(x))
+        out, hidden = self.lstm(x, hidden)
+        return out
+
     def init_hidden(self, bsz=None):
         if not bsz:
             bsz = self.batch_size
