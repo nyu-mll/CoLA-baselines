@@ -103,15 +103,24 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
             embedding_size=embedding_size,
             num_layers=encoder_num_layers
         )
+    if encoder_type == "LM":
+        encoder = LSTMLanguageModel(
+            embedding_size,
+            seq_length=30,
+            hidden_dim=embedding_size,
+            batch_size=32,
+            vocab_size=100003,
+            num_layers=encoder_num_layers,
+        )
+    else:
+        return encoder
 
-        if encoder_path is not None:
-            encoder.load_state_dict(torch.load(encoder_path)['model'])
+    if encoder_path is not None:
+        encoder.load_state_dict(torch.load(encoder_path)['model'])
 
-            # Since we have loaded freeze params
-            for p in encoder.parameters():
-                p.requires_grad = False
-
-
+        # Since we have loaded freeze params
+        for p in encoder.parameters():
+            p.requires_grad = False
 
     return encoder
 
