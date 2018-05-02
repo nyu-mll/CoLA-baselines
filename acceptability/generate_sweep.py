@@ -85,6 +85,8 @@ classifier_parser.add_argument("--should_not_lowercase", action="store_true", de
                                   help="Should lowercase data? Default: true (Will lowercase)")
 classifier_parser.add_argument("--preprocess_tokenizer", default=None, type=str,
                                   help="Type of tokenizer to use (space|nltk)")
+classifier_parser.add_argument("--gpu", default=True, type=bool,
+                                  help="True if using gpu")
 
 hashbang_line = '#!/bin/bash'
 
@@ -234,7 +236,10 @@ def get_fixed_lm_run_params(args):
 
 def get_fixed_classifier_run_params(args):
     params = ['-m', args.model, '-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab,
-              '--logs_dir', args.logs_dir, '-g', '-r', '-p', str(args.patience)]
+              '--logs_dir', args.logs_dir, '-r', '-p', str(args.patience)]
+
+    if args.gpu:
+        params.append('-g')
 
     if args.max_pool:
         params.append('--max_pool')
