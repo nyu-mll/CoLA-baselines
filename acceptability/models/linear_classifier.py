@@ -119,7 +119,8 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
         )
 
         if encoder_path is not None:
-            encoder = torch.load(f, map_location=lambda storage, loc: storage)
+            with open(encoder_path, 'rb') as f:
+                encoder = torch.load(f, map_location=lambda storage, loc: storage)
 
             # Since we have loaded freeze params
             for p in encoder.parameters():
