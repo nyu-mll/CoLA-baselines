@@ -46,10 +46,6 @@ class LMTrainer:
         self.test_loader = batchify(self.test_data.get_tokens(), self.args.batch_size,
                                     self.args)
 
-        if self.args.glove:
-            vocab = GloVeIntersectedVocab(self.args, True)
-            self.model.set_glove_embeddings(vocab)
-            print("loading GloVe embeddings")
 
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)
@@ -65,6 +61,11 @@ class LMTrainer:
         if self.model is None:
             self.writer.write("Please pass a valid model name")
             sys.exit(1)
+
+        if self.args.glove:
+            vocab = GloVeIntersectedVocab(self.args, True)
+            self.model.set_glove_embeddings(vocab)
+            print("loading GloVe embeddings")
 
         self.current_epoch = 0
 
