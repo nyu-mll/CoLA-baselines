@@ -3,6 +3,7 @@ import os
 import sys
 import math
 import numpy as np
+import torch.nn as nn
 
 from torch.autograd import Variable
 from acceptability.utils import get_lm_parser, get_lm_model_instance, get_lm_experiment_name
@@ -48,6 +49,7 @@ class LMTrainer:
         if self.args.glove:
             vocab = GloVeIntersectedVocab(self.args, True)
             self.model.set_glove_embeddings(vocab)
+            print("loading GloVe embeddings")
 
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)

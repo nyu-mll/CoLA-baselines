@@ -25,8 +25,9 @@ class LSTMLanguageModel(nn.Module):
         self.init_weights()
 
     def set_glove_embeddings(self, vocab):
-            self.embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
-            self.embedding.weight.data.copy_(vocab.vectors)
+        print("setting model embeddings as GloVe embeddings")
+        self.embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
+        self.embedding.weight.data.copy_(vocab.vectors)
 
     def init_weights(self):
         init_range = 0.1
