@@ -92,10 +92,10 @@ hashbang_line = '#!/bin/bash'
 
 space = {
     'lm': hp.choice('lm', [{
-            'hidden_size': hp.uniform('hidden_size', 300, 1200),
+            'hidden_size': hp.uniform('hidden_size', 600, 1200),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
             'learning_rate': hp.uniform('learning_rate', -4, -2.5),
-            'num_layers': hp.uniform('num_layers', 1, 5),
+            'num_layers': hp.uniform('num_layers', 2, 5),
             'dropout': hp.choice('dropout', [0.2, 0.5])
     }]),
     'classifier': hp.choice('classifier', [{
