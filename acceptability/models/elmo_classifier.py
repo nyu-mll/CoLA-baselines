@@ -14,33 +14,33 @@ class ELMOClassifier(nn.Module):
         self.batch_size = self.lm.batch_size
         self.num_layers = self.lm.num_layers
 
-        self.embedding = self.lm.embedding
         self.last_hid = last_hid
-
-
-        # Freeze embedding
-        for p in self.embedding.parameters():
-            p.requires_grad = False
 
         self.lstms = []
 
         lm_lstm = self.lm.lstm
         lm_state_dict = lm_lstm.state_dict()
 
-        for l in range(self.num_layers):
+        for i in range(self.num_layers):
             # Hacks to get hidden states for each timestep for each layer
             # of LSTM
-            lstm = nn.LSTM(self.emb_dim, self.hidden_dim, 1, dropout=0)
-            ih_weight = lm_state_dict['weight_ih_l' + l]
-            hh_weight = lm_state_dict['weight_hh_l' + l]
-            ih_base = lm_state_dict['base_ih_l' + l]
-            hh_base = lm_state_dict['base_hh_l' + l]
+            if i == 0:
+                lstm_inp_dim = self.emb_dim
+            else:
+                lstm_inp_dim = self.hidden_dim
+            lstm = nn.LSTM(lstm_inp_dim, self.hidden_dim, 1,
+                           dropout=0, batch_first=True)
+            layer_num = str(i)
+            ih_weight = lm_state_dict['weight_ih_l' + layer_num]
+            hh_weight = lm_state_dict['weight_hh_l' + layer_num]
+            ih_bias = lm_state_dict['bias_ih_l' + layer_num]
+            hh_bias = lm_state_dict['bias_hh_l' + layer_num]
 
             curr_state_dict = {
-                'ih_weight_l0': ih_weight,
-                'ih_base_l0': ih_base,
-                'hh_weight_l0': hh_weight,
-                'hh_base_l0': hh_base
+                'weight_ih_l0': ih_weight,
+                'bias_ih_l0': ih_bias,
+                'weight_hh_l0': hh_weight,
+                'bias_hh_l0': hh_bias
             }
 
             lstm.load_state_dict(curr_state_dict)
@@ -59,19 +59,23 @@ class ELMOClassifier(nn.Module):
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        x = self.embedding(x)
-
         hidden_states = []
         hidden = x
-        for l in self.num_layers:
+        for l in range(self.num_layers):
             hidden, _ = self.lstms[l](hidden)
-            # hidden: T x B x H
+            # hidden: B x T x H
             hidden_states.append(hidden)
 
-        hidden_states = torch.cat(hidden_states, hidden.dim())
+        # [B x T x H] => L x B x T x H
+        hidden_states = torch.stack(hidden_states, hidden.dim())
+        # L x B x T x H => B x T x H
         hidden_states = self.linear_comb(hidden_states).squeeze()
 
-        max_pooled = torch.nn.max_pool1d(hidden_states, dim=0).squeeze()
+        num_timesteps = x.shape[1]
+
+        # B x T x H => B x H
+        max_pooled = nn.functional.max_pool1d(hidden_states.transpose(1, 2), num_timesteps)
+        max_pooled = max_pooled.squeeze()
 
         non_lineared = self.relu(self.fc1(max_pooled))
 
