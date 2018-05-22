@@ -232,6 +232,9 @@ def get_fixed_lm_run_params(args):
         params.append('-e')
         params.append(str(args.epochs))
 
+    if args.glove:
+        params.append('--glove')
+
     return ' '.join(params)
 
 def get_fixed_classifier_run_params(args):
