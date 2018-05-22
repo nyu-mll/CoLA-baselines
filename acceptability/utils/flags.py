@@ -171,6 +171,8 @@ def get_lm_parser():
                         " Will look for checkpoint with experiment name")
     parser.add_argument('--clip', type=float, default=0.5,
                         help='gradient clipping')
+    parser.add_argument("--glove", action="store_true", default=False,
+                        help="Whether to use GloVE embedidngs for models")
     return parser
 
 def get_lm_generator_parser():
