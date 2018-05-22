@@ -63,8 +63,14 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
         )
 
         if encoder_path is not None:
-            encoder.load_state_dict(torch.load(encoder_path)['model'])
+            pth = torch.load(encoder_path)
 
+            if 'model' in pth:
+                encoder.load_state_dict(pth['model'])
+            elif hasattr(pth, 'model'):
+                encoder.load_state_dict(pth.model)
+            else:
+                encoder.load_state_dict(pth.state_dict())
             # Since we have loaded freeze params
             for p in encoder.parameters():
                 p.requires_grad = False

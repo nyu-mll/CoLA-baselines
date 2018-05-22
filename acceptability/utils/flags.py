@@ -91,6 +91,10 @@ def get_parser():
     parser.add_argument("--encoder_num_layers", type=int, default=1,
                         help="Number of layers in encoder network")
 
+    # Path for LM to be used in ELMo embeddings
+    parser.add_argument("--lm_path", type=str, default=None,
+                        help="Location of LM checkpoint")
+
     ## Take care to pass this argument for loading a pretrained encoder
     parser.add_argument("--encoder_path", type=str, default=None,
                         help="Location of encoder checkpoint")
