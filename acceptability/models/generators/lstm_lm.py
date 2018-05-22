@@ -4,6 +4,7 @@ from torch import nn
 from torch.autograd import Variable
 
 
+
 class LSTMLanguageModel(nn.Module):
     def __init__(self, emb_dim, seq_length, hidden_dim, batch_size, vocab_size,
                  num_layers, dropout=0.5, bidirectional=False):
@@ -21,8 +22,11 @@ class LSTMLanguageModel(nn.Module):
                             num_layers=num_layers, dropout=dropout,
                             bidirectional=bidirectional)
         self.fc = nn.Linear(self.hidden_dim, vocab_size)
-
         self.init_weights()
+
+    def set_glove_embeddings(self, vocab):
+            self.embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
+            self.embedding.weight.data.copy_(vocab.vectors)
 
     def init_weights(self):
         init_range = 0.1

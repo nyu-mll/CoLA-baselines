@@ -49,6 +49,7 @@ lm_parser = subparsers.add_parser('lm', help="Generate sweeps for lm")
 lm_parser.add_argument('-v', '--vocab', help="Vocab file location")
 lm_parser.add_argument('-m', '--model', default="lstm",
                        help="Model type to be used for lm")
+lm_parser.add_argument('--glove')
 lm_parser.set_defaults(sweep_type="lm")
 
 classifier_parser = subparsers.add_parser('classifier',

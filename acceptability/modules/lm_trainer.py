@@ -12,6 +12,7 @@ from acceptability.utils import seed_torch
 from .dataset import LMDataset
 from .early_stopping import EarlyStopping
 from .logger import Logger
+from .dataset import GloVeIntersectedVocab
 
 
 class LMTrainer:
@@ -30,6 +31,7 @@ class LMTrainer:
         self.test_data = LMDataset(os.path.join(self.args.data, 'test.tsv'), self.args.vocab_file)
         print("Test dataset loaded")
 
+
         self.args.vocab_size = self.train_data.get_vocab_size()
         self.args.gpu = self.args.gpu and torch.cuda.is_available()
 
@@ -42,6 +44,10 @@ class LMTrainer:
 
         self.test_loader = batchify(self.test_data.get_tokens(), self.args.batch_size,
                                     self.args)
+
+        if self.args.glove:
+            vocab = GloVeIntersectedVocab(self.args, True)
+            self.model.set_glove_embeddings(vocab)
 
         if self.args.experiment_name is None:
             self.args.experiment_name = get_lm_experiment_name(self.args)
