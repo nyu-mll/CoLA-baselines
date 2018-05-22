@@ -56,6 +56,8 @@ class LMTrainer:
 
     def load(self):
         print("Creating model instance")
+        if self.args.glove:
+            self.args.embedding_size = 300
         self.model = get_lm_model_instance(self.args)
 
         if self.model is None:
