@@ -173,7 +173,7 @@ def get_lm_parser():
                         help='gradient clipping')
     parser.add_argument("--glove", action="store_true", default=False,
                         help="Whether to use GloVE embedidngs for models")
-    parser.add_argument("-e", "--embedding", type=str, default="glove.6B.300d",
+    parser.add_argument("--embedding", type=str, default="glove.6B.300d",
                         help="Embedding type to be used, select from" +
                         "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
     return parser
