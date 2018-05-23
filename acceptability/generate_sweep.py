@@ -75,6 +75,8 @@ classifier_parser.add_argument('--train_embeddings', action="store_true", defaul
                                   help="Train word embeddings")
 classifier_parser.add_argument('--glove', action="store_true", default=False,
                                   help="Use glove")
+classifier_parser.add_argument('--lm_path', type=str, default=None,
+                                  help="LM path, to be used with elmo classifier")
 classifier_parser.add_argument('-m', '--model', type=str, default=None,
                                   help="Model")
 classifier_parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,
@@ -97,9 +99,9 @@ space = {
             'dropout': hp.choice('dropout', [0.2, 0.5])
     }]),
     'classifier': hp.choice('classifier', [{
-            'hidden_size': hp.uniform('hidden_size', 300, 1200),
+            'hidden_size': hp.uniform('hidden_size', 20, 1200),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
-            'learning_rate': hp.uniform('learning_rate', -5, -3.5),
+            'learning_rate': hp.uniform('learning_rate', -5, -3.75),
             'num_layers': hp.uniform('num_layers', 1, 5 ),
             'encoding_size': hp.uniform('encoding_size', 300, 1200),
             'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 5),
@@ -289,6 +291,10 @@ def get_fixed_classifier_run_params(args):
     if args.embedding_path is not None:
         params.append('--embedding_path')
         params.append(str(args.embedding_path))
+
+    if args.lm_path is not None:
+        params.append('--lm_path')
+        params.append(str(args.lm_path))
 
     return ' '.join(params)
 
