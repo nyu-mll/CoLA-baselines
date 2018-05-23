@@ -5,6 +5,7 @@ from torch import nn
 from datetime import datetime
 from acceptability.models import LSTMPoolingClassifier
 from acceptability.models import ELMOClassifier
+from acceptability.models import LSTMPoolingClassifierWithELMo
 from acceptability.models import LinearClassifierWithEncoder
 from acceptability.models import CBOWClassifier
 from acceptability.models import LSTMLanguageModel
@@ -47,6 +48,13 @@ def get_model_instance(args):
             last_hid=args.hidden_size,
             dropout=args.dropout,
             use_gpu=args.gpu
+        )
+    elif args.model == 'lstm_pooling_elmo':
+        return LSTMPoolingClassifierWithELMo(
+            lm_path=args.lm_path,
+            hidden_size=args.hidden_size,
+            num_layers=args.num_layers,
+            dropout=args.dropout
         )
     else:
         return None

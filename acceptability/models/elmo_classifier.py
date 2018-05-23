@@ -79,4 +79,4 @@ class ELMOClassifier(nn.Module):
 
         non_lineared = self.relu(self.fc1(max_pooled))
 
-        return self.sigmoid(self.out(non_lineared))
+        return self.sigmoid(self.out(non_lineared)), hidden_states

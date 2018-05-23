@@ -1,7 +1,7 @@
 import torch
 
 from torch import nn
-from .lstm_classifiers import LSTMPoolingClassifier
+from .lstm_classifiers import LSTMPoolingClassifier, LSTMPoolingClassifierWithELMo
 
 class LinearClassifier(nn.Module):
     """
@@ -65,6 +65,8 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
         if encoder_path is not None:
             pth = torch.load(encoder_path)
 
+            if type(pth) is LSTMPoolingClassifierWithELMo:
+                encoder = pth
             if 'model' in pth:
                 encoder.load_state_dict(pth['model'])
             elif hasattr(pth, 'model'):
