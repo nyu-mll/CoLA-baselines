@@ -99,7 +99,7 @@ space = {
             'dropout': hp.choice('dropout', [0.2, 0.5])
     }]),
     'classifier': hp.choice('classifier', [{
-            'hidden_size': hp.uniform('hidden_size', 20, 1200),
+            'hidden_size': hp.uniform('hidden_size', 20, 200),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
             'learning_rate': hp.uniform('learning_rate', -5, -3.75),
             'num_layers': hp.uniform('num_layers', 1, 5 ),
