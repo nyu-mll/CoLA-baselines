@@ -70,8 +70,6 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
             try:
                 if 'model' in pth:
                     encoder.load_state_dict(pth['model'])
-                elif hasattr(pth, 'model'):
-                    encoder.load_state_dict(pth.model)
                 else:
                     encoder.load_state_dict(pth.state_dict())
             except TypeError:
