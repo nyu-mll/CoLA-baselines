@@ -22,12 +22,12 @@ class Checkpoint:
         elif self.args.resume and os.path.exists(self.experiment_ckpt_path):
             self._load(self.experiment_ckpt_path)
 
-            # Try loading embedding
-            if os.path.exists(self.embedding_path):
-                self.trainer.embedding = self._torch_load(self.embedding_path)
-            elif hasattr(self.args, 'embedding_path') and self.args.embedding_path \
-                and os.path.exists(self.args.embedding_path):
-                self.trainer.embedding = self._torch_load(self.args.embedding_path)
+        # Try loading embedding
+        if os.path.exists(self.embedding_path):
+            self.trainer.embedding = self._torch_load(self.embedding_path)
+        elif hasattr(self.args, 'embedding_path') and self.args.embedding_path \
+            and os.path.exists(self.args.embedding_path):
+            self.trainer.embedding = self._torch_load(self.args.embedding_path)
 
     def _load(self, file):
         print("Loading checkpoint")

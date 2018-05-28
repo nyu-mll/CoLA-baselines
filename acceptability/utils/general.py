@@ -4,6 +4,8 @@ import numpy as np
 from torch import nn
 from datetime import datetime
 from acceptability.models import LSTMPoolingClassifier
+from acceptability.models import ELMOClassifier
+from acceptability.models import LSTMPoolingClassifierWithELMo
 from acceptability.models import LinearClassifierWithEncoder
 from acceptability.models import CBOWClassifier
 from acceptability.models import LSTMLanguageModel
@@ -38,6 +40,20 @@ def get_model_instance(args):
             hidden_size=args.hidden_size,
             input_size=args.embedding_size,
             max_pool=args.max_pool,
+            dropout=args.dropout
+        )
+    elif args.model == "elmo_classifier":
+        return ELMOClassifier(
+            lm_path=args.lm_path,
+            last_hid=args.hidden_size,
+            dropout=args.dropout,
+            use_gpu=args.gpu
+        )
+    elif args.model == 'lstm_pooling_elmo':
+        return LSTMPoolingClassifierWithELMo(
+            lm_path=args.lm_path,
+            hidden_size=args.hidden_size,
+            num_layers=args.num_layers,
             dropout=args.dropout
         )
     else:

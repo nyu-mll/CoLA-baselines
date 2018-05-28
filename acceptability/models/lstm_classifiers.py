@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from acceptability.models import ELMOClassifier
 
 
 class LSTMClassifier(nn.Module):
@@ -45,3 +46,20 @@ class LSTMPoolingClassifier(nn.Module):
         pool = self.dropout(pool)
         output = self.sigmoid(self.pool2o(pool))
         return output.squeeze(), pool
+
+
+class LSTMPoolingClassifierWithELMo(nn.Module):
+    def __init__(self, lm_path, hidden_size, num_layers, dropout=0.5):
+        super(LSTMPoolingClassifierWithELMo, self).__init__()
+
+        self.elmo = ELMOClassifier(lm_path, hidden_size, dropout)
+
+        # Embedding dim would be hidden dim of the ELMoClassifier
+        self.embedding_size = self.elmo.hidden_dim
+        self.pooling_classifier = LSTMPoolingClassifier(hidden_size, self.embedding_size,
+                                                        num_layers, dropout)
+
+    def forward(self, x):
+        _, x = self.elmo(x)
+
+        return self.pooling_classifier(x)
