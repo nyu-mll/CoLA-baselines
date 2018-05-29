@@ -66,11 +66,13 @@ class ELMOClassifier(nn.Module):
             # hidden: B x T x H
             hidden_states.append(hidden)
 
-        # [B x T x H] => L x B x T x H
+        # [B x T x H] => B x T x H x L
         hidden_states = torch.stack(hidden_states, hidden.dim())
-        # L x B x T x H => B x T x H
+        # B x T x H => B x T x H x L
         hidden_states = self.linear_comb(hidden_states).squeeze()
 
+        if hidden_states.dim() < 3:
+            hidden_states = hidden_states.unsqueeze(0)
         num_timesteps = x.shape[1]
 
         # B x T x H => B x H
