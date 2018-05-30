@@ -55,6 +55,7 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
                          encoder_path=None):
 
     encoder = lambda x: x
+
     if encoder_type == "lstm_pooling_classifier":
         encoder = LSTMPoolingClassifier(
             hidden_size=encoding_size,
@@ -80,6 +81,11 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
             # Since we have loaded freeze params
             for p in encoder.parameters():
                 p.requires_grad = False
+
+    elif encoder_type == "lstm_pooling_elmo":
+        encoder = torch.load(encoder_path)
+        for p in encoder.parameters():
+            p.requires_grad = False
 
     return encoder
 
