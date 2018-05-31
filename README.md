@@ -1,6 +1,6 @@
 # CoLA Baselines
 
-Baselines accompanying paper [](). More details and demo can be found [here](https://nyu-mll.github.io/CoLA)
+Baselines accompanying paper [](). Check the [CoLA website](https://nyu-mll.github.io/CoLA) to download The Corpus of Linguistic Acceptablity (CoLA), for more information, and for a demo model.
 
 ## Dataset
 
