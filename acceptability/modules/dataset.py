@@ -1,6 +1,5 @@
 import os
 import sys
-import nltk
 import torch
 from torch.utils.data import Dataset
 from torchtext import vocab, data
@@ -57,6 +56,7 @@ class AcceptabilityDataset(Dataset):
 
 
 def nltk_tokenize(sentence):
+    import nltk
     return nltk.word_tokenize(sentence)
 
 def preprocess_label(label):
