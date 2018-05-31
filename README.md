@@ -1,6 +1,6 @@
 # CoLA Baselines
 
-Baselines accompanying paper [](). Check the [CoLA website](https://nyu-mll.github.io/CoLA) to download The Corpus of Linguistic Acceptablity (CoLA), for more information, and for a demo model.
+Baselines accompanying paper [Neural Network Acceptability Judgments](https://www.nyu.edu/projects/bowman/neural_network_acceptability.pdf). Check the [CoLA website](https://nyu-mll.github.io/CoLA) to download The Corpus of Linguistic Acceptablity (CoLA), for more information, and for a demo model.
 
 ## Dataset
 
