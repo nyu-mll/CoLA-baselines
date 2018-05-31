@@ -1,14 +1,23 @@
-# Acceptability Judgements
+# CoLA Baselines
 
-Dataset for testing grammatical acceptability of a sentence.
+Baselines accompanying paper [](). More details and demo can be found [here](https://nyu-mll.github.io/CoLA)
 
 ## Dataset
 
-Dataset for grammaticality judgments is available under [acceptability_corpus/raw](acceptability_corpus/raw)
+Training and validation sets for CoLA are available under [acceptability_corpus/raw](acceptability_corpus/raw) with a tokenized version available under [tokenized](acceptability_corpus/tokenized).
+
+## Requirements
+
+- Python >= 3
+- PyTorch v0.3.0
+- TorchNet and TorchText
+- NLTK (Optional: For NLTK preprocessing)
 
 ## Running
 
-Install [PyTorch](https://pytorch.org/). Then run:
+Install [Pytorch](https://pytorch.org/) v0.3.0.
+
+Then run:
 
 ```
 git clone https://github.com/nyu-mll/acceptability-judgments.git
@@ -23,15 +32,38 @@ Run a simple training session by:
 
 This will use default classifier model and all of the default settings.
 
+## Model
+
+Our general model structure looks like figure below. Follow paper for more in-depth details.
+
+![Model](https://i.imgur.com/eI4tNvd.png)
+
 ## Complex Run
 
-Example of a complex run:
+Example of a command for running ELMo + Real/Fake on top of transferred encoder:
 
-TODO: Fix this.
+Folder containing data must contain three files, `train.tsv`, `valid.tsv` and `test.tsv`. Download vocabulary file used by us in our experiments from this [link](https://drive.google.com/file/d/14HNMByzrUM2ZJBjOqCzelFz5yJMHskFb/view?usp=sharing).
 
 ```
-python acceptability/run.py --embedding_size 300 --data_dir /scratch/asw462/data/discriminator/ --data_type discriminator --vocab_path /scratch/asw462/data/bnc-30/vocab_20000.txt --log_path /scratch/asw462/logs/ --convergence_threshold 20 --num_layers 3 --crop_pad_length 30 --ckpt_path /scratch/asw462/models/ --batch_size 32 --prints_per_stage 1 --max_epochs 100 --embedding_path /scratch/asw462/data/bnc-30/embeddings_20000.txt --stages_per_epoch 100 --model_type rnn_classifier_pooling --gpu  --hidden_size 1383 --learning_rate 0.00251670745856 --experiment_name sweep_0115223201_rnn_classifier_pooling_19-lr0.0025-h_size1383-datadiscriminator-num_layers3"
+python acceptability/run.py -m linear_classifier -d data --save_loc save --vocab_file ./vocab_100k.tsv --logs_dir ./logs -g -r -p 40 -se 2 -n 1000 --encoder_path ./elmo_best_real_fake/experiment_lstm_pooling_elmo_h_528_l_3_lr_0.0001_e_360_do_0.2.pth --encoding_size 528 --embedding_size 217 --embedding_path ./elmo_best_real_fake/experiment_lstm_pooling_elmo_h_528_l_3_lr_0.0001_e_360_do_0.2.emb -lr 0.00005 -nl 3 -hs 1134 -do 0.2
+```
+
+## Cite
+
+Cite CoLA or the baselines using the following entry:
+
+```
+@misc{warstadt-18,
+   Author = {Warstadt, Alexander and Singh, Amanpreet and
+             Bowman, Samuel R.},
+   Howpublished = {http://nyu-mll.github.io/cola},
+   Title = {Corpus of Linguistic Acceptability},
+   Year = {2018}
+}
 ```
 
 ## License
-BSD
+
+Baseline code is available under Apache2.0 license.
+
+The text in this corpus is excerpted from the published works available on website, and copyright (where applicable) remains with the original authors or publishers. We expect that research use within the US is legal under fair use, but make no guarantee of this.
