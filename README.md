@@ -64,6 +64,6 @@ Cite CoLA or the baselines using the following entry:
 
 ## License
 
-Baseline code is available under Apache2.0 license.
+Baseline code is available under MIT license.
 
 The text in this corpus is excerpted from the published works available on website, and copyright (where applicable) remains with the original authors or publishers. We expect that research use within the US is legal under fair use, but make no guarantee of this.
