@@ -73,7 +73,7 @@ def get_datasets(args):
 
     train_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'train.tsv'),
                                             vocab)
-    valid_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'valid.tsv'),
+    valid_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'dev.tsv'),
                                             vocab)
     test_dataset = AcceptabilityDataset(args, os.path.join(args.data, 'test.tsv'),
                                         vocab)

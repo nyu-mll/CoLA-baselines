@@ -5,6 +5,7 @@ from acceptability.utils import seed_torch
 from acceptability.utils import get_test_parser
 
 
+# TODO: Add matthews support here.
 def test(args):
     vocab_path = args.vocab_file
     dataset_path = args.dataset_path
@@ -26,7 +27,8 @@ def test(args):
     loader = torch.utils.data.DataLoader(
         dataset,
         batch_size=1,
-        pin_memory=gpu
+        pin_memory=gpu,
+        shuffle=False
     )
 
     model.eval()
@@ -48,7 +50,7 @@ def test(args):
             output = output[0]
         output = output.squeeze()
         output = (output > 0.5).long()
-        print(output,data[0])
+        print(output.data[0].numpy(), data[0])
 
 
 if __name__ == '__main__':
