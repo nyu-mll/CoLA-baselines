@@ -15,7 +15,7 @@ class AcceptabilityDataset(Dataset):
         self.args = args
         if not os.path.exists(path):
             # TODO: log failure here
-            sys.exit(1)
+            raise Exception("Path %s does not exist" % path)
 
         self.vocab = vocab
 

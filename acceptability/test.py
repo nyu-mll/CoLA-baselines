@@ -3,6 +3,7 @@ from torch.autograd import Variable
 from acceptability.modules.dataset import AcceptabilityDataset, Vocab
 from acceptability.utils import seed_torch
 from acceptability.utils import get_test_parser
+from acceptability.modules.meter import Meter
 
 
 # TODO: Add matthews support here.
@@ -31,6 +32,8 @@ def test(args):
         shuffle=False
     )
 
+    meter = Meter(2)
+
     model.eval()
     embedding.eval()
 
@@ -50,7 +53,10 @@ def test(args):
             output = output[0]
         output = output.squeeze()
         output = (output > 0.5).long()
-        print(output.data[0].numpy(), data[0])
+
+        meter.add(output.unsqueeze(0), y)
+
+    print("Matthews %.5f, Accuracy: %.5ff" % (meter.matthews(), meter.accuracy()))
 
 
 if __name__ == '__main__':
