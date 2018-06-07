@@ -65,12 +65,11 @@ To do a test run over a dataset:
 Cite CoLA or the baselines using the following entry:
 
 ```
-@misc{warstadt-18,
-   Author = {Warstadt, Alexander and Singh, Amanpreet and
-             Bowman, Samuel R.},
-   Howpublished = {http://nyu-mll.github.io/cola},
-   Title = {Corpus of Linguistic Acceptability},
-   Year = {2018}
+@article{warstadt2018neural,
+  title={Neural Network Acceptability Judgments},
+  author={Warstadt, Alex and Singh, Amanpreet and Bowman, Samuel R},
+  journal={arXiv preprint arXiv:1805.12471},
+  year={2018}
 }
 ```
 
