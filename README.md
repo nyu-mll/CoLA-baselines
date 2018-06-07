@@ -4,7 +4,7 @@ Baselines accompanying paper [Neural Network Acceptability Judgments](https://ww
 
 ## Dataset
 
-Training and validation sets for CoLA are available under [acceptability_corpus/raw](acceptability_corpus/raw) with a tokenized version available under [tokenized](acceptability_corpus/tokenized).
+Training and validation sets for CoLA are available under [acceptability_corpus/raw](acceptability_corpus/raw) with a tokenized version available under [tokenized](acceptability_corpus/tokenized). Test data (unlabeled) is available here: [in domain](https://www.kaggle.com/c/cola-in-domain-open-evaluation) [out of domain](https://www.kaggle.com/c/cola-out-of-domain-open-evaluation).
 
 ## Requirements
 
@@ -62,7 +62,7 @@ To do a test run over a dataset:
 
 ## Cite
 
-Cite CoLA or the baselines using the following entry:
+If you use CoLA or the baselines in your research, please cite the accompanying paper using the following entry:
 
 ```
 @article{warstadt2018neural,
