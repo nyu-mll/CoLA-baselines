@@ -6,3 +6,12 @@ save
 .vscode
 .vector_cache
 .idea
+acceptability_corpus/raw/in_domain_test.tsv
+acceptability_corpus/source/ad03.tsv
+acceptability_corpus/source/bc01.tsv
+acceptability_corpus/source/ks08.tsv
+acceptability_corpus/source/l-93.tsv
+acceptability_corpus/source/r-67.tsv
+acceptability_corpus/tokenized/run/dev.tsv
+acceptability_corpus/tokenized/run/test.tsv
+acceptability_corpus/tokenized/run/train.tsv

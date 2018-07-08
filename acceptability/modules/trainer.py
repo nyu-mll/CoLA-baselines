@@ -75,6 +75,7 @@ class Trainer:
             self.embedding.eval()
 
     def load(self):
+        print("loading trainer")
         self.model = get_model_instance(self.args)
 
         if self.model is None:
