@@ -55,8 +55,10 @@ classifier_parser = subparsers.add_parser('classifier',
                             help="Generate sweeps for classifier")
 classifier_parser.set_defaults(sweep_type="classifier")
 
-classifier_parser.add_argument('-v', '--vocab', type=str, help="Vocab file location")
-
+classifier_parser.add_argument('-v', '--vocab', type=str,
+                               help="Vocab file location")
+classifier_parser.add_argument('-o', "--output_dir", type=str, default=None,
+                               help="Location of output directory")
 classifier_parser.add_argument('--encoder_path', type=str, default=None,
                                   help="Location of encoder checkpoint")
 classifier_parser.add_argument('--encoding_type', type=str, default=None,
@@ -237,6 +239,10 @@ def get_fixed_lm_run_params(args):
 def get_fixed_classifier_run_params(args):
     params = ['-m', args.model, '-d', args.data, '--save_loc', args.save_loc, '--vocab_file', args.vocab,
               '--logs_dir', args.logs_dir, '-g', '-r', '-p', str(args.patience)]
+
+    if args.output_dir is not None:
+        params.append('-o')
+        params.append(args.output_dir)
 
     if args.max_pool:
         params.append('--max_pool')

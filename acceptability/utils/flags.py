@@ -22,6 +22,8 @@ def get_parser():
 
     parser.add_argument("-v", "--vocab_file", type=str, default="./vocab_100k.tsv",
                         help="File containing vocabulary to be used with embedding")
+    parser.add_argument("-o", "--output_dir", type=str,
+                        help="Output file for model classifications.")
     parser.add_argument("--glove", action="store_true", default=False,
                         help="Whether to use GloVE embedidngs for models")
     parser.add_argument("-es", "--embedding_size", type=int, default=300,
