@@ -75,11 +75,10 @@ class Trainer:
             self.embedding.eval()
 
     def load(self):
-        print("loading trainer")
         self.model = get_model_instance(self.args)
 
         if self.model is None:
-            # TODO: Add logger statement for valid model here
+            print("model not found at " + self.args.model)
             sys.exit(1)
 
         self.early_stopping = EarlyStopping(self.model, self.checkpoint, self.args.patience)
