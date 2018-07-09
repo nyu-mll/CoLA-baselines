@@ -141,7 +141,7 @@ def get_lm_parser():
                         help="Early stopping patience")
 
     parser.add_argument("--seed", type=int, default=1111,
-                        help="Seed for reproducability")
+                        help="Seed for reproducibility")
 
     parser.add_argument("-en", "--experiment_name", type=str, default=None,
                         help="Name of the experiment")
@@ -202,6 +202,10 @@ def get_lm_generator_parser():
     return parser
 
 def get_lm_evaluator_parser():
+    """
+    python -u acceptability/lm_evaluate.py -d acceptability_corpus/tokenized/in_domain_test.tsv 
+    -m checkpoints/experiment_lstm_s_35_h_891_l_2_lr_0.0002_d_0.20.pth -o logs -v ../data/vocabs/vocab_100k.tsv
+    """
     parser = argparse.ArgumentParser(description='Acceptability LM Evaluator')
 
     # Model parameters.
@@ -225,14 +229,17 @@ def get_lm_evaluator_parser():
 
     return parser
 
-# python -u acceptability/lm_evaluate.py -d acceptability_corpus/tokenized/in_domain_test.tsv -m checkpoints/experiment_lstm_s_35_h_891_l_2_lr_0.0002_d_0.20.pth -o logs -v ../data/vocabs/vocab_100k.tsv
 
 def get_test_parser():
+    """
+    python acceptability/test.py -mf elmo.pth -vf vocab_100k.tsv -ef elmo.emb -d data/test.tsv -g
+    """
     parser = argparse.ArgumentParser(description='Acceptability Test')
 
     parser.add_argument("-mf", "--model_file", type=str, help="Model file to load")
     parser.add_argument("-vf", "--vocab_file", type=str, help="Vocab file to load")
     parser.add_argument("-ef", "--embedding_file", type=str, help="Embedding file to load")
+    parser.add_argument("-o", "--output_file", type=str, help="Output file for model classifications.")
     parser.add_argument("-d", "--dataset_path", type=str, help="Test file")
     parser.add_argument("-s", "--seed", type=int, default=11111, help="Random seed")
     parser.add_argument("-g", "--gpu", action="store_true", default=False, help="Use GPU")
@@ -246,6 +253,4 @@ def get_test_parser():
                         help="Type of tokenizer to use (space|nltk)")
     parser.add_argument("-cp", "--crop_pad_length", type=int, default=30,
                         help="Padding Crop length")
-
-
     return parser

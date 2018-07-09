@@ -6,7 +6,6 @@ from acceptability.utils import get_test_parser
 from acceptability.modules.meter import Meter
 
 
-# TODO: Add matthews support here.
 def test(args):
     vocab_path = args.vocab_file
     dataset_path = args.dataset_path
@@ -36,6 +35,7 @@ def test(args):
 
     model.eval()
     embedding.eval()
+    outputs = []
 
     for data in loader:
         x, y, _ = data
@@ -53,10 +53,16 @@ def test(args):
             output = output[0]
         output = output.squeeze()
         output = (output > 0.5).long()
+        outputs.append(int(output))
 
         meter.add(output.unsqueeze(0), y)
 
-    print("Matthews %.5f, Accuracy: %.5ff" % (meter.matthews(), meter.accuracy()))
+    print("Matthews %.5f, Accuracy: %.5f" % (meter.matthews(), meter.accuracy()))
+    if args.output_file != None:
+        out_file = open(args.output_file, "w")
+        for x in outputs:
+            out_file.write(str(x) + "\n")
+        out_file.close()
 
 
 if __name__ == '__main__':
