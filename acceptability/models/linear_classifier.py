@@ -31,7 +31,8 @@ class LinearClassifierWithEncoder(nn.Module):
                  embedding_size, num_layers, dropout=0.5,
                  encoder_type="lstm_pooling_classifier",
                  encoder_num_layers=1,
-                 encoder_path=None):
+                 encoder_path=None,
+                 gpu=True):
         super(LinearClassifierWithEncoder, self).__init__()
         self.hidden_size = hidden_size
         self.encoding_size = encoding_size
@@ -42,7 +43,7 @@ class LinearClassifierWithEncoder(nn.Module):
         self.model = LinearClassifier(self.hidden_size, self.encoding_size, dropout)
         self.encoder = get_encoder_instance(encoder_type, encoding_size,
                                             embedding_size, encoder_num_layers,
-                                            encoder_path)
+                                            encoder_path, gpu)
 
     def forward(self, x):
         _, encoding = self.encoder(x)
@@ -52,7 +53,8 @@ class LinearClassifierWithEncoder(nn.Module):
 
 def get_encoder_instance(encoder_type, encoding_size, embedding_size,
                          encoder_num_layers,
-                         encoder_path=None):
+                         encoder_path=None,
+                         gpu=True):
 
     encoder = lambda x: x
 
@@ -64,8 +66,10 @@ def get_encoder_instance(encoder_type, encoding_size, embedding_size,
         )
 
         if encoder_path is not None:
-            pth = torch.load(encoder_path)
-
+            if gpu:
+                pth = torch.load(encoder_path)
+            else:
+                pth = torch.load(encoder_path, map_location=lambda storage, loc: storage)
             if type(pth) is LSTMPoolingClassifierWithELMo:
                 encoder = pth
             try:

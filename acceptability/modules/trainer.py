@@ -174,7 +174,7 @@ class Trainer:
                 break
 
         self.checkpoint.restore()
-        acc, loss, matthews, confusion = self.validate(self.test_loader)
+        acc, loss, matthews, confusion = self.validate(self.test_loader, test=True)
         other_metrics = {
             'acc': acc,
             'val_loss': loss,
@@ -184,13 +184,14 @@ class Trainer:
         self.print_current_info(0, 0, matthews, other_metrics)
         self.checkpoint.finalize()
 
-    def validate(self, loader: torch.utils.data.DataLoader):
+    def validate(self, loader: torch.utils.data.DataLoader, test=False):
         self.model.eval()
         self.embedding.eval()
         self.meter.reset()
         correct = 0
         total = 0
         total_loss = 0
+        outputs = []
 
         for data in loader:
             x, y, _ = data
@@ -223,6 +224,7 @@ class Trainer:
             total_loss = loss.data[0]
             total += len(y)
             output = (output > 0.5).long()
+            outputs.extend([int(o) for o in output])
 
             self.meter.add(output.data, y.data)
             if not self.args.gpu:
@@ -236,6 +238,12 @@ class Trainer:
             self.embedding.train()
 
         avg_loss = total_loss / total
+
+        if test and self.args.output_dir is not None:
+            out_file = open(os.path.join(self.args.output_dir, self.args.experiment_name + ".tsv"), "w")
+            for x in outputs:
+                out_file.write(str(x) + "\n")
+            out_file.close()
 
         return correct / total * 100, avg_loss, \
                self.meter.matthews(), self.meter.confusion()

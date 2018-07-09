@@ -33,7 +33,8 @@ def get_model_instance(args):
             encoder_type=args.encoding_type,
             encoder_num_layers=args.encoder_num_layers,
             encoder_path=args.encoder_path,
-            dropout=args.dropout
+            dropout=args.dropout,
+            gpu=args.gpu
         )
     elif args.model == "cbow_classifier":
         return CBOWClassifier(
