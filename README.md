@@ -57,8 +57,10 @@ To do a test run over a dataset:
 - Create your data-folder in same format as acceptability_corpus with `train.tsv`, `dev.tsv` and `test.tsv`.
 - Download one of the pretrained models
 - Download vocabulary file from this [link](https://drive.google.com/file/d/14HNMByzrUM2ZJBjOqCzelFz5yJMHskFb/view?usp=sharing)
-- Run the following command, for e.g ELMo pretrained it would be something like:
-- `python acceptability/test.py -mf elmo.pth -vf vocab_100k.tsv -ef elmo.emb -d data/test.tsv -g`
+- Run the following command, for e.g ELMo pretrained it would be something like:  
+  `python acceptability/test.py -mf elmo.pth -vf vocab_100k.tsv -ef elmo.emb -d data/test.tsv -g`
+
+To save the model predictions for each of the sentences in `test.tsv`, you can append to the last command the additional flag `-o predictions.txt`, which will write them in the `predictions.txt` file.
 
 ## Cite
 
