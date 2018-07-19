@@ -28,7 +28,7 @@ python setup.py develop
 
 Run a simple training session by:
 
-`python acceptability/run.py -d acceptability_corpus/raw`
+`python acceptability/run.py -d acceptability_corpus/tokenized`
 
 This will use default classifier model and all of the default settings.
 
