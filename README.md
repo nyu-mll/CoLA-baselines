@@ -4,7 +4,7 @@ Baselines accompanying paper [Neural Network Acceptability Judgments](https://ww
 
 ## Dataset
 
-Training and validation sets for CoLA are available under [acceptability_corpus/raw](acceptability_corpus/raw) with a tokenized version available under [tokenized](acceptability_corpus/tokenized). Test data (unlabeled) is available here: [in domain](https://www.kaggle.com/c/cola-in-domain-open-evaluation) [out of domain](https://www.kaggle.com/c/cola-out-of-domain-open-evaluation).
+Training and validation sets for CoLA are available under [acceptability_corpus/raw](acceptability_corpus/raw) with a tokenized version available under [tokenized](acceptability_corpus/tokenized). Test data (unlabeled) is available here: [in domain](https://www.kaggle.com/c/cola-in-domain-open-evaluation) [out of domain](https://www.kaggle.com/c/cola-out-of-domain-open-evaluation). All models require tokenized data (we use the default NLTK tokenizer).
 
 ## Requirements
 
@@ -42,7 +42,7 @@ Our general model structure looks like figure below. Follow paper for more in-de
 
 Example of a command for running ELMo + Real/Fake on top of transferred encoder:
 
-Folder containing data must contain three files, `train.tsv`, `dev.tsv` and `test.tsv`. Download vocabulary file used by us in our experiments from this [link](https://drive.google.com/file/d/14HNMByzrUM2ZJBjOqCzelFz5yJMHskFb/view?usp=sharing).
+The directory containing data (value of `-d`) must contain three files, `train.tsv`, `dev.tsv` and `test.tsv`. Download vocabulary file used by us in our experiments from this [link](https://drive.google.com/file/d/14HNMByzrUM2ZJBjOqCzelFz5yJMHskFb/view?usp=sharing).
 
 ```
 python acceptability/run.py -m linear_classifier -d data --save_loc save --vocab_file ./vocab_100k.tsv --logs_dir ./logs -g -r -p 40 -se 2 -n 1000 --encoder_path ./elmo_best_real_fake/experiment_lstm_pooling_elmo_h_528_l_3_lr_0.0001_e_360_do_0.2.pth --encoding_size 528 --embedding_size 217 --embedding_path ./elmo_best_real_fake/experiment_lstm_pooling_elmo_h_528_l_3_lr_0.0001_e_360_do_0.2.emb -lr 0.00005 -nl 3 -hs 1134 -do 0.2
