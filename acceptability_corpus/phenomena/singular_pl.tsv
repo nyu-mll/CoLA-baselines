@@ -1,0 +1,676 @@
+	1		the boy is here .
+	1		the boy has n't been there .
+	1		the boy likes to read .
+	1		the boy knows where to go .
+	1		the boy seems nice .
+	1		the boy is walking .
+	1		the boy sleeps here .
+	1		the boy has a problem .
+	1		the boy has to go .
+	1		the boy gets it .
+	1		the boy has the flu .
+	1		the boy feels great .
+	1		the boy is n't going to come .
+	0		the boy are here .
+	0		the boy have n't been there .
+	0		the boy like to read .
+	0		the boy know where to go .
+	0		the boy seem nice .
+	0		the boy are walking .
+	0		the boy sleep here .
+	0		the boy have a problem .
+	0		the boy have to go .
+	0		the boy get it .
+	0		the boy have the flu .
+	0		the boy feel great .
+	0		the boy are n't going to come .
+	1		she is here .
+	1		she has n't been there .
+	1		she likes to read .
+	1		she knows where to go .
+	1		she seems nice .
+	1		she is walking .
+	1		she sleeps here .
+	1		she has a problem .
+	1		she has to go .
+	1		she gets it .
+	1		she has the flu .
+	1		she feels great .
+	1		she is n't going to come .
+	0		she are here .
+	0		she have n't been there .
+	0		she like to read .
+	0		she know where to go .
+	0		she seem nice .
+	0		she are walking .
+	0		she sleep here .
+	0		she have a problem .
+	0		she have to go .
+	0		she get it .
+	0		she have the flu .
+	0		she feel great .
+	0		she are n't going to come .
+	1		he is here .
+	1		he has n't been there .
+	1		he likes to read .
+	1		he knows where to go .
+	1		he seems nice .
+	1		he is walking .
+	1		he sleeps here .
+	1		he has a problem .
+	1		he has to go .
+	1		he gets it .
+	1		he has the flu .
+	1		he feels great .
+	1		he is n't going to come .
+	0		he are here .
+	0		he have n't been there .
+	0		he like to read .
+	0		he know where to go .
+	0		he seem nice .
+	0		he are walking .
+	0		he sleep here .
+	0		he have a problem .
+	0		he have to go .
+	0		he get it .
+	0		he have the flu .
+	0		he feel great .
+	0		he are n't going to come .
+	1		my friend is here .
+	1		my friend has n't been there .
+	1		my friend likes to read .
+	1		my friend knows where to go .
+	1		my friend seems nice .
+	1		my friend is walking .
+	1		my friend sleeps here .
+	1		my friend has a problem .
+	1		my friend has to go .
+	1		my friend gets it .
+	1		my friend has the flu .
+	1		my friend feels great .
+	1		my friend is n't going to come .
+	0		my friend are here .
+	0		my friend have n't been there .
+	0		my friend like to read .
+	0		my friend know where to go .
+	0		my friend seem nice .
+	0		my friend are walking .
+	0		my friend sleep here .
+	0		my friend have a problem .
+	0		my friend have to go .
+	0		my friend get it .
+	0		my friend have the flu .
+	0		my friend feel great .
+	0		my friend are n't going to come .
+	1		that guy is here .
+	1		that guy has n't been there .
+	1		that guy likes to read .
+	1		that guy knows where to go .
+	1		that guy seems nice .
+	1		that guy is walking .
+	1		that guy sleeps here .
+	1		that guy has a problem .
+	1		that guy has to go .
+	1		that guy gets it .
+	1		that guy has the flu .
+	1		that guy feels great .
+	1		that guy is n't going to come .
+	0		that guy are here .
+	0		that guy have n't been there .
+	0		that guy like to read .
+	0		that guy know where to go .
+	0		that guy seem nice .
+	0		that guy are walking .
+	0		that guy sleep here .
+	0		that guy have a problem .
+	0		that guy have to go .
+	0		that guy get it .
+	0		that guy have the flu .
+	0		that guy feel great .
+	0		that guy are n't going to come .
+	1		the dancer is here .
+	1		the dancer has n't been there .
+	1		the dancer likes to read .
+	1		the dancer knows where to go .
+	1		the dancer seems nice .
+	1		the dancer is walking .
+	1		the dancer sleeps here .
+	1		the dancer has a problem .
+	1		the dancer has to go .
+	1		the dancer gets it .
+	1		the dancer has the flu .
+	1		the dancer feels great .
+	1		the dancer is n't going to come .
+	0		the dancer are here .
+	0		the dancer have n't been there .
+	0		the dancer like to read .
+	0		the dancer know where to go .
+	0		the dancer seem nice .
+	0		the dancer are walking .
+	0		the dancer sleep here .
+	0		the dancer have a problem .
+	0		the dancer have to go .
+	0		the dancer get it .
+	0		the dancer have the flu .
+	0		the dancer feel great .
+	0		the dancer are n't going to come .
+	1		everyone is here .
+	1		everyone has n't been there .
+	1		everyone likes to read .
+	1		everyone knows where to go .
+	1		everyone seems nice .
+	1		everyone is walking .
+	1		everyone sleeps here .
+	1		everyone has a problem .
+	1		everyone has to go .
+	1		everyone gets it .
+	1		everyone has the flu .
+	1		everyone feels great .
+	1		everyone is n't going to come .
+	0		everyone are here .
+	0		everyone have n't been there .
+	0		everyone like to read .
+	0		everyone know where to go .
+	0		everyone seem nice .
+	0		everyone are walking .
+	0		everyone sleep here .
+	0		everyone have a problem .
+	0		everyone have to go .
+	0		everyone get it .
+	0		everyone have the flu .
+	0		everyone feel great .
+	0		everyone are n't going to come .
+	1		mary is here .
+	1		mary has n't been there .
+	1		mary likes to read .
+	1		mary knows where to go .
+	1		mary seems nice .
+	1		mary is walking .
+	1		mary sleeps here .
+	1		mary has a problem .
+	1		mary has to go .
+	1		mary gets it .
+	1		mary has the flu .
+	1		mary feels great .
+	1		mary is n't going to come .
+	0		mary are here .
+	0		mary have n't been there .
+	0		mary like to read .
+	0		mary know where to go .
+	0		mary seem nice .
+	0		mary are walking .
+	0		mary sleep here .
+	0		mary have a problem .
+	0		mary have to go .
+	0		mary get it .
+	0		mary have the flu .
+	0		mary feel great .
+	0		mary are n't going to come .
+	1		the doctor is here .
+	1		the doctor has n't been there .
+	1		the doctor likes to read .
+	1		the doctor knows where to go .
+	1		the doctor seems nice .
+	1		the doctor is walking .
+	1		the doctor sleeps here .
+	1		the doctor has a problem .
+	1		the doctor has to go .
+	1		the doctor gets it .
+	1		the doctor has the flu .
+	1		the doctor feels great .
+	1		the doctor is n't going to come .
+	0		the doctor are here .
+	0		the doctor have n't been there .
+	0		the doctor like to read .
+	0		the doctor know where to go .
+	0		the doctor seem nice .
+	0		the doctor are walking .
+	0		the doctor sleep here .
+	0		the doctor have a problem .
+	0		the doctor have to go .
+	0		the doctor get it .
+	0		the doctor have the flu .
+	0		the doctor feel great .
+	0		the doctor are n't going to come .
+	1		some woman is here .
+	1		some woman has n't been there .
+	1		some woman likes to read .
+	1		some woman knows where to go .
+	1		some woman seems nice .
+	1		some woman is walking .
+	1		some woman sleeps here .
+	1		some woman has a problem .
+	1		some woman has to go .
+	1		some woman gets it .
+	1		some woman has the flu .
+	1		some woman feels great .
+	1		some woman is n't going to come .
+	0		some woman are here .
+	0		some woman have n't been there .
+	0		some woman like to read .
+	0		some woman know where to go .
+	0		some woman seem nice .
+	0		some woman are walking .
+	0		some woman sleep here .
+	0		some woman have a problem .
+	0		some woman have to go .
+	0		some woman get it .
+	0		some woman have the flu .
+	0		some woman feel great .
+	0		some woman are n't going to come .
+	1		john is here .
+	1		john has n't been there .
+	1		john likes to read .
+	1		john knows where to go .
+	1		john seems nice .
+	1		john is walking .
+	1		john sleeps here .
+	1		john has a problem .
+	1		john has to go .
+	1		john gets it .
+	1		john has the flu .
+	1		john feels great .
+	1		john is n't going to come .
+	0		john are here .
+	0		john have n't been there .
+	0		john like to read .
+	0		john know where to go .
+	0		john seem nice .
+	0		john are walking .
+	0		john sleep here .
+	0		john have a problem .
+	0		john have to go .
+	0		john get it .
+	0		john have the flu .
+	0		john feel great .
+	0		john are n't going to come .
+	1		mr. smith is here .
+	1		mr. smith has n't been there .
+	1		mr. smith likes to read .
+	1		mr. smith knows where to go .
+	1		mr. smith seems nice .
+	1		mr. smith is walking .
+	1		mr. smith sleeps here .
+	1		mr. smith has a problem .
+	1		mr. smith has to go .
+	1		mr. smith gets it .
+	1		mr. smith has the flu .
+	1		mr. smith feels great .
+	1		mr. smith is n't going to come .
+	0		mr. smith are here .
+	0		mr. smith have n't been there .
+	0		mr. smith like to read .
+	0		mr. smith know where to go .
+	0		mr. smith seem nice .
+	0		mr. smith are walking .
+	0		mr. smith sleep here .
+	0		mr. smith have a problem .
+	0		mr. smith have to go .
+	0		mr. smith get it .
+	0		mr. smith have the flu .
+	0		mr. smith feel great .
+	0		mr. smith are n't going to come .
+	1		the guest of honor is here .
+	1		the guest of honor has n't been there .
+	1		the guest of honor likes to read .
+	1		the guest of honor knows where to go .
+	1		the guest of honor seems nice .
+	1		the guest of honor is walking .
+	1		the guest of honor sleeps here .
+	1		the guest of honor has a problem .
+	1		the guest of honor has to go .
+	1		the guest of honor gets it .
+	1		the guest of honor has the flu .
+	1		the guest of honor feels great .
+	1		the guest of honor is n't going to come .
+	0		the guest of honor are here .
+	0		the guest of honor have n't been there .
+	0		the guest of honor like to read .
+	0		the guest of honor know where to go .
+	0		the guest of honor seem nice .
+	0		the guest of honor are walking .
+	0		the guest of honor sleep here .
+	0		the guest of honor have a problem .
+	0		the guest of honor have to go .
+	0		the guest of honor get it .
+	0		the guest of honor have the flu .
+	0		the guest of honor feel great .
+	0		the guest of honor are n't going to come .
+	0		the boys is here .
+	0		the boys has n't been there .
+	0		the boys likes to read .
+	0		the boys knows where to go .
+	0		the boys seems nice .
+	0		the boys is walking .
+	0		the boys sleeps here .
+	0		the boys has a problem .
+	0		the boys has to go .
+	0		the boys gets it .
+	0		the boys has the flu .
+	0		the boys feels great .
+	0		the boys is n't going to come .
+	1		the boys are here .
+	1		the boys have n't been there .
+	1		the boys like to read .
+	1		the boys know where to go .
+	1		the boys seem nice .
+	1		the boys are walking .
+	1		the boys sleep here .
+	1		the boys have a problem .
+	1		the boys have to go .
+	1		the boys get it .
+	1		the boys have the flu .
+	1		the boys feel great .
+	1		the boys are n't going to come .
+	0		they is here .
+	0		they has n't been there .
+	0		they likes to read .
+	0		they knows where to go .
+	0		they seems nice .
+	0		they is walking .
+	0		they sleeps here .
+	0		they has a problem .
+	0		they has to go .
+	0		they gets it .
+	0		they has the flu .
+	0		they feels great .
+	0		they is n't going to come .
+	1		they are here .
+	1		they have n't been there .
+	1		they like to read .
+	1		they know where to go .
+	1		they seem nice .
+	1		they are walking .
+	1		they sleep here .
+	1		they have a problem .
+	1		they have to go .
+	1		they get it .
+	1		they have the flu .
+	1		they feel great .
+	1		they are n't going to come .
+	0		we is here .
+	0		we has n't been there .
+	0		we likes to read .
+	0		we knows where to go .
+	0		we seems nice .
+	0		we is walking .
+	0		we sleeps here .
+	0		we has a problem .
+	0		we has to go .
+	0		we gets it .
+	0		we has the flu .
+	0		we feels great .
+	0		we is n't going to come .
+	1		we are here .
+	1		we have n't been there .
+	1		we like to read .
+	1		we know where to go .
+	1		we seem nice .
+	1		we are walking .
+	1		we sleep here .
+	1		we have a problem .
+	1		we have to go .
+	1		we get it .
+	1		we have the flu .
+	1		we feel great .
+	1		we are n't going to come .
+	0		my friends is here .
+	0		my friends has n't been there .
+	0		my friends likes to read .
+	0		my friends knows where to go .
+	0		my friends seems nice .
+	0		my friends is walking .
+	0		my friends sleeps here .
+	0		my friends has a problem .
+	0		my friends has to go .
+	0		my friends gets it .
+	0		my friends has the flu .
+	0		my friends feels great .
+	0		my friends is n't going to come .
+	1		my friends are here .
+	1		my friends have n't been there .
+	1		my friends like to read .
+	1		my friends know where to go .
+	1		my friends seem nice .
+	1		my friends are walking .
+	1		my friends sleep here .
+	1		my friends have a problem .
+	1		my friends have to go .
+	1		my friends get it .
+	1		my friends have the flu .
+	1		my friends feel great .
+	1		my friends are n't going to come .
+	0		those guys is here .
+	0		those guys has n't been there .
+	0		those guys likes to read .
+	0		those guys knows where to go .
+	0		those guys seems nice .
+	0		those guys is walking .
+	0		those guys sleeps here .
+	0		those guys has a problem .
+	0		those guys has to go .
+	0		those guys gets it .
+	0		those guys has the flu .
+	0		those guys feels great .
+	0		those guys is n't going to come .
+	1		those guys are here .
+	1		those guys have n't been there .
+	1		those guys like to read .
+	1		those guys know where to go .
+	1		those guys seem nice .
+	1		those guys are walking .
+	1		those guys sleep here .
+	1		those guys have a problem .
+	1		those guys have to go .
+	1		those guys get it .
+	1		those guys have the flu .
+	1		those guys feel great .
+	1		those guys are n't going to come .
+	0		the dancers is here .
+	0		the dancers has n't been there .
+	0		the dancers likes to read .
+	0		the dancers knows where to go .
+	0		the dancers seems nice .
+	0		the dancers is walking .
+	0		the dancers sleeps here .
+	0		the dancers has a problem .
+	0		the dancers has to go .
+	0		the dancers gets it .
+	0		the dancers has the flu .
+	0		the dancers feels great .
+	0		the dancers is n't going to come .
+	1		the dancers are here .
+	1		the dancers have n't been there .
+	1		the dancers like to read .
+	1		the dancers know where to go .
+	1		the dancers seem nice .
+	1		the dancers are walking .
+	1		the dancers sleep here .
+	1		the dancers have a problem .
+	1		the dancers have to go .
+	1		the dancers get it .
+	1		the dancers have the flu .
+	1		the dancers feel great .
+	1		the dancers are n't going to come .
+	0		most people is here .
+	0		most people has n't been there .
+	0		most people likes to read .
+	0		most people knows where to go .
+	0		most people seems nice .
+	0		most people is walking .
+	0		most people sleeps here .
+	0		most people has a problem .
+	0		most people has to go .
+	0		most people gets it .
+	0		most people has the flu .
+	0		most people feels great .
+	0		most people is n't going to come .
+	1		most people are here .
+	1		most people have n't been there .
+	1		most people like to read .
+	1		most people know where to go .
+	1		most people seem nice .
+	1		most people are walking .
+	1		most people sleep here .
+	1		most people have a problem .
+	1		most people have to go .
+	1		most people get it .
+	1		most people have the flu .
+	1		most people feel great .
+	1		most people are n't going to come .
+	0		mary and sarah is here .
+	0		mary and sarah has n't been there .
+	0		mary and sarah likes to read .
+	0		mary and sarah knows where to go .
+	0		mary and sarah seems nice .
+	0		mary and sarah is walking .
+	0		mary and sarah sleeps here .
+	0		mary and sarah has a problem .
+	0		mary and sarah has to go .
+	0		mary and sarah gets it .
+	0		mary and sarah has the flu .
+	0		mary and sarah feels great .
+	0		mary and sarah is n't going to come .
+	1		mary and sarah are here .
+	1		mary and sarah have n't been there .
+	1		mary and sarah like to read .
+	1		mary and sarah know where to go .
+	1		mary and sarah seem nice .
+	1		mary and sarah are walking .
+	1		mary and sarah sleep here .
+	1		mary and sarah have a problem .
+	1		mary and sarah have to go .
+	1		mary and sarah get it .
+	1		mary and sarah have the flu .
+	1		mary and sarah feel great .
+	1		mary and sarah are n't going to come .
+	0		the doctors is here .
+	0		the doctors has n't been there .
+	0		the doctors likes to read .
+	0		the doctors knows where to go .
+	0		the doctors seems nice .
+	0		the doctors is walking .
+	0		the doctors sleeps here .
+	0		the doctors has a problem .
+	0		the doctors has to go .
+	0		the doctors gets it .
+	0		the doctors has the flu .
+	0		the doctors feels great .
+	0		the doctors is n't going to come .
+	1		the doctors are here .
+	1		the doctors have n't been there .
+	1		the doctors like to read .
+	1		the doctors know where to go .
+	1		the doctors seem nice .
+	1		the doctors are walking .
+	1		the doctors sleep here .
+	1		the doctors have a problem .
+	1		the doctors have to go .
+	1		the doctors get it .
+	1		the doctors have the flu .
+	1		the doctors feel great .
+	1		the doctors are n't going to come .
+	0		some women is here .
+	0		some women has n't been there .
+	0		some women likes to read .
+	0		some women knows where to go .
+	0		some women seems nice .
+	0		some women is walking .
+	0		some women sleeps here .
+	0		some women has a problem .
+	0		some women has to go .
+	0		some women gets it .
+	0		some women has the flu .
+	0		some women feels great .
+	0		some women is n't going to come .
+	1		some women are here .
+	1		some women have n't been there .
+	1		some women like to read .
+	1		some women know where to go .
+	1		some women seem nice .
+	1		some women are walking .
+	1		some women sleep here .
+	1		some women have a problem .
+	1		some women have to go .
+	1		some women get it .
+	1		some women have the flu .
+	1		some women feel great .
+	1		some women are n't going to come .
+	0		john and his wife is here .
+	0		john and his wife has n't been there .
+	0		john and his wife likes to read .
+	0		john and his wife knows where to go .
+	0		john and his wife seems nice .
+	0		john and his wife is walking .
+	0		john and his wife sleeps here .
+	0		john and his wife has a problem .
+	0		john and his wife has to go .
+	0		john and his wife gets it .
+	0		john and his wife has the flu .
+	0		john and his wife feels great .
+	0		john and his wife is n't going to come .
+	1		john and his wife are here .
+	1		john and his wife have n't been there .
+	1		john and his wife like to read .
+	1		john and his wife know where to go .
+	1		john and his wife seem nice .
+	1		john and his wife are walking .
+	1		john and his wife sleep here .
+	1		john and his wife have a problem .
+	1		john and his wife have to go .
+	1		john and his wife get it .
+	1		john and his wife have the flu .
+	1		john and his wife feel great .
+	1		john and his wife are n't going to come .
+	0		mr. and mrs. smith is here .
+	0		mr. and mrs. smith has n't been there .
+	0		mr. and mrs. smith likes to read .
+	0		mr. and mrs. smith knows where to go .
+	0		mr. and mrs. smith seems nice .
+	0		mr. and mrs. smith is walking .
+	0		mr. and mrs. smith sleeps here .
+	0		mr. and mrs. smith has a problem .
+	0		mr. and mrs. smith has to go .
+	0		mr. and mrs. smith gets it .
+	0		mr. and mrs. smith has the flu .
+	0		mr. and mrs. smith feels great .
+	0		mr. and mrs. smith is n't going to come .
+	1		mr. and mrs. smith are here .
+	1		mr. and mrs. smith have n't been there .
+	1		mr. and mrs. smith like to read .
+	1		mr. and mrs. smith know where to go .
+	1		mr. and mrs. smith seem nice .
+	1		mr. and mrs. smith are walking .
+	1		mr. and mrs. smith sleep here .
+	1		mr. and mrs. smith have a problem .
+	1		mr. and mrs. smith have to go .
+	1		mr. and mrs. smith get it .
+	1		mr. and mrs. smith have the flu .
+	1		mr. and mrs. smith feel great .
+	1		mr. and mrs. smith are n't going to come .
+	0		the guests of honor is here .
+	0		the guests of honor has n't been there .
+	0		the guests of honor likes to read .
+	0		the guests of honor knows where to go .
+	0		the guests of honor seems nice .
+	0		the guests of honor is walking .
+	0		the guests of honor sleeps here .
+	0		the guests of honor has a problem .
+	0		the guests of honor has to go .
+	0		the guests of honor gets it .
+	0		the guests of honor has the flu .
+	0		the guests of honor feels great .
+	0		the guests of honor is n't going to come .
+	1		the guests of honor are here .
+	1		the guests of honor have n't been there .
+	1		the guests of honor like to read .
+	1		the guests of honor know where to go .
+	1		the guests of honor seem nice .
+	1		the guests of honor are walking .
+	1		the guests of honor sleep here .
+	1		the guests of honor have a problem .
+	1		the guests of honor have to go .
+	1		the guests of honor get it .
+	1		the guests of honor have the flu .
+	1		the guests of honor feel great .
+	1		the guests of honor are n't going to come .

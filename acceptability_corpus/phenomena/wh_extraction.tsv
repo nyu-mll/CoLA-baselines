@@ -1,0 +1,520 @@
+	0		what did michael read the book ?
+	1		what did michael read ?
+	0		what did michael read the article ?
+	1		what did michael read ?
+	0		what did michael read the letter ?
+	1		what did michael read ?
+	0		what did michael read the story ?
+	1		what did michael read ?
+	0		what did michael read the chapter ?
+	1		what did michael read ?
+	0		what did christopher read the book ?
+	1		what did christopher read ?
+	0		what did christopher read the article ?
+	1		what did christopher read ?
+	0		what did christopher read the letter ?
+	1		what did christopher read ?
+	0		what did christopher read the story ?
+	1		what did christopher read ?
+	0		what did christopher read the chapter ?
+	1		what did christopher read ?
+	0		what did jason read the book ?
+	1		what did jason read ?
+	0		what did jason read the article ?
+	1		what did jason read ?
+	0		what did jason read the letter ?
+	1		what did jason read ?
+	0		what did jason read the story ?
+	1		what did jason read ?
+	0		what did jason read the chapter ?
+	1		what did jason read ?
+	0		what did david read the book ?
+	1		what did david read ?
+	0		what did david read the article ?
+	1		what did david read ?
+	0		what did david read the letter ?
+	1		what did david read ?
+	0		what did david read the story ?
+	1		what did david read ?
+	0		what did david read the chapter ?
+	1		what did david read ?
+	0		what did james read the book ?
+	1		what did james read ?
+	0		what did james read the article ?
+	1		what did james read ?
+	0		what did james read the letter ?
+	1		what did james read ?
+	0		what did james read the story ?
+	1		what did james read ?
+	0		what did james read the chapter ?
+	1		what did james read ?
+	0		what did nicole read the book ?
+	1		what did nicole read ?
+	0		what did nicole read the article ?
+	1		what did nicole read ?
+	0		what did nicole read the letter ?
+	1		what did nicole read ?
+	0		what did nicole read the story ?
+	1		what did nicole read ?
+	0		what did nicole read the chapter ?
+	1		what did nicole read ?
+	0		what did jessica read the book ?
+	1		what did jessica read ?
+	0		what did jessica read the article ?
+	1		what did jessica read ?
+	0		what did jessica read the letter ?
+	1		what did jessica read ?
+	0		what did jessica read the story ?
+	1		what did jessica read ?
+	0		what did jessica read the chapter ?
+	1		what did jessica read ?
+	0		what did elizabeth read the book ?
+	1		what did elizabeth read ?
+	0		what did elizabeth read the article ?
+	1		what did elizabeth read ?
+	0		what did elizabeth read the letter ?
+	1		what did elizabeth read ?
+	0		what did elizabeth read the story ?
+	1		what did elizabeth read ?
+	0		what did elizabeth read the chapter ?
+	1		what did elizabeth read ?
+	0		what did rebecca read the book ?
+	1		what did rebecca read ?
+	0		what did rebecca read the article ?
+	1		what did rebecca read ?
+	0		what did rebecca read the letter ?
+	1		what did rebecca read ?
+	0		what did rebecca read the story ?
+	1		what did rebecca read ?
+	0		what did rebecca read the chapter ?
+	1		what did rebecca read ?
+	0		what did kelly read the book ?
+	1		what did kelly read ?
+	0		what did kelly read the article ?
+	1		what did kelly read ?
+	0		what did kelly read the letter ?
+	1		what did kelly read ?
+	0		what did kelly read the story ?
+	1		what did kelly read ?
+	0		what did kelly read the chapter ?
+	1		what did kelly read ?
+	0		what did michael devour the cake ?
+	1		what did michael devour ?
+	0		what did michael devour the salad ?
+	1		what did michael devour ?
+	0		what did michael devour the sandwich ?
+	1		what did michael devour ?
+	0		what did michael devour the steak ?
+	1		what did michael devour ?
+	0		what did michael eat the cake ?
+	1		what did michael eat ?
+	0		what did michael eat the salad ?
+	1		what did michael eat ?
+	0		what did michael eat the sandwich ?
+	1		what did michael eat ?
+	0		what did michael eat the steak ?
+	1		what did michael eat ?
+	0		what did christopher devour the cake ?
+	1		what did christopher devour ?
+	0		what did christopher devour the salad ?
+	1		what did christopher devour ?
+	0		what did christopher devour the sandwich ?
+	1		what did christopher devour ?
+	0		what did christopher devour the steak ?
+	1		what did christopher devour ?
+	0		what did christopher eat the cake ?
+	1		what did christopher eat ?
+	0		what did christopher eat the salad ?
+	1		what did christopher eat ?
+	0		what did christopher eat the sandwich ?
+	1		what did christopher eat ?
+	0		what did christopher eat the steak ?
+	1		what did christopher eat ?
+	0		what did jason devour the cake ?
+	1		what did jason devour ?
+	0		what did jason devour the salad ?
+	1		what did jason devour ?
+	0		what did jason devour the sandwich ?
+	1		what did jason devour ?
+	0		what did jason devour the steak ?
+	1		what did jason devour ?
+	0		what did jason eat the cake ?
+	1		what did jason eat ?
+	0		what did jason eat the salad ?
+	1		what did jason eat ?
+	0		what did jason eat the sandwich ?
+	1		what did jason eat ?
+	0		what did jason eat the steak ?
+	1		what did jason eat ?
+	0		what did david devour the cake ?
+	1		what did david devour ?
+	0		what did david devour the salad ?
+	1		what did david devour ?
+	0		what did david devour the sandwich ?
+	1		what did david devour ?
+	0		what did david devour the steak ?
+	1		what did david devour ?
+	0		what did david eat the cake ?
+	1		what did david eat ?
+	0		what did david eat the salad ?
+	1		what did david eat ?
+	0		what did david eat the sandwich ?
+	1		what did david eat ?
+	0		what did david eat the steak ?
+	1		what did david eat ?
+	0		what did james devour the cake ?
+	1		what did james devour ?
+	0		what did james devour the salad ?
+	1		what did james devour ?
+	0		what did james devour the sandwich ?
+	1		what did james devour ?
+	0		what did james devour the steak ?
+	1		what did james devour ?
+	0		what did james eat the cake ?
+	1		what did james eat ?
+	0		what did james eat the salad ?
+	1		what did james eat ?
+	0		what did james eat the sandwich ?
+	1		what did james eat ?
+	0		what did james eat the steak ?
+	1		what did james eat ?
+	0		what did nicole devour the cake ?
+	1		what did nicole devour ?
+	0		what did nicole devour the salad ?
+	1		what did nicole devour ?
+	0		what did nicole devour the sandwich ?
+	1		what did nicole devour ?
+	0		what did nicole devour the steak ?
+	1		what did nicole devour ?
+	0		what did nicole eat the cake ?
+	1		what did nicole eat ?
+	0		what did nicole eat the salad ?
+	1		what did nicole eat ?
+	0		what did nicole eat the sandwich ?
+	1		what did nicole eat ?
+	0		what did nicole eat the steak ?
+	1		what did nicole eat ?
+	0		what did jessica devour the cake ?
+	1		what did jessica devour ?
+	0		what did jessica devour the salad ?
+	1		what did jessica devour ?
+	0		what did jessica devour the sandwich ?
+	1		what did jessica devour ?
+	0		what did jessica devour the steak ?
+	1		what did jessica devour ?
+	0		what did jessica eat the cake ?
+	1		what did jessica eat ?
+	0		what did jessica eat the salad ?
+	1		what did jessica eat ?
+	0		what did jessica eat the sandwich ?
+	1		what did jessica eat ?
+	0		what did jessica eat the steak ?
+	1		what did jessica eat ?
+	0		what did elizabeth devour the cake ?
+	1		what did elizabeth devour ?
+	0		what did elizabeth devour the salad ?
+	1		what did elizabeth devour ?
+	0		what did elizabeth devour the sandwich ?
+	1		what did elizabeth devour ?
+	0		what did elizabeth devour the steak ?
+	1		what did elizabeth devour ?
+	0		what did elizabeth eat the cake ?
+	1		what did elizabeth eat ?
+	0		what did elizabeth eat the salad ?
+	1		what did elizabeth eat ?
+	0		what did elizabeth eat the sandwich ?
+	1		what did elizabeth eat ?
+	0		what did elizabeth eat the steak ?
+	1		what did elizabeth eat ?
+	0		what did rebecca devour the cake ?
+	1		what did rebecca devour ?
+	0		what did rebecca devour the salad ?
+	1		what did rebecca devour ?
+	0		what did rebecca devour the sandwich ?
+	1		what did rebecca devour ?
+	0		what did rebecca devour the steak ?
+	1		what did rebecca devour ?
+	0		what did rebecca eat the cake ?
+	1		what did rebecca eat ?
+	0		what did rebecca eat the salad ?
+	1		what did rebecca eat ?
+	0		what did rebecca eat the sandwich ?
+	1		what did rebecca eat ?
+	0		what did rebecca eat the steak ?
+	1		what did rebecca eat ?
+	0		what did kelly devour the cake ?
+	1		what did kelly devour ?
+	0		what did kelly devour the salad ?
+	1		what did kelly devour ?
+	0		what did kelly devour the sandwich ?
+	1		what did kelly devour ?
+	0		what did kelly devour the steak ?
+	1		what did kelly devour ?
+	0		what did kelly eat the cake ?
+	1		what did kelly eat ?
+	0		what did kelly eat the salad ?
+	1		what did kelly eat ?
+	0		what did kelly eat the sandwich ?
+	1		what did kelly eat ?
+	0		what did kelly eat the steak ?
+	1		what did kelly eat ?
+	0		what did michael bake the cake ?
+	1		what did michael bake ?
+	0		what did michael bake the cookies ?
+	1		what did michael bake ?
+	0		what did christopher bake the cake ?
+	1		what did christopher bake ?
+	0		what did christopher bake the cookies ?
+	1		what did christopher bake ?
+	0		what did jason bake the cake ?
+	1		what did jason bake ?
+	0		what did jason bake the cookies ?
+	1		what did jason bake ?
+	0		what did david bake the cake ?
+	1		what did david bake ?
+	0		what did david bake the cookies ?
+	1		what did david bake ?
+	0		what did james bake the cake ?
+	1		what did james bake ?
+	0		what did james bake the cookies ?
+	1		what did james bake ?
+	0		what did nicole bake the cake ?
+	1		what did nicole bake ?
+	0		what did nicole bake the cookies ?
+	1		what did nicole bake ?
+	0		what did jessica bake the cake ?
+	1		what did jessica bake ?
+	0		what did jessica bake the cookies ?
+	1		what did jessica bake ?
+	0		what did elizabeth bake the cake ?
+	1		what did elizabeth bake ?
+	0		what did elizabeth bake the cookies ?
+	1		what did elizabeth bake ?
+	0		what did rebecca bake the cake ?
+	1		what did rebecca bake ?
+	0		what did rebecca bake the cookies ?
+	1		what did rebecca bake ?
+	0		what did kelly bake the cake ?
+	1		what did kelly bake ?
+	0		what did kelly bake the cookies ?
+	1		what did kelly bake ?
+	0		what did michael erase the board ?
+	1		what did michael erase ?
+	0		what did michael erase the chalk ?
+	1		what did michael erase ?
+	0		what did christopher erase the board ?
+	1		what did christopher erase ?
+	0		what did christopher erase the chalk ?
+	1		what did christopher erase ?
+	0		what did jason erase the board ?
+	1		what did jason erase ?
+	0		what did jason erase the chalk ?
+	1		what did jason erase ?
+	0		what did david erase the board ?
+	1		what did david erase ?
+	0		what did david erase the chalk ?
+	1		what did david erase ?
+	0		what did james erase the board ?
+	1		what did james erase ?
+	0		what did james erase the chalk ?
+	1		what did james erase ?
+	0		what did nicole erase the board ?
+	1		what did nicole erase ?
+	0		what did nicole erase the chalk ?
+	1		what did nicole erase ?
+	0		what did jessica erase the board ?
+	1		what did jessica erase ?
+	0		what did jessica erase the chalk ?
+	1		what did jessica erase ?
+	0		what did elizabeth erase the board ?
+	1		what did elizabeth erase ?
+	0		what did elizabeth erase the chalk ?
+	1		what did elizabeth erase ?
+	0		what did rebecca erase the board ?
+	1		what did rebecca erase ?
+	0		what did rebecca erase the chalk ?
+	1		what did rebecca erase ?
+	0		what did kelly erase the board ?
+	1		what did kelly erase ?
+	0		what did kelly erase the chalk ?
+	1		what did kelly erase ?
+	0		what did michael rake the leaves ?
+	1		what did michael rake ?
+	0		what did christopher rake the leaves ?
+	1		what did christopher rake ?
+	0		what did jason rake the leaves ?
+	1		what did jason rake ?
+	0		what did david rake the leaves ?
+	1		what did david rake ?
+	0		what did james rake the leaves ?
+	1		what did james rake ?
+	0		what did nicole rake the leaves ?
+	1		what did nicole rake ?
+	0		what did jessica rake the leaves ?
+	1		what did jessica rake ?
+	0		what did elizabeth rake the leaves ?
+	1		what did elizabeth rake ?
+	0		what did rebecca rake the leaves ?
+	1		what did rebecca rake ?
+	0		what did kelly rake the leaves ?
+	1		what did kelly rake ?
+	0		what did michael boil the egg ?
+	1		what did michael boil ?
+	0		what did michael boil the potato ?
+	1		what did michael boil ?
+	0		what did michael fry the egg ?
+	1		what did michael fry ?
+	0		what did michael fry the potato ?
+	1		what did michael fry ?
+	0		what did christopher boil the egg ?
+	1		what did christopher boil ?
+	0		what did christopher boil the potato ?
+	1		what did christopher boil ?
+	0		what did christopher fry the egg ?
+	1		what did christopher fry ?
+	0		what did christopher fry the potato ?
+	1		what did christopher fry ?
+	0		what did jason boil the egg ?
+	1		what did jason boil ?
+	0		what did jason boil the potato ?
+	1		what did jason boil ?
+	0		what did jason fry the egg ?
+	1		what did jason fry ?
+	0		what did jason fry the potato ?
+	1		what did jason fry ?
+	0		what did david boil the egg ?
+	1		what did david boil ?
+	0		what did david boil the potato ?
+	1		what did david boil ?
+	0		what did david fry the egg ?
+	1		what did david fry ?
+	0		what did david fry the potato ?
+	1		what did david fry ?
+	0		what did james boil the egg ?
+	1		what did james boil ?
+	0		what did james boil the potato ?
+	1		what did james boil ?
+	0		what did james fry the egg ?
+	1		what did james fry ?
+	0		what did james fry the potato ?
+	1		what did james fry ?
+	0		what did nicole boil the egg ?
+	1		what did nicole boil ?
+	0		what did nicole boil the potato ?
+	1		what did nicole boil ?
+	0		what did nicole fry the egg ?
+	1		what did nicole fry ?
+	0		what did nicole fry the potato ?
+	1		what did nicole fry ?
+	0		what did jessica boil the egg ?
+	1		what did jessica boil ?
+	0		what did jessica boil the potato ?
+	1		what did jessica boil ?
+	0		what did jessica fry the egg ?
+	1		what did jessica fry ?
+	0		what did jessica fry the potato ?
+	1		what did jessica fry ?
+	0		what did elizabeth boil the egg ?
+	1		what did elizabeth boil ?
+	0		what did elizabeth boil the potato ?
+	1		what did elizabeth boil ?
+	0		what did elizabeth fry the egg ?
+	1		what did elizabeth fry ?
+	0		what did elizabeth fry the potato ?
+	1		what did elizabeth fry ?
+	0		what did rebecca boil the egg ?
+	1		what did rebecca boil ?
+	0		what did rebecca boil the potato ?
+	1		what did rebecca boil ?
+	0		what did rebecca fry the egg ?
+	1		what did rebecca fry ?
+	0		what did rebecca fry the potato ?
+	1		what did rebecca fry ?
+	0		what did kelly boil the egg ?
+	1		what did kelly boil ?
+	0		what did kelly boil the potato ?
+	1		what did kelly boil ?
+	0		what did kelly fry the egg ?
+	1		what did kelly fry ?
+	0		what did kelly fry the potato ?
+	1		what did kelly fry ?
+	0		what did michael sweep the floor ?
+	1		what did michael sweep ?
+	0		what did michael mop the floor ?
+	1		what did michael mop ?
+	0		what did christopher sweep the floor ?
+	1		what did christopher sweep ?
+	0		what did christopher mop the floor ?
+	1		what did christopher mop ?
+	0		what did jason sweep the floor ?
+	1		what did jason sweep ?
+	0		what did jason mop the floor ?
+	1		what did jason mop ?
+	0		what did david sweep the floor ?
+	1		what did david sweep ?
+	0		what did david mop the floor ?
+	1		what did david mop ?
+	0		what did james sweep the floor ?
+	1		what did james sweep ?
+	0		what did james mop the floor ?
+	1		what did james mop ?
+	0		what did nicole sweep the floor ?
+	1		what did nicole sweep ?
+	0		what did nicole mop the floor ?
+	1		what did nicole mop ?
+	0		what did jessica sweep the floor ?
+	1		what did jessica sweep ?
+	0		what did jessica mop the floor ?
+	1		what did jessica mop ?
+	0		what did elizabeth sweep the floor ?
+	1		what did elizabeth sweep ?
+	0		what did elizabeth mop the floor ?
+	1		what did elizabeth mop ?
+	0		what did rebecca sweep the floor ?
+	1		what did rebecca sweep ?
+	0		what did rebecca mop the floor ?
+	1		what did rebecca mop ?
+	0		what did kelly sweep the floor ?
+	1		what did kelly sweep ?
+	0		what did kelly mop the floor ?
+	1		what did kelly mop ?
+	0		what did michael ride the bicycle ?
+	1		what did michael ride ?
+	0		what did michael ride the train ?
+	1		what did michael ride ?
+	0		what did christopher ride the bicycle ?
+	1		what did christopher ride ?
+	0		what did christopher ride the train ?
+	1		what did christopher ride ?
+	0		what did jason ride the bicycle ?
+	1		what did jason ride ?
+	0		what did jason ride the train ?
+	1		what did jason ride ?
+	0		what did david ride the bicycle ?
+	1		what did david ride ?
+	0		what did david ride the train ?
+	1		what did david ride ?
+	0		what did james ride the bicycle ?
+	1		what did james ride ?
+	0		what did james ride the train ?
+	1		what did james ride ?
+	0		what did nicole ride the bicycle ?
+	1		what did nicole ride ?
+	0		what did nicole ride the train ?
+	1		what did nicole ride ?
+	0		what did jessica ride the bicycle ?
+	1		what did jessica ride ?
+	0		what did jessica ride the train ?
+	1		what did jessica ride ?
+	0		what did elizabeth ride the bicycle ?
+	1		what did elizabeth ride ?
+	0		what did elizabeth ride the train ?
+	1		what did elizabeth ride ?
+	0		what did rebecca ride the bicycle ?
+	1		what did rebecca ride ?
+	0		what did rebecca ride the train ?
+	1		what did rebecca ride ?
+	0		what did kelly ride the bicycle ?
+	1		what did kelly ride ?
+	0		what did kelly ride the train ?
+	1		what did kelly ride ?

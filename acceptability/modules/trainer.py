@@ -34,8 +34,8 @@ class Trainer:
         self.timer = Timer()
         self.load_datasets()
 
-        if self.args.imbalance:
-            self.weights = np.array([0.705, 0.295])
+        if self.args.imbalance is not None:
+            self.weights = np.array([self.args.imbalance, 1 - self.args.imbalance])
         else:
             self.weights = None
 
