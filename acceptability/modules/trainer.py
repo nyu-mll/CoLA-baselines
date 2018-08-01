@@ -39,8 +39,6 @@ class Trainer:
     def get_imbalance(self):
         if self.args.imbalance is None:
             return None
-        elif self.args.imbalance != 0:
-            return np.array([self.args.imbalance, 1 - self.args.imbalance])
         else:
             total = 0
             positive = 0
