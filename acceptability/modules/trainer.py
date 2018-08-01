@@ -33,11 +33,24 @@ class Trainer:
         self.writer.write(self.args)
         self.timer = Timer()
         self.load_datasets()
+        self.weights = self.get_imbalance()
 
-        if self.args.imbalance is not None:
-            self.weights = np.array([self.args.imbalance, 1 - self.args.imbalance])
+
+    def get_imbalance(self):
+        if self.args.imbalance is None:
+            return None
+        elif self.args.imbalance != 0:
+            return np.array([self.args.imbalance, 1 - self.args.imbalance])
         else:
-            self.weights = None
+            total = 0
+            positive = 0
+            for set in [self.train_dataset, self.test_dataset, self.val_dataset]:
+                total += len(set.pairs)
+                positive += sum([x[0] for x in set.pairs])
+            imbalance = float(positive)/float(total)
+            return np.array([imbalance, 1 - imbalance])
+
+
 
     def load_datasets(self):
         self.train_dataset, self.val_dataset, self.test_dataset, \
