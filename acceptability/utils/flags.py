@@ -32,8 +32,8 @@ def get_parser():
                         help="If specified, custom embedding will be loaded from this path")
     parser.add_argument("--train_embeddings", action="store_true", default=False,
                         help="Whether to train embeddings?")
-    parser.add_argument("--imbalance", type=float, default=0.5,
-                        help="Is there a class imbalance?")
+    parser.add_argument("--imbalance", action="store_true", default=True,
+                        help="Whether to use pass class imbalance to weighted loss function")
 
     parser.add_argument("-l", "--logs_dir", type=str, default="./logs",
                         help="Log directory")
