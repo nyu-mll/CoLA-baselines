@@ -55,7 +55,7 @@ def test(args):
         output = (output > 0.5).long()
         outputs.append(int(output))
 
-        meter.add(output.unsqueeze(0).data, y)
+        meter.add(output.unsqueeze(0).data, y.data)
 
     print("Matthews %.5f, Accuracy: %.5f" % (meter.matthews(), meter.accuracy()))
     if args.output_file != None:
