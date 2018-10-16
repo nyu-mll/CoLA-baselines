@@ -115,7 +115,7 @@ def seed_torch(args):
     if torch.cuda.is_available():
         if not args.gpu:
             print("WARNING: You have a CUDA device," +
-                  " so you should probably run with --cuda")
+                  " so you should probably run with -g")
         else:
             torch.cuda.manual_seed(args.seed)
 

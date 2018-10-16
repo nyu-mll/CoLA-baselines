@@ -8,7 +8,7 @@ def get_parser():
     parser.add_argument("-d", "--data", type=str, default="./data",
                         help="Directory containing train.txt, test.txt" +
                         "and valid.txt")
-    parser.add_argument("-e", "--embedding", type=str, default="glove.6B.300d",
+    parser.add_argument("-e", "--embedding", type=str, default="glove.840B.300d",
                         help="Embedding type to be used, select from" +
                         "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
 
