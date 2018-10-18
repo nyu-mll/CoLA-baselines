@@ -14,9 +14,15 @@ class Checkpoint:
                                            self.args.experiment_name + ".emb")
 
     def load_state_dict(self):
+        training_done = False
+
         # First check if resume arg has been passed
         if self.args.resume_file and os.path.exists(self.args.resume_file):
             self._load(self.args.resume_file)
+
+        # If .pth exists, then training is already finished
+        if os.path.exists(self.final_model_path):
+            training_done = True
 
         # Then check if current experiement has a checkpoint
         elif self.args.resume and os.path.exists(self.experiment_ckpt_path):
@@ -28,6 +34,8 @@ class Checkpoint:
         elif hasattr(self.args, 'embedding_path') and self.args.embedding_path \
             and os.path.exists(self.args.embedding_path):
             self.trainer.embedding = self._torch_load(self.args.embedding_path)
+
+        return training_done
 
     def _load(self, file):
         print("Loading checkpoint")

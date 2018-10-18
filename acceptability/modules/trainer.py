@@ -24,8 +24,11 @@ class Trainer:
 
         seed_torch(self.args)
 
+
         if self.args.experiment_name is None:
             self.args.experiment_name = get_experiment_name(self.args)
+
+        self.resuming = os.path.exists(os.path.join(self.args.logs_dir, self.args.experiment_name + '.log'))
         self.checkpoint = Checkpoint(self)
         self.num_classes = 2
         self.meter = Meter(self.num_classes)
@@ -100,7 +103,11 @@ class Trainer:
         self.criterion = torch.nn.BCELoss()
 
         self.current_epoch = 0
-        self.checkpoint.load_state_dict()
+        training_done = self.checkpoint.load_state_dict()
+        if training_done:
+            print(".pth found at %s, training has already stopped." + self.checkpoint.final_model_path)
+            sys.exit(1)
+
 
         if self.args.gpu:
             self.model = self.model.cuda()
@@ -108,7 +115,8 @@ class Trainer:
 
 
     def train(self):
-        self.print_start_info()
+        if not self.resuming:
+            self.print_start_info()
         log_interval = len(self.train_loader) // self.args.stages_per_epoch
 
         if log_interval <= 0:
@@ -232,7 +240,7 @@ class Trainer:
             else:
                 loss = nn.functional.binary_cross_entropy(output, y.float(),
                                                           size_average=False)
-            total_loss = loss.data[0]
+            total_loss = loss.data.item()
             total += len(y)
             output = (output > 0.5).long()
             outputs.extend([int(o) for o in output])
