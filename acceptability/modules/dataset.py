@@ -151,7 +151,7 @@ class GloVeIntersectedVocab(Vocab):
             glove_index = glove.stoi.get(word, None)
 
             if glove_index is None:
-                self.vectors[i] = self.vectors[self.UNK_INDEX].copy()
+                self.vectors[i] = self.vectors[self.UNK_INDEX].clone()
             else:
                 self.vectors[i] = glove.vectors[glove_index]
 
