@@ -256,7 +256,12 @@ class Trainer:
         if self.args.train_embeddings:
             self.embedding.train()
 
-        avg_loss = total_loss / total
+        try:
+            avg_loss = total_loss / total
+        except ZeroDivisionError:
+            print("Error: total number of validation examples is %d" % total)
+            print("total loss is %d" % total_loss)
+            total = 1
 
         if test and self.args.output_dir is not None:
             out_file = open(os.path.join(self.args.output_dir, self.args.experiment_name + ".tsv"), "w")
