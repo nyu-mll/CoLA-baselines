@@ -51,9 +51,10 @@ def test(args):
 
         if type(output) == tuple:
             output = output[0]
-        output = output.squeeze()
-        output = (output > 0.5).long()
-        outputs.append(int(output))
+        out_float = output.squeeze()
+        output = (out_float > 0.5).long()
+        # outputs.append(int(output))
+        outputs.append(float(out_float))
 
         if not gpu:
             output = output.unsqueeze(0)

@@ -16,17 +16,15 @@ class Checkpoint:
     def load_state_dict(self):
         training_done = False
 
-        # First check if resume arg has been passed
+        # First check if resume arg has been passed, then if experiment has .ckpt
         if self.args.resume_file and os.path.exists(self.args.resume_file):
             self._load(self.args.resume_file)
+        elif self.args.resume and os.path.exists(self.experiment_ckpt_path):
+            self._load(self.experiment_ckpt_path)
 
         # If .pth exists, then training is already finished
         if os.path.exists(self.final_model_path):
             training_done = True
-
-        # Then check if current experiement has a checkpoint
-        elif self.args.resume and os.path.exists(self.experiment_ckpt_path):
-            self._load(self.experiment_ckpt_path)
 
         # Try loading embedding
         if os.path.exists(self.embedding_path):
@@ -49,6 +47,7 @@ class Checkpoint:
         self.trainer.early_stopping.other_metrics = loaded['other_metrics']
 
         print("Checkpoint loaded")
+        self.trainer.writer.write("Checkpoint loaded at %s" % file)
 
 
     def save(self):
