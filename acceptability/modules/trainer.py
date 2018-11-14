@@ -242,8 +242,8 @@ class Trainer:
                                                           size_average=False)
             total_loss = loss.data[0]
             total += len(y)
+            outputs.extend([float(o) for o in output])
             output = (output > 0.5).long()
-            outputs.extend([int(o) for o in output])
 
             self.meter.add(output.data, y.data)
             if not self.args.gpu:
@@ -266,6 +266,8 @@ class Trainer:
             avg_loss = 0
 
         if test and self.args.output_dir is not None:
+            if not os.path.exists(self.args.output_dir):
+                os.makedirs(self.args.output_dir)
             out_file = open(os.path.join(self.args.output_dir, self.args.experiment_name + ".tsv"), "w")
             for x in outputs:
                 out_file.write(str(x) + "\n")
