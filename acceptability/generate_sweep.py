@@ -101,12 +101,12 @@ space = {
             'dropout': hp.choice('dropout', [0.2, 0.5])
     }]),
     'classifier': hp.choice('classifier', [{
-            'hidden_size': hp.uniform('hidden_size', 400, 1000),
+            'hidden_size': hp.uniform('hidden_size', 400, 700),
             'embedding_size': hp.uniform('embedding_size', 200, 600),
             'learning_rate': hp.uniform('learning_rate', -5, -1),
             'num_layers': hp.uniform('num_layers', 2, 5),
             'encoding_size': hp.uniform('encoding_size', 300, 1200),
-            'encoder_num_layers': hp.uniform('encoder_num_layers', 1, 5),
+            'encoder_num_layers': hp.uniform('encoder_num_layers', 3.5, 5),
             'dropout': hp.choice('dropout', [0.2, 0.5])
     }])
 }
