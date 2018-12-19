@@ -245,6 +245,11 @@ def get_test_parser():
     parser.add_argument("-d", "--dataset_path", type=str, help="Test file")
     parser.add_argument("-s", "--seed", type=int, default=11111, help="Random seed")
     parser.add_argument("-g", "--gpu", action="store_true", default=False, help="Use GPU")
+    parser.add_argument("--glove", action="store_true", default=False,
+                        help="Whether to use GloVE embeddings for models")
+    parser.add_argument("-e", "--embedding", type=str, default="glove.840B.300d",
+                        help="Embedding type to be used, select from" +
+                        "http://torchtext.readthedocs.io/en/latest/vocab.html#pretrained-aliases")
 
     # Preprocess arguments
     parser.add_argument("--should_not_preprocess_data", action="store_true", default=False,

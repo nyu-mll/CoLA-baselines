@@ -302,6 +302,10 @@ def get_fixed_classifier_run_params(args):
         params.append('--lm_path')
         params.append(str(args.lm_path))
 
+    if args.number_experiment is not None:
+        params.append('--experiment_name')
+        params.append(str(args.job_name))
+
     return ' '.join(params)
 
 def get_sampled_params_for_classifier(args, space, index=1, has_pretrained_encoder=False):

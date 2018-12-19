@@ -16,7 +16,7 @@ cj99	1		The more pictures of him that appear in the news, the more embarrassed J
 cj99	1		Every senator seems to become more corrupt, as he talks to more lobbyists.
 bc01	0	*	Who does John visit Sally because he likes?
 bc01	1		Marianne did not leave.
-bc01	1		He could not] have been working.
+bc01	1		He could not have been working.
 bc01	1		He can not have been working.
 bc01	1		You will believe Bob.
 bc01	1		John has not kissed Mary.
@@ -71,7 +71,7 @@ bc01	1		Mary has always preferred lemons to limes.
 r-67	1		He let the cats which were whining out.
 r-67	1		What did Bill buy?
 r-67	1		Mary saw the boy walking toward the railroad station.
-r-67	0	*	A proof that the claim had been. made was giver that John had lied.
+r-67	0	*	A proof that the claim had been made was given that John had lied.
 r-67	1		He attributed to a short circuit which was caused by an overloaded transducer the fire which destroyed most of my factory.
 r-67	0	?*	The mayor regarded as being absurd the proposal to build a sidewalk from Dartmouth to Smith.
 r-67	0	?*	I want that Bill left to remain a secret.
@@ -327,7 +327,7 @@ kl93	1		I'm even sure we got these tickets!
 kl93	1		It's not because I have any sympathy for urban guerillas that I helped him.
 kl93	1		It isn't because Sue said anything bad about me that I'm angry.
 b_82	0	*	That he was hungry, John whined.
-b_82	0	*	1 gave Mary after the party a book.
+b_82	0	*	I gave Mary after the party a book.
 b_82	0	*	Because she's so pleasant, as for Mary I really like her.
 b_82	1		Though he may hate those that criticize Carter, it doesn't matter.
 b_82	1		With no job would John be happy.
@@ -520,8 +520,8 @@ ad03	1		I wondered who Medea had poisoned.
 ad03	0	*	I inquired when could we leave.
 ad03	1		They kicked them
 ad03	0	*	The monkey is ate the banana
-ad03	1		I would like to could swim
+ad03	0	*	I would like to could swim
 ad03	1		I kicked myself
 ad03	0	*	The bookcase ran
 ad03	1		I shaved myself.
-ad03	1		Anson became a muscle bound.
+ad03	0	*	Anson became a muscle bound.

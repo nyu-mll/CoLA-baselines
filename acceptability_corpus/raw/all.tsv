@@ -827,7 +827,7 @@ bc01	1		She could not have been working.
 bc01	0	*	Marianne not left.
 bc01	0	*	Marianne left not.
 bc01	1		Marianne did not leave.
-bc01	1		He could not] have been working.
+bc01	1		He could not have been working.
 bc01	1		He could not have been working.
 bc01	1		He cannot have been working.
 bc01	1		He can just not have been working.
@@ -7704,9 +7704,9 @@ clc95	1		Meg is attracted to Harry, but they don't know who she is attracted to.
 clc95	1		Sandy was trying to work out which students would be able to solve a certain problem, but she wouldn't tell us which one.
 clc95	1		That certain countries would vote against the resolution has been widely reported, but I'm not sure which ones.
 clc95	1		The administration has issued a statement that it is willing to meet with one of the student groups, but I'm not sure which one.
-clc95	0	*	Sandy was trying to work out which students would be able to solve a certain problem, but she wouldn't tell us which one.
-clc95	0	*	That certain countries would vote against the resolution has been widely reported, but I'm not sure which ones.
-clc95	0	*	The administration has issued a statement that it is willing to meet with one of the student groups, but I'm not sure which one.
+clc95	0	*	Sandy was trying to work out which students would be able to solve a certain problem, but she wouldn't tell us which one she was trying to work out which students would be able to solve.
+clc95	0	*	That certain countries would vote against the resolution has been widely reported, but I'm not sure which ones that would vote against the resolution has been widely reported.
+clc95	0	*	The administration has issued a statement that it is willing to meet with one of the student groups, but I'm not sure which one it has issued a statement that it is willing to meet with.
 clc95	0	*	What circumstances will we use force under?
 clc95	0	*	What sense is this theory right in?
 clc95	1		We are willing to use force under certain circumstances, but we will not say in advance which ones,.
@@ -8550,7 +8550,6 @@ j_71	0	*	John has written the words, and Paul has the music.
 j_71	1		If the ants were called elephants and elephants ants, I'd be able to squash an elephant.
 j_71	0	*	Simon quickly dropped the gold, and Jack suddenly the diamonds.
 j_71	0	*	Max sometimes beats his wife, and Ted frequently his dog.
-j_71	1		are quickly drops and sometimes beats, not just dropped and beats:.
 j_71	1		Simon quickly dropped the gold, and Jack the diamonds.
 j_71	1		Max sometimes beats his wife, and Ted his dog.
 j_71	1		I didn't eat fish, Bill didn't eat rice, and Harry didn't eat roast beef.
@@ -8590,7 +8589,7 @@ j_71	0	*	Bill must quickly eat the peaches, and Harry must slowly.
 j_71	1		Bill must quickly eat the peaches, and Harry must, too.
 j_71	1		Charlie will leave town if his mother-in-law doesn't.
 j_71	1		Whenever Russia has made a major political blunder, the U.S. has too.
-j_71	1		Tom swam the English Channel because he believed that Suzy ex.
+j_71	1		Tom swam the English Channel because he believed that Suzy had.
 j_71	1		Anyone who can, should show me how to wiggle my ears.
 j_71	1		If he hasn't yet, John should try to climb the Eiffel Tower.
 j_71	1		Bill's story about Sue and Max's about Kathy both amazed me.
@@ -9589,7 +9588,7 @@ w_80	1		what to do is a mystery to John.
 w_80	1		there is nothing to do.
 w_80	1		John has something to do.
 w_80	1		John has something for Bill to do.
-w_80	0	*	1 wondered what Bill to do.
+w_80	0	*	I wondered what Bill to do.
 w_80	1		I am counting on Bill to incriminate himself.
 w_80	1		On whom are you counting to incriminate himself?
 w_80	1		I am counting on Bill to get there on time.
@@ -9654,7 +9653,7 @@ w_80	0	*	John believed it that Bill was tardy.
 w_80	1		It was believed that Bill was tardy.
 w_80	0	*	John's reluctance seems.
 w_80	0	*	That John is reluctant seems.
-w_80	1		John seems t to be here.
+w_80	1		John seems to be here.
 w_80	0	*	It is the problem that he is here.
 w_80	1		That he is here is the problem.
 w_80	1		The problem we are discussing is George.
