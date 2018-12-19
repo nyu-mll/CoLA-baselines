@@ -31,6 +31,8 @@ def test(args):
         vocab = GloVeIntersectedVocab(args, True)
         embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
         embedding.weight.data.copy_(vocab.vectors)
+        if gpu:
+            embedding = embedding.cuda()
 
 
     loader = torch.utils.data.DataLoader(
