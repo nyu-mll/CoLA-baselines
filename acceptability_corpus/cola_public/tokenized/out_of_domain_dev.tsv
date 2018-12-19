@@ -199,10 +199,10 @@ s_97	1		the book that i like which everyone else in the class hates was written 
 s_97	0	*	the only person whose kids dana is willing to put up with was written by john .
 s_97	0	*	the book that i like - everyone else in the class hates .
 s_97	1		the only person whose kids dana is willing to put up with is pat .
-s_97	1		which book 's , author did you meet ?
-s_97	0	*	which boy 's , mother , did you meet who you liked ?
-s_97	0	*	which book 's , author did you meet who you liked ?
-s_97	1		which boy 's , mother , did you meet ?
+s_97	1		which book 's author did you meet ?
+s_97	0	*	which boy 's mother did you meet who you liked ?
+s_97	0	*	which book 's author did you meet who you liked ?
+s_97	1		which boy 's mother did you meet ?
 s_97	1		all who lost money in the scam are eligible for the program .
 s_97	0	*	who for sandy to talk to is still enrolled in the class ?
 s_97	1		who who you like does sandy also like ?

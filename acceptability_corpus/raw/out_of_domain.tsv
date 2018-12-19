@@ -929,7 +929,7 @@ w_80	1		what to do is a mystery to John.
 w_80	1		there is nothing to do.
 w_80	1		John has something to do.
 w_80	1		John has something for Bill to do.
-w_80	0	*	1 wondered what Bill to do.
+w_80	0	*	I wondered what Bill to do.
 w_80	1		I am counting on Bill to incriminate himself.
 w_80	1		On whom are you counting to incriminate himself?
 w_80	1		I am counting on Bill to get there on time.
@@ -994,7 +994,7 @@ w_80	0	*	John believed it that Bill was tardy.
 w_80	1		It was believed that Bill was tardy.
 w_80	0	*	John's reluctance seems.
 w_80	0	*	That John is reluctant seems.
-w_80	1		John seems t to be here.
+w_80	1		John seems to be here.
 w_80	0	*	It is the problem that he is here.
 w_80	1		That he is here is the problem.
 w_80	1		The problem we are discussing is George.

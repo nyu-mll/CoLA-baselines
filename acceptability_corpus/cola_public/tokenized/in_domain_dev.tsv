@@ -16,7 +16,7 @@ cj99	1		the more pictures of him that appear in the news , the more embarrassed 
 cj99	1		every senator seems to become more corrupt , as he talks to more lobbyists .
 bc01	0	*	who does john visit sally because he likes ?
 bc01	1		marianne did not leave .
-bc01	1		he could not ] have been working .
+bc01	1		he could not have been working .
 bc01	1		he can not have been working .
 bc01	1		you will believe bob .
 bc01	1		john has not kissed mary .
@@ -71,7 +71,7 @@ bc01	1		mary has always preferred lemons to limes .
 r-67	1		he let the cats which were whining out .
 r-67	1		what did bill buy ?
 r-67	1		mary saw the boy walking toward the railroad station .
-r-67	0	*	a proof that the claim had been . made was giver that john had lied .
+r-67	0	*	a proof that the claim had been made was given that john had lied .
 r-67	1		he attributed to a short circuit which was caused by an overloaded transducer the fire which destroyed most of my factory .
 r-67	0	?*	the mayor regarded as being absurd the proposal to build a sidewalk from dartmouth to smith .
 r-67	0	?*	i want that bill left to remain a secret .
@@ -327,7 +327,7 @@ kl93	1		i 'm even sure we got these tickets !
 kl93	1		it 's not because i have any sympathy for urban guerillas that i helped him .
 kl93	1		it is n't because sue said anything bad about me that i 'm angry .
 b_82	0	*	that he was hungry , john whined .
-b_82	0	*	1 gave mary after the party a book .
+b_82	0	*	i gave mary after the party a book .
 b_82	0	*	because she 's so pleasant , as for mary i really like her .
 b_82	1		though he may hate those that criticize carter , it does n't matter .
 b_82	1		with no job would john be happy .
@@ -520,8 +520,8 @@ ad03	1		i wondered who medea had poisoned .
 ad03	0	*	i inquired when could we leave .
 ad03	1		they kicked them
 ad03	0	*	the monkey is ate the banana
-ad03	1		i would like to could swim
+ad03	0	*	i would like to could swim
 ad03	1		i kicked myself
 ad03	0	*	the bookcase ran
 ad03	1		i shaved myself .
-ad03	1		anson became a muscle bound .
+ad03	0	*	anson became a muscle bound .

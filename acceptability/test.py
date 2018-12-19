@@ -1,9 +1,10 @@
 import torch
 from torch.autograd import Variable
-from acceptability.modules.dataset import AcceptabilityDataset, Vocab
+from acceptability.modules.dataset import AcceptabilityDataset, Vocab, GloVeIntersectedVocab
 from acceptability.utils import seed_torch
 from acceptability.utils import get_test_parser
 from acceptability.modules.meter import Meter
+from torch import nn
 
 
 def test(args):
@@ -18,10 +19,18 @@ def test(args):
 
     if gpu:
         model = torch.load(args.model_file)
-        embedding = torch.load(args.embedding_file)
     else:
         model = torch.load(args.model_file, map_location=lambda storage, loc: storage)
-        embedding = torch.load(args.embedding_file, map_location=lambda storage, loc: storage)
+
+    if args.embedding_file is not None:
+        if gpu:
+            embedding = torch.load(args.embedding_file)
+        else:
+            embedding = torch.load(args.embedding_file, map_location=lambda storage, loc: storage)
+    elif "glove" in args.embedding:
+        vocab = GloVeIntersectedVocab(args, True)
+        embedding = nn.Embedding(len(vocab.vectors), len(vocab.vectors[0]))
+        embedding.weight.data.copy_(vocab.vectors)
 
 
     loader = torch.utils.data.DataLoader(
