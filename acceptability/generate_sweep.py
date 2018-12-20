@@ -71,6 +71,8 @@ classifier_parser.add_argument('--encoder_num_layers', type=int, default=None,
                                   help="Num layers of encoder, only to be used if you are loading a pretrained encoder")
 classifier_parser.add_argument('--embedding_size', type=int, default=None,
                                   help="Embedding size, only to used if you are loading a pretrained encoder")
+classifier_parser.add_argument('--embedding', type=str, default=None,
+                                  help="Embedding, use to enter name of GloVe embedding")
 classifier_parser.add_argument('--max_pool', action="store_true", default=False,
                                   help="Use max-pooling for CBOW")
 classifier_parser.add_argument('--train_embeddings', action="store_true", default=False,
@@ -297,6 +299,10 @@ def get_fixed_classifier_run_params(args):
     if args.embedding_path is not None:
         params.append('--embedding_path')
         params.append(str(args.embedding_path))
+
+    if args.embedding is not None:
+        params.append('--embedding')
+        params.append(str(args.embedding))
 
     if args.lm_path is not None:
         params.append('--lm_path')
