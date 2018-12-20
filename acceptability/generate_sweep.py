@@ -288,9 +288,9 @@ def get_fixed_classifier_run_params(args):
             params.append('--encoding_size')
             params.append(str(args.encoding_size))
 
-        if args.embedding_size is not None:
-            params.append('--embedding_size')
-            params.append(str(args.embedding_size))
+    if args.embedding_size is not None:
+        params.append('--embedding_size')
+        params.append(str(args.embedding_size))
 
     if args.encoding_type is not None:
         params.append('--encoding_type')
@@ -330,16 +330,18 @@ def get_sampled_params_for_classifier(args, space, index=1, has_pretrained_encod
     params = '-lr %.5f -nl %d -hs %d -do %.1f' % (sample['learning_rate'],
              sample['num_layers'], sample['hidden_size'], sample['dropout'])
 
+    embedding_size = sample["embedding_size"] if args.embedding_size is None else args.embedding_size
+
     if has_pretrained_encoder:
         sample.pop('encoder_num_layers')
         sample.pop('encoding_size')
         sample.pop('embedding_size')
-        output += '_ed_%d_es_%d_enl_%d.out' % (args.embedding_size,
+        output += '_ed_%d_es_%d_enl_%d.out' % (embedding_size,
                   args.encoder_num_layers, args.encoding_size)
     else:
-        output += '_ed_%d_es_%d_enl_%d.out' % (sample['embedding_size'], sample['encoding_size'],
+        output += '_ed_%d_es_%d_enl_%d.out' % (embedding_size, sample['encoding_size'],
                   sample['encoder_num_layers'])
-        params += ' -es %d --encoding_size %d --encoder_num_layers %d' % (sample['embedding_size'],
+        params += ' -es %d --encoding_size %d --encoder_num_layers %d' % (embedding_size,
                     sample['encoding_size'],
                     sample['encoder_num_layers'])
 
