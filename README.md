@@ -55,8 +55,9 @@ Pretrained models are available at this [link](https://drive.google.com/drive/fo
 To do a test run over a dataset:
 
 - Create your data-folder in same format as acceptability_corpus with `train.tsv`, `dev.tsv` and `test.tsv`.
-- Download one of the pretrained models
+- Download one of the pretrained encoders
 - Download vocabulary file from this [link](https://drive.google.com/file/d/14HNMByzrUM2ZJBjOqCzelFz5yJMHskFb/view?usp=sharing)
+- OPTIONAL: Train a classifier on CoLA using the command above
 - Run (with the `-g` flag to use GPU hardware) the following command, for e.g ELMo pretrained it would be something like:  
   `python acceptability/test.py -mf elmo.pth -vf vocab_100k.tsv -ef elmo.emb -d data/test.tsv -g`
 
@@ -67,11 +68,14 @@ To save the model predictions for each of the sentences in `test.tsv`, you can a
 If you use CoLA or the baselines in your research, please cite the accompanying paper using the following entry:
 
 ```
-@article{warstadt2018neural,
-  title={Neural Network Acceptability Judgments},
+@article{warstadt2019neural,
+  title={Neural network acceptability judgments},
   author={Warstadt, Alex and Singh, Amanpreet and Bowman, Samuel R},
-  journal={arXiv preprint arXiv:1805.12471},
-  year={2018}
+  journal={Transactions of the Association for Computational Linguistics},
+  volume={7},
+  pages={625--641},
+  year={2019},
+  publisher={MIT Press}
 }
 ```
 
