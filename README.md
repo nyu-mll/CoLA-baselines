@@ -58,7 +58,7 @@ To do a test run over a dataset:
 - Download one of the pretrained encoders
 - Download vocabulary file from this [link](https://drive.google.com/file/d/14HNMByzrUM2ZJBjOqCzelFz5yJMHskFb/view?usp=sharing)
 - OPTIONAL: Train a classifier on CoLA using the command above
-- Run (with the `-g` flag to use GPU hardware) the following command, for e.g ELMo pretrained it would be something like:  
+- Run (with the `-g` flag to use GPU hardware) the following command, e.g. for the downloadable ELMo real/fake encoder (without CoLA training) it would be something like:  
   `python acceptability/test.py -mf elmo.pth -vf vocab_100k.tsv -ef elmo.emb -d data/test.tsv -g`
 
 To save the model predictions for each of the sentences in `test.tsv`, you can append to the last command the additional flag `-o predictions.txt`, which will write them in the `predictions.txt` file.
